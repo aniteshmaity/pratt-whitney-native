@@ -1,12 +1,13 @@
-import {View, Text} from 'react-native'
+import {Stack} from "expo-router";
 import React from 'react'
 import "../styles/global.css";
 
-export default function HomeLayout()
+export default function RootLayout()
 {
   return (
-    <View className="flex items-center w-full">
-      <Text className="text-cyan-700 text-2xl font-semibold">Current Orientation</Text>
-    </View>
+    <Stack>
+      <Stack.Screen name="index" options={{headerShown: false}}/>
+      <Stack.Screen name="(pages)" options={{headerShown: false}}/>
+    </Stack>
   )
 }
