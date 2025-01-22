@@ -32,11 +32,7 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ],
-      ["expo-screen-orientation",
-      {
-        "initialOrientation": "DEFAULT"
-      }]
+      ]
     ],
     "experiments": {
       "typedRoutes": true
