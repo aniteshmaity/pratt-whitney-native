@@ -4,7 +4,14 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./src/app/**/*.{js,jsx,ts,tsx}", "./src/components/**/*.{js,jsx,ts,tsx}",],
   presets: [require("nativewind/preset")],
   theme: {
-    extend: {},
+    extend: {
+       fontFamily: {
+        objektiv: ['"ObjektivVF_Trial_Wght"', 'sans-serif'],
+        frutigerBold:['Frutiger-Bold','sans-serif'] ,
+        frutigerReg:['Frutiger','sans-serif'],
+        frutigerBlack :['Frutige-Black','sans-serif']
+      },
+    },
   },
   plugins: [],
 }
