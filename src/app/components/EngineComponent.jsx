@@ -17,6 +17,7 @@ export default function EngineComponent() {
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [isScrollableOverflowing, setIsScrollableOverflowing] = useState(false);
+  const [parentWidth, setParentWidth] = useState(0);
   const opacity = useSharedValue(0);
 
 const toggleDescription = (index) => {
@@ -151,8 +152,11 @@ const animatedStyle = useAnimatedStyle(() => ({
                   resizeMode="cover"
                 />
               </View>
-              <View className="slider-section w-[90%] m-auto mt-8">
-                <GalleryCarousel />
+              <View className="slider-section w-[90%] m-auto mt-8"  onLayout={(event) => {
+        const { width } = event.nativeEvent.layout;
+        setParentWidth(width);
+      }}>
+                 {parentWidth > 0 && <GalleryCarousel parentWidth={parentWidth} />}
               </View>
             </View>
           </View>

@@ -5,48 +5,72 @@ import yearImages from "../constants/yearImages";
 
 
 const { width: windowWidth } = Dimensions.get('window');
-const itemWidth = windowWidth / 5; // Width of each item
-const scaleFactor = 1.5;
 
-const data = Array.from({ length: 20 }, (_, i) => ({ id: i, text: `Item ${i + 1}` }));
+const scaleFactor = 1;
 
-const CarouselItem = ({ item, index, currentIndex }) => {
+
+const data = [
+  { id: 1, image: yearImages.layer1, description: "Card 1 Description" },
+  { id: 2, image: yearImages.layer1, description: "Card 2 Description" },
+  { id: 3, image: yearImages.layer3, description: "Card 3 Description" },
+  { id: 4, image: yearImages.layer2, description: "Card 4 Description" },
+  { id: 5, image: yearImages.layer2, description: "Card 5 Description" },
+  { id: 6, image: yearImages.layer3, description: "Card 6 Description" },
+  { id: 7, image: yearImages.layer3, description: "Card 7 Description" },
+];
+
+const CarouselItem = ({ item, index, currentIndex,itemWidth }) => {
+  console.log("currentindex",currentIndex);
   const animatedStyle = useAnimatedStyle(() => {
-    const scale = index === currentIndex ? scaleFactor : 1; // Scale the current item
+    const scale = index === currentIndex ? scaleFactor : 0.5; // Scale the current item
     return {
       transform: [{ scale: withSpring(scale) }],
     };
   });
 
   return (
-    <Animated.View style={[ animatedStyle]}>
-   <View className="w-[40px] h-[40px] bg-red-900">
-   <Text className="">{item.text}</Text>
-   </View>
+    <Animated.View style={[{ width: itemWidth,  marginHorizontal: 5 }, animatedStyle]}>
+  
+  <Image
+                  source={item.image}
+                  alt={`Card ${item.id}`}
+                  className="h-[100px] w-full object-cover"
+                  style={{width:'100%', height:60}}
+                />
+                <View className=" w-full  bg-opacity-50 text-white text-center text-[0.6rem] p-1">
+                  {item.description}
+                </View>
+
     </Animated.View>
   );
 };
-const GalleryCarousel = () => {
-
+const GalleryCarousel = ({ parentWidth }) => {
+  const itemWidth = parentWidth / 5; // Width of each item
   const [currentIndex, setCurrentIndex] = useState(1); // Track the current focused item
   const flatListRef = useRef(null);
 
   const handlePrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-      flatListRef.current.scrollToIndex({ index: currentIndex - 1, animated: true });
-    }
+    if (currentIndex <= 0) return; // Prevent negative index
+
+    const newIndex = currentIndex - 1;
+    if (newIndex <= 0) return; // Prevent negative index
+    setCurrentIndex(newIndex);
+   
+    flatListRef.current?.scrollToIndex({ index: newIndex - 1, animated: true });
   };
 
   const handleNext = () => {
-    if (currentIndex < data.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      flatListRef.current.scrollToIndex({ index: currentIndex + 1, animated: true });
-    }
+    if (currentIndex === data.length - 4) return; // Prevent overflow
+
+    const newIndex = currentIndex + 1;
+    setCurrentIndex(newIndex);
+
+    flatListRef.current?.scrollToIndex({ index: newIndex - 1, animated: true });
   };
+
   return (
     <View
-      className="items-center relative"  
+      className=" relative"  
     >
      
            <FlatList
@@ -56,7 +80,7 @@ const GalleryCarousel = () => {
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item, index }) => (
-          <CarouselItem item={item} index={index} currentIndex={currentIndex} />
+          <CarouselItem item={item} index={index} itemWidth={itemWidth} currentIndex={currentIndex} />
         )}
 
         snapToInterval={itemWidth} // Snap to the width of each item

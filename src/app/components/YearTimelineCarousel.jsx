@@ -356,14 +356,14 @@ const data = [
                     </Text>
                   </View>
                 </View>
-                <div className=" pt-3">
+                <View className=" pt-3">
                     <InnerCarousel
                       images={
                         slide?.innerSlidesData[currentInnerSlide].slideImages ?? []
                       }
                     />
 
-                  </div>
+                  </View>
                 <View className="w-full pt-5">
                   <Text className="text-[20px] font-[900] pb-2">
                     <Text className="font-[600] text-[0.8rem] font-objektiv">
