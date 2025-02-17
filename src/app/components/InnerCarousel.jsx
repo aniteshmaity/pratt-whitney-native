@@ -1,87 +1,77 @@
-
-import React, { useRef } from 'react'
-import { View, Image, TouchableOpacity, FlatList, StyleSheet, Dimensions } from "react-native";
-
+import React, { useRef, useState } from 'react';
+import { View, Image, FlatList, StyleSheet, Dimensions, ScrollView } from "react-native";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
-import PrevNextButton from './PrevNextButton';
+import PrevNextButton from './buttons/PrevNextButton';
+
 const { width } = Dimensions.get("window");
 const ITEM_WIDTH = width / 6;
+const VISIBLE_ITEMS = 7;
 
 export default function InnerCarousel({ images }) {
-    console.log("images",images);
     const flatListRef = useRef(null);
+    const [currentIndex, setCurrentIndex] = useState(0); // Track index state
     const scrollX = useSharedValue(0); // Shared value for animations
-  
+
     // Handle Next Slide
     const handleNextClick = () => {
-      if (flatListRef.current) {
-        flatListRef.current.scrollToOffset({
-          offset: scrollX.value + ITEM_WIDTH,
-          animated: true,
-        });
-        scrollX.value = withTiming(scrollX.value + ITEM_WIDTH);
-      }
+        if (flatListRef.current && currentIndex < images.length - 1) {
+            const nextIndex = currentIndex + 1;
+            flatListRef.current.scrollToIndex({
+                index: nextIndex,
+                animated: true,
+            });
+            setCurrentIndex(nextIndex);
+            scrollX.value = withTiming(nextIndex * ITEM_WIDTH);
+        }
     };
-  
+
     // Handle Previous Slide
     const handlePrevClick = () => {
-      if (flatListRef.current) {
-        flatListRef.current.scrollToOffset({
-          offset: Math.max(scrollX.value - ITEM_WIDTH, 0),
-          animated: true,
-        });
-        scrollX.value = withTiming(Math.max(scrollX.value - ITEM_WIDTH, 0));
-      }
-    }
-  return (
-    <View className="relative  flex justify-center">
-    {images?.length > 7 && (
-      <>
-      
-                      <View className="flex-row  justify-between w-[110%] absolute left-1/2 transform -translate-x-1/2  top-1/2 -translate-y-1/2 z-50">
-                            
-                                <View>
-                                <PrevNextButton
-                                isColor="red"
-                                isIcon='prev'
-                                isPolygon="first"
-                                isWidth ="small"
-                                onPress={  handlePrevClick }
-                                      />
-                        
-                                </View>
-                                <View>
-                                <PrevNextButton
-                                        isColor="red"
-                                        isIcon='next'
-                                        isWidth ="small"
-                                        onPress={handleNextClick}
-                                      />
-                        
-                                </View>
-                              
-                              </View>
-      </>
-    )}
+        if (flatListRef.current && currentIndex > 0) {
+            const prevIndex = currentIndex - 1;
+            flatListRef.current.scrollToIndex({
+                index: prevIndex,
+                animated: true,
+            });
+            setCurrentIndex(prevIndex);
+            scrollX.value = withTiming(prevIndex * ITEM_WIDTH);
+        }
+    };
 
-    {/* Gradient Overlay for Smooth Fade Effect */}
-    <Animated.View className="absolute top-0 left-0 h-full w-10 bg-gradient-to-r from-[#f3f3f3] to-transparent z-20" />
-    <Animated.View className="absolute top-0 right-0 h-full w-10 bg-gradient-to-l from-[#f3f3f3] to-transparent z-20" />
+    return (
+        <View className="relative flex justify-center">
+            {images?.length > 7 && (
+                <View className="flex-row justify-between w-[110%] absolute left-1/2 transform -translate-x-1/2 top-1/2 -translate-y-1/2 z-50">
+                    <PrevNextButton     isColor={currentIndex === 0 ? "grey" : "red"}  isIcon='prev' isPolygon="first" isWidth="small" onPress={handlePrevClick} />
+                    <PrevNextButton     isColor={currentIndex >= images.length - VISIBLE_ITEMS ? "grey" : "red"}  isIcon='next' isWidth="small" onPress={handleNextClick} />
+                </View>
+            )}
 
-    {/* FlatList for Image Slider */}
-    <FlatList
-      ref={flatListRef}
-      horizontal
-      data={images}
-      keyExtractor={(item, index) => index.toString()}
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{ paddingHorizontal: 10 }}
-      renderItem={({ item }) => (
-        <Animated.View className=" flex flex-row items-center mx-[4px]">
-          <Image source={item?.img} className="w-full h-[42px] object-cover" resizeMode='cover' style={{width:42, height:42}} />
-        </Animated.View>
-      )}
-    />
-  </View>
-  )
+            {/* Gradient Overlay for Smooth Fade Effect */}
+            {/* <Animated.View className="absolute top-0 left-0 h-full w-10 bg-gradient-to-r from-[#f3f3f3] to-transparent z-20" />
+            <Animated.View className="absolute top-0 right-0 h-full w-10 bg-gradient-to-l from-[#f3f3f3] to-transparent z-20" /> */}
+            <View
+          className={`h-full w-full z-30 bg-slate-500 absolute top-0 ${images?.length > 6 ? 'opacity-100' : 'opacity-0'} `}
+          style={{
+            background: "linear-gradient(270deg, #f3f3f3, transparent)",
+          }}
+        ></View>
+<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            {/* FlatList for Image Slider */}
+            <FlatList
+                ref={flatListRef}
+                horizontal
+                data={images}
+                keyExtractor={(item, index) => index.toString()}
+                showsHorizontalScrollIndicator={false}
+                  keyboardShouldPersistTaps="handled"
+                renderItem={({ item }) => (
+                    <Animated.View className="flex flex-row items-center mr-[6px]">
+                        <Image source={item?.img} className="w-full h-[42px] object-cover" resizeMode='cover' style={{ width: 42, height: 42 }} />
+                    </Animated.View>
+                )}
+            />
+            </ScrollView>
+        </View>
+    );
 }

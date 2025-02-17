@@ -14,13 +14,13 @@
     font-family: "Objektiv";
   }
    */
-   .card_clip{
+   /* .card_clip{
     clip-path: polygon(50% 0%, 100% 0, 100% 85%, 83% 100%, 53% 100%, 0 100%, 0 0);
   }
   .card_clip_2{
     clip-path: polygon(50% 0%, 100% 0, 100% 65%, 83% 100%, 53% 100%, 0 100%, 0 0);
-  }
-  .main_box::after{
+  } */
+  /* .main_box::after{
     content: '';
     position: absolute;
     width: 100%;
@@ -30,4 +30,4 @@
     z-index: -1;
     background-color: white;
     clip-path: polygon(50% 0%, 100% 0, 100% 80%, 83% 100%, 53% 100%, 0 100%, 0 0);
-  }
+  } */

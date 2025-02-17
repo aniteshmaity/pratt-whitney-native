@@ -15,7 +15,7 @@ const CloseButton = ({ onPress }) => {
 
       className="  z-[100] w-[40px] cursor-pointer h-[32px] flex justify-center items-center"
     >
-      <View className="w-3 h-3 absolute -bottom-1.5 -right-1.5 bg-transparent" />
+      <View className="w-2 h-2 absolute -bottom-1.5 -right-1.5 bg-transparent" />
       <Image source={yearImages.closeIcon} />
     </View>
     </TouchableOpacity>

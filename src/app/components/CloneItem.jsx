@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { View, Text, Image,Button, TouchableOpacity } from "react-native";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
+import boxShadow from "../constants/boxShadow";
 
 const CloneItem = ({ clone, index, activeId, isPrev, slide, redDot, activeRedDot,animationTrigger,currentInnerSlide,direction }) => {
-    console.log("current",currentInnerSlide);
-    console.log("direction",direction);
-    console.log("animationtrigger",animationTrigger);
+    // console.log("current",currentInnerSlide);
+    // console.log("direction",direction);
+    // console.log("animationtrigger",animationTrigger);
   
     // console.log("clone",clone);
     
@@ -22,7 +23,7 @@ const CloneItem = ({ clone, index, activeId, isPrev, slide, redDot, activeRedDot
    }
    }else{
     return {
-      opacity: isPrev ? 0 : 1,
+      opacity: isPrev ? 0.6 : 1,
       scale: isPrev ? 1 : 0.9,
       translateX: clone.x,
       translateY: clone.y,
@@ -50,46 +51,46 @@ if(direction === "next"){
   if(isPrev){
     if (currentInnerSlide === clone.id) {
       // Active item animation (expands to full size)
-      opacity.value = withTiming(1, { duration: 1000 });
-      scale.value = withTiming(1, { duration: 500 });
-      translateX.value = withTiming(0, { duration: 1000 });
-      translateY.value = withTiming(0, { duration: 1000 });
-      height.value = withTiming(350, { duration: 1000 });
-      width.value = withTiming(430, { duration: 1000 });
+      opacity.value = withTiming(0.4, { duration: 300 });
+      scale.value = withTiming(1, { duration: 600 });
+      translateX.value = withTiming(0, { duration: 600 });
+      translateY.value = withTiming(0, { duration: 600 });
+      height.value = withTiming(350, { duration: 600 });
+      width.value = withTiming(430, { duration: 600 });
   }
 
   }else{
        if( currentInnerSlide === index+1){
-        opacity.value = withTiming(1, { duration: 1000 });
+        opacity.value = withTiming(1, { duration: 600 });
         scale.value = withTiming(0.9, { duration: 500 });
-        translateX.value = withTiming(-180 + clone.id * 30, { duration: 1000 });
-        translateY.value = withTiming(100, { duration: 1000 });
-        height.value = withTiming(52, { duration: 1000 });
-        width.value = withTiming(140, { duration: 1000 });
+        translateX.value = withTiming(-180 + clone.id * 30, { duration: 600 });
+        translateY.value = withTiming(100, { duration: 600 });
+        height.value = withTiming(52, { duration: 600 });
+        width.value = withTiming(140, { duration: 600 });
        }
   }
 }else{
   if(isPrev){
   if(clone.id === currentInnerSlide+1 ){
     console.log("this is right---");
-    opacity.value = withTiming(1, { duration: 1000 });
-    scale.value = withTiming(0.9, { duration: 1000 });
+    opacity.value = withTiming(1, { duration: 600 });
+    scale.value = withTiming(0.9, { duration: 600 });
     console.log("Before Animation - translateX:", translateX.value, "translateY:", translateY.value);
  
-      translateX.value = withTiming(150 + currentInnerSlide * 30, { duration: 1000 });
-      translateY.value = withTiming(100, { duration: 1000 });
+      translateX.value = withTiming(150 + currentInnerSlide * 30, { duration: 600 });
+      translateY.value = withTiming(100, { duration: 600 });
       console.log("After Animation - translateX:", translateX.value, "translateY:", translateY.value);
-    height.value = withTiming(52, { duration: 1000 });
-    width.value = withTiming(140, { duration: 1000 });
+    height.value = withTiming(52, { duration: 600 });
+    width.value = withTiming(140, { duration: 600 });
   }
   }else{
    if(index === currentInnerSlide){
-    opacity.value = withTiming(1, { duration: 1000 });
+    opacity.value = withTiming(1, { duration: 600 });
     scale.value = withTiming(1, { duration: 500 });
-    translateX.value = withTiming(0, { duration: 1000 });
-    translateY.value = withTiming(0, { duration: 1000 });
-    height.value = withTiming(350, { duration: 1000 });
-    width.value = withTiming(430, { duration: 1000 });
+    translateX.value = withTiming(0, { duration: 600 });
+    translateY.value = withTiming(0, { duration: 600 });
+    height.value = withTiming(350, { duration: 600 });
+    width.value = withTiming(430, { duration: 600 });
    }
   }
 }
@@ -142,7 +143,7 @@ const animatedStyle = useAnimatedStyle(() => {
     return (
       <Animated.View
         key={clone.id}
-        className={`${isPrev ? `prevContentClone-${clone.id}` : `nextContentClone-${clone.id}`} drop-shadow-2xl h-full`}
+        className={`${isPrev ? `prevContentClone-${clone.id}` : `nextContentClone-${clone.id}`}  h-full bg-white`}
         style={[
             animatedStyle,
         {
@@ -155,6 +156,7 @@ const animatedStyle = useAnimatedStyle(() => {
             transform: `translate(${clone.x}, ${clone.y}) scale(${clone.scale})`,
             opacity: clone.opacity,
             zIndex: isPrev ? -1 - index * 20 : -1,
+            ...boxShadow("#00000040", 0, 25, 0.25, 50, 10) 
         }
         ]}
       >

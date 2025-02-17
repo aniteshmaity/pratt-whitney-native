@@ -4,15 +4,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import yearImages from "../../constants/yearImages";
 import CloseButton from "../../components/CloseButton ";
-import PrevNextButton from "../../components/PrevNextButton"
+import PrevNextButton from "../../components/buttons/PrevNextButton"
 import { useRouter } from "expo-router";
 import Carousel from "react-native-reanimated-carousel";
-
+import boxShadow from "../../constants/boxShadow";
 
 // import React, { useState, useRef, useCallback } from 'react';
 
-import Animated, { withSpring, useAnimatedStyle, useSharedValue,withTiming } from 'react-native-reanimated';
+import Animated, { withSpring, useAnimatedStyle, useSharedValue,withTiming, Easing } from 'react-native-reanimated';
 import YearTimelineCarousel from "../../components/YearTimelineCarousel";
+import ClippedView from "../../components/ClippedView";
+import CustomCloseButton from "../../components/buttons/CustomCloseButton";
+import MyTextBtn from "../../components/buttons/MyTextBtn";
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = width / 5; // Calculate width for 5 visible cards
 
@@ -73,9 +76,9 @@ const handleExplore = () => {
       style={[{ width: ITEM_WIDTH, height:ITEM_WIDTH }, animatedStyle]}
       className={`item-${index} ${ middleIndex === index ? 'active' : ''} ${middleIndex > index  ? 'left' : 'right'}`}
     >
-      <View  style={{ width: ITEM_WIDTH, height:ITEM_WIDTH }} className="rounded-full bg-white overflow-hidden  shadow-[3px_7px_20px_10px_#6b646426] z-40 p-[13px] transition-transform duration-300 ease-in-out relative">
+      <View  style={{  ...boxShadow("#6b6464", 3, 7, 0.2, 10, 10), width: ITEM_WIDTH, height:ITEM_WIDTH }} className="rounded-full bg-white overflow-hidden   z-40 p-[13px] transition-transform duration-300 ease-in-out relative">
       { middleIndex === index && (<View className="absolute bg-[#E11C37] -left-[26px] w-[90px] h-[80px] top-[4px] -z-10" />)}
-<View  className={`flex  justify-center items-center rounded-full w-full h-full transition-all duration-300 shadow-[1px_0px_11px_8px_#b9b7b730] ease-in-out bg-white ${
+<View style={{ ...boxShadow("#b9b7b7", 1, 0, 0.3, 11, 8)}} className={`flex  justify-center items-center rounded-full w-full h-full transition-all duration-300  ease-in-out bg-white ${
                     middleIndex === index
                       ? "opacity-100"
                       : "bg-white text-black opacity-80"
@@ -90,22 +93,28 @@ const handleExplore = () => {
       </View>
       {middleIndex === index && (
          <Animated.View className="text-center mt-6" style={[textanimatedStyle]}>
-         <Text className="text-[0.5rem] leading-tight font-[600] text-center">
+         <Text className="text-[0.7rem] leading-tight font-[700] text-center font-frutigerBold">
            With the war over, a new golden age of progress begins. Prat & Whitney’s JT3D powers USA’s first commercial Jetliner, The Boeing 707.
          </Text>
-         <TouchableOpacity onPress={handleExplore} className="mt-6 mx-auto clipped-button-2 px-6 py-2 explore_arrow_clip-Path bg-[#D91027] w-[80px] flex gap-2 justify-center items-center">
-           <Text className="text-[0.5rem]  text-white">   Explore</Text>
-         </TouchableOpacity>
+         {/* <TouchableOpacity onPress={handleExplore} className="mt-6 mx-auto clipped-button-2 px-6 py-2   w-[98px] flex flex-row gap-2 justify-center items-center">
+         <ClippedView width={98} height={25} backgroundColor="#D91027" clipPathId="EngineYclip1" slug="variant8"  />
+           <Text className="text-[0.58rem] text-white font-frutigerBold">   Explore</Text>
+           <Image source={yearImages.tringleArrow} className="w-[10px] h-[10px]" resizeMode="contain" />
+         </TouchableOpacity> */}
+         <MyTextBtn onPress={handleExplore}  className={"w-[98px] h-[26px] mt-8 ml-4"}
+                                        title={"Explore"}
+                                        textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "} />
       
        </Animated.View>
       )}
      
       {/* <Text className="text-white text-lg">Card {item}</Text> */}
     </Animated.View>
+    
   );
 };
 const yearCarousal = () => {
-
+const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);  // Initial current index
   const [middleIndex, setMiddleIndex] = useState(2);   // Initial middle index (3rd card)
   const [prevActiveIndex, setPrevActiveIndex] = useState([]);
@@ -115,6 +124,8 @@ const yearCarousal = () => {
     const [direction, setDirection] = useState("next"); 
   const flatListRef = useRef(null);
   const airplaneRefs = useRef([]);
+  const animatedX = useSharedValue(0);
+console.log("currentindex",currentIndex);
 
   const handleStateUp = ()=> {
     setYearDetails("view");
@@ -131,7 +142,7 @@ const yearCarousal = () => {
   };
   const handleScroll = useCallback((event) => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
-    console.log("contentoffset",contentOffsetX);
+    // console.log("contentoffset",contentOffsetX);
     const newIndex = Math.round(contentOffsetX / ITEM_WIDTH + 2); // Round to nearest index
     console.log("go", newIndex);
 
@@ -152,7 +163,8 @@ const yearCarousal = () => {
   };
 
   const handleNext = () => {
-    if (currentIndex < years.length - 1) {
+
+    if (currentIndex < years.length - 5) {
       setCurrentIndex(currentIndex + 1);
       setMiddleIndex(middleIndex + 1);
       scrollToIndex(currentIndex + 1);
@@ -182,6 +194,7 @@ const years = [
   null,
   null
 ];
+console.log("year-lenght ",years.length);
   const airplaneImages = [
     yearImages.aero1,
     yearImages.aero2,
@@ -190,6 +203,8 @@ const years = [
     yearImages.aero1,
     yearImages.aero2,
     yearImages.aero3,
+    yearImages.aero1,
+    yearImages.aero2,
   ];
 
   // console.log("names",years[middleIndex]);
@@ -198,6 +213,7 @@ const years = [
   
   // Animate the airplanes based on activeIndex and direction
   const animateAirplanes = (index,direction) => {
+    console.log("index-clicked", index);
     airplaneRefs.current.forEach((el, idx) => {
       if (idx === index) {
         if(direction ==="next"){
@@ -240,6 +256,18 @@ useEffect(() => {
    animateAirplanes(currentIndex,direction);
   }
  }, [currentIndex]);
+ useEffect(() => {
+  // Smooth transition using `withTiming`
+  animatedX.value = withTiming(-imagePosition, {
+    duration: 500, // 0.5s duration
+    easing: Easing.inOut(Easing.ease), // Smooth effect
+  });
+}, [imagePosition]);
+
+// Define animated styles
+const moveImgAnimatedStyle = useAnimatedStyle(() => ({
+  transform: [{ translateX: animatedX.value }],
+}));
 
 
   return (
@@ -255,20 +283,18 @@ useEffect(() => {
           />
           <View className=" flex flex-row justify-center items-center gap-4 z-40">
            
-              <CloseButton
-               
-               onPress={handleClose}
-              />
+                <CustomCloseButton onPress={handleClose} />
+
 
           </View>
         </View>
         {/* main */}
-        <View className="flex gap-3  justify-center items-center relative">
+        <View className="flex-row justify-center items-center relative">
           <Image
             source={yearImages.logo100}
-            alt=""
-            className={`max-w-[320px] max-h-[76px] ${yearDetails ==="view" ? "absolute top-[30px]" : 'mt-[30px]'}`}
-            resizeMode="contain"
+         
+            className={`h-[76px] w-[320px] ${yearDetails ==="view" ? "absolute top-[30px]" : 'mt-[30px]'}`}
+            resizeMode="cover"
           />
         </View>
 
@@ -299,28 +325,33 @@ useEffect(() => {
         scrollEventThrottle={16} // Update the scroll position frequently
        
       />
-        <View className="h-[2.1px] w-full bg-gray-100 absolute -z-50 transform translate-y-[100%] top-[30%] " />
-      <View className="flex-row mt-5 justify-between w-[98%] absolute left-1/2 transform -translate-x-1/2  top-[20%]">
-    
-        <View>
-        <PrevNextButton
-        isColor="grey"
+        <View className="h-[2.1px] w-full bg-gray-100 absolute -z-50  " style={{top:ITEM_WIDTH/2}} />
+        {/* <View className="h-60 w-screen bg-slate-500 absolute left-1/2 transform -translate-x-1/2  top-[20%] "></View> */}
+     
+
+      <View className="absolute left-4 " style={{top:ITEM_WIDTH/2,transform: [{ translateY: "-50%" }]}}>
+   <PrevNextButton
+        isColor={currentIndex === 0 ? "grey" : "red"} 
         isIcon='prev'
         isPolygon="first"
                 onPress={handlePrev}
               />
+   </View>
 
-        </View>
-        <View>
-        <PrevNextButton
-                isColor="red"
-                isIcon='next'
-                onPress={handleNext}
-              />
-
-        </View>
+   
       
-      </View>
+   <View className="absolute right-4  " style={{top:ITEM_WIDTH/2, transform: [{ translateY: "-50%" }]}}>
+   <PrevNextButton
+           isColor={currentIndex === years.length - 5  ? "grey" : "red"}
+           isIcon='next'
+           onPress={handleNext}
+         />
+
+   </View>
+ 
+
+
+
     </View>
  
 
@@ -330,49 +361,42 @@ useEffect(() => {
           </View>
        ) : (
         <View className="h-[calc(100vh-80px)] flex items-center">
-        <YearTimelineCarousel Year={years[middleIndex]?.name} animateAirplanes={animateAirplanes} setImagePosition={setImagePosition} handleChangeYearFlag={handleChangeYearFlag} />
+        <YearTimelineCarousel Year={years[middleIndex]?.name} animateAirplanes={animateAirplanes} setImagePosition={setImagePosition} animatedX={animatedX} handleChangeYearFlag={handleChangeYearFlag} />
     </View>
       )}
 
         {/* Footer */}
-        <View className="w-screen fixed bottom-0 left-0">
-          <Image
-            style={{
-              transform: `translateX(-${imagePosition}px)`, // Move the image based on the position
-              transition: "transform 0.5s ease-in-out", // Smooth transition
-            }}
-            className=" max-w-full max-h-[80px]"
-            source={yearImages.moveCity}
-            alt="terrain"
-            resizeMode="cover"
-          />
-          <View className="absolute flex flex-row w-[90%] left-1/2 -translate-x-1/2 bottom-[80px] gap-[80px] ">
-      {airplaneImages.map((airplane, index) => {
-        const animatedStyle = animatedStyles(index);
-         return (
-        
+      <View className="w-screen absolute bottom-0 left-0">
+  <Animated.Image
+    style={[{ width: '120%' }, moveImgAnimatedStyle]}
+    className="h-[80px] " 
+    source={yearImages.moveCity}
+    alt="terrain"
+    resizeMode="cover"
+  />
+  <View className="absolute flex-row w-[93%] left-[50%] bottom-[50px] gap-[80px]" style={{ transform: [{ translateX: -0.5 * 93 + "%" }] }}>
+    {airplaneImages.map((airplane, index) => {
+      const animatedStyle = animatedStyles(index);
+      return (
         <Animated.Image
           key={index}
-     
-          ref={(el) => (airplaneRefs.current[index] = el)} // Attach ref for animation
+          ref={(el) => (airplaneRefs.current[index] = el)}
           source={airplane}
-          alt={`airplane-${index}`}
-          className="w-[80px] opacity-0"
-          style={[animatedStyle, { width: 80 }]}
-           resizeMode='contain'
+          className="w-[80px]"
+          style={[animatedStyle, { width: 70, height: 25 }]}
+          resizeMode="contain"
         />
-      )})}
-      </View>
-          <View className="absolute  max-w-full bottom-0  px-3">
-         
-            <Image
-              source={yearImages.bracket}
-              className=" max-w-full max-h-[140px] "
-              alt
-              resizeMode="center"
-            />
-          </View>
-        </View>
+      );
+    })}
+  </View>
+  <View className="absolute bottom-0 w-full px-3">
+  <Image
+    source={yearImages.bracket}
+    className="w-full h-[140px]"
+    resizeMode="cover"
+  />
+</View>
+</View>
       </View>
      
     </SafeAreaView>
@@ -380,7 +404,6 @@ useEffect(() => {
 };
 
 export default yearCarousal;
-
 
 // import React, { useState, useRef, useCallback } from 'react';
 // import { FlatList, View, Text, TouchableOpacity, Dimensions } from 'react-native';

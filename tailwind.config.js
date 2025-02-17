@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
        fontFamily: {
-        objektiv: ['"ObjektivVF_Trial_Wght"', 'sans-serif'],
+        objektiv: ['ObjektivVF_Trial_Wght', 'sans-serif'],
+        objectiveBlk:['ObjektivVF_Blk', 'sans-serif'],
         frutigerBold:['Frutiger-Bold','sans-serif'] ,
         frutigerReg:['Frutiger','sans-serif'],
         frutigerBlack :['Frutige-Black','sans-serif']

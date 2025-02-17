@@ -1,17 +1,22 @@
-import {Stack} from "expo-router";
-import React from 'react'
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import { useRoute, useNavigation } from '@react-navigation/native';
-
-export default function HundredYearsLayout()
-{
- 
+export default function HundredYearsLayout() {
   return (
-    
-    <Stack
-    screenOptions={{
-      headerShown: false, // Hides the header for all subpages
-    }}
-  />
-  )
+    <>
+       <GestureHandlerRootView >
+      {/* StatusBar Overlapping Content */}
+      <StatusBar hidden={true} /> 
+
+      {/* Stack Navigator without SafeAreaView */}
+      <Stack
+        screenOptions={{
+          headerShown: false, // Hides the header for all subpages
+        }}
+      />
+      </GestureHandlerRootView>
+    </>
+  );
 }
