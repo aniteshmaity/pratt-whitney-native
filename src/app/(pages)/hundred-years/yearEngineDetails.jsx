@@ -12,7 +12,7 @@ export default function yearEngineDetails() {
     console.log("ok");
   };
   return (
-    <SafeAreaView className="bg-white">
+    <SafeAreaView className="">
       <View className=" w-full h-screen overflow-hidden relative">
         <ImageBackground
           source={yearImages.exploreBgImage}

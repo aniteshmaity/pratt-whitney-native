@@ -4,5 +4,6 @@ import yearGif from "../../assets/images/home/product-gif.gif";
 import Terrain from "../../assets/images/home/Terrain.png";
 import groupAero from "../../assets/images/home/Group-aeroplanes.png";
 import building from "../../assets/images/home/building.png";
+import new1 from "../../assets/images/home/new-1.png";
 
-export default { homeMap,cardImg,yearGif,Terrain,groupAero,building};
+export default { homeMap,cardImg,yearGif,Terrain,groupAero,building,new1};

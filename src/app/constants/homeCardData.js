@@ -10,7 +10,7 @@ const homeCardData = [
       description:
         "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
       imageUrl:
-      homeImages.yearGif,
+      homeImages.new1,
       link: "/hundred-years",
       triggerCloseAnimation: true,
     },
@@ -23,7 +23,7 @@ const homeCardData = [
       description:
         "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
       imageUrl:
-      homeImages.yearGif,
+      homeImages.new1,
       link: "/innovations",
     },
     {
@@ -35,7 +35,7 @@ const homeCardData = [
       description:
         "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
       imageUrl:
-      homeImages.yearGif,
+      homeImages.new1,
       link: "/products",
     },
     {
@@ -47,7 +47,7 @@ const homeCardData = [
       description:
         "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
       imageUrl:
-      homeImages.yearGif,
+      homeImages.new1,
       link: "/innovations",
     },
     {
@@ -59,7 +59,7 @@ const homeCardData = [
       description:
         "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
       imageUrl:
-      homeImages.yearGif,
+      homeImages.new1,
       link: "/innovations",
     },
     

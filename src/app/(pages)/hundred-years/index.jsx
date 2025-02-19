@@ -280,8 +280,8 @@ if(type === "prev"){
           <Image source={yearImages.pwLogo} alt="homeLogo" className="max-w-[180px] max-h-[50px]"   resizeMode="contain" />
           <Animated.View  className="absolute right-[25%] flex flex-row justify-center items-center gap-4 z-40" style={[moveanimatedStyle]}>
             <Animated.View className=" font-[900] flex flex-row" style={[textOpacityStyle]}>
-              <Text className="text-[#E11C37] pr-2 font-objectiveBlk font-[900] text-[1.6rem]">INDIA</Text>
-              <Text className="text-black font-objectiveBlk font-[900]text-[1.6rem]">INTERACTIVE</Text>
+              <Text className="text-[#E11C37] pr-2 font-objectiveBlk font-[900] text-[1.1rem]">INDIA</Text>
+              <Text className="text-black font-objectiveBlk font-[900]text-[1.1rem]">INTERACTIVE</Text>
             </Animated.View>
           
             <CustomCloseButton onPress={handleClose} />

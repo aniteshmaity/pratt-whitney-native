@@ -26,6 +26,8 @@ const ClippedView = ({ width, height, backgroundColor, clipPathId, children,slug
                 return `${width},0 ${width},0 ${width},${height * 0.8} ${width * 0.9},${height} 0,${height} 0,${height} 0,0`;
                 case "variant10":
                   return `${width},0 ${width},${height} ${width * 0.9},${height} ${width * 0.2},${height} 0,${height * 0.6} 0,0`;
+                  case "variant11":
+                    return `${width * 0.5},0, ${width},0, ${width},${height * 0.8}, ${width * 0.83},${height}, ${width * 0.53},${height}, 0,${height}, 0,0`;
           default:
             return `${width},0 ${width},0 ${width},${height / 2} ${width * 0.9},${height} 0,${height} 0,0`; 
         }

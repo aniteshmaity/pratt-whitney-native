@@ -51,7 +51,7 @@ if(direction === "next"){
   if(isPrev){
     if (currentInnerSlide === clone.id) {
       // Active item animation (expands to full size)
-      opacity.value = withTiming(0.4, { duration: 300 });
+      opacity.value = withTiming(0, { duration: 300 });
       scale.value = withTiming(1, { duration: 600 });
       translateX.value = withTiming(0, { duration: 600 });
       translateY.value = withTiming(0, { duration: 600 });
@@ -72,20 +72,20 @@ if(direction === "next"){
 }else{
   if(isPrev){
   if(clone.id === currentInnerSlide+1 ){
-    console.log("this is right---");
+    // console.log("this is right---");
     opacity.value = withTiming(1, { duration: 600 });
     scale.value = withTiming(0.9, { duration: 600 });
-    console.log("Before Animation - translateX:", translateX.value, "translateY:", translateY.value);
+    // console.log("Before Animation - translateX:", translateX.value, "translateY:", translateY.value);
  
       translateX.value = withTiming(150 + currentInnerSlide * 30, { duration: 600 });
       translateY.value = withTiming(100, { duration: 600 });
-      console.log("After Animation - translateX:", translateX.value, "translateY:", translateY.value);
+      // console.log("After Animation - translateX:", translateX.value, "translateY:", translateY.value);
     height.value = withTiming(52, { duration: 600 });
     width.value = withTiming(140, { duration: 600 });
   }
   }else{
    if(index === currentInnerSlide){
-    opacity.value = withTiming(1, { duration: 600 });
+    opacity.value = withTiming(0, { duration: 600 });
     scale.value = withTiming(1, { duration: 500 });
     translateX.value = withTiming(0, { duration: 600 });
     translateY.value = withTiming(0, { duration: 600 });
@@ -161,7 +161,7 @@ const animatedStyle = useAnimatedStyle(() => {
         ]}
       >
         <View className="card_clip_2 py-[10px] px-[10px] h-full w-full bg-white">
-          <View className="relative w-full flex flex-row justify-between">
+          <View className="relative w-full flex flex-row justify-center gap-5">
             <Image
               style={{
                 width: activeId === clone.id ? 160 : 35,  // Change width dynamically
@@ -171,13 +171,13 @@ const animatedStyle = useAnimatedStyle(() => {
               source={clone?.image}
               alt="Slide Image"
             />
-            <View>
+            <View style={{ flex: 1 }}>
             
-                <Text className={`year font-[800] ${activeId === clone.id ? "text-[1.8rem]" : "text-[0.6rem]"} text-red-600`}>
+                <Text className={`year font-objectiveBlk ${activeId === clone.id ? "text-[1.8rem]" : "text-[0.6rem]"} text-red-600`}>
                   {clone?.year}
                 </Text>
             
-              <Text className={`font-[900] ${activeId === clone.id ? "text-[1.4rem]" : "text-[0.45rem]"} leading-tight`}>
+              <Text className={`font-objectiveBlk ${activeId === clone.id ? "text-[1.4rem]" : "text-[0.45rem]"} leading-tight`}>
                 {clone.title}
               </Text>
             </View>

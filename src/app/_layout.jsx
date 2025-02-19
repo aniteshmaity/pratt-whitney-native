@@ -20,6 +20,8 @@ export default function RootLayout()
     "Frutige-Black": require("../assets/fonts/Frutiger-Black.otf"),
     "ObjektivVF_Trial_Wght": require("../assets/fonts/ObjektivVF_Trial_Wght.ttf"),
     "ObjektivVF_Blk": require("../assets/fonts/objektiv_Blk.ttf"),
+    "ObjektivVF_SBd": require("../assets/fonts/objektiv_SBd.ttf"),
+    "ObjektivVF_Md": require("../assets/fonts/objektiv_Md.ttf"),
   });
 
   useEffect(() => {

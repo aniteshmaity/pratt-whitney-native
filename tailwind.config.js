@@ -10,7 +10,9 @@ module.exports = {
         objectiveBlk:['ObjektivVF_Blk', 'sans-serif'],
         frutigerBold:['Frutiger-Bold','sans-serif'] ,
         frutigerReg:['Frutiger','sans-serif'],
-        frutigerBlack :['Frutige-Black','sans-serif']
+        frutigerBlack :['Frutige-Black','sans-serif'],
+        ObjektivSBd :['ObjektivVF_SBd','sans-serif'],
+        ObjektivMd :['ObjektivVF_Md','sans-serif'],
       },
     },
   },

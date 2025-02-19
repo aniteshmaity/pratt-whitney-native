@@ -14,10 +14,11 @@ import Svg, { Defs, ClipPath, Polygon, Rect, G } from 'react-native-svg';
 import boxShadow from '../constants/boxShadow';
 import MyTextBtn from './buttons/MyTextBtn';
 import CustomCloseButton from './buttons/CustomCloseButton';
+import ClippedView from './ClippedView';
 export default function YearTimelineCarousel({Year, animateAirplanes,handleChangeYearFlag,setImagePosition,animatedX}) {
   const clipWidth = "100%";
   const clipHeight = "350"
-  console.log("activeyeaer",Year);
+  // console.log("activeyeaer",Year);
    const router = useRouter();
   const goToYearExplore = () => {
     // Navigate to another screen or action
@@ -25,7 +26,7 @@ export default function YearTimelineCarousel({Year, animateAirplanes,handleChang
   };
 
   // Function to trigger animation on button click
-console.log("year-----", Year);
+// console.log("year-----", Year);
     const getInitialSlideIndex = () => {
         const index = yearSlideData.findIndex((slide) => slide.year === Year);
         return index !== -1 ? index : 0; // Default to 0 if Year doesn't match
@@ -50,7 +51,7 @@ const [navigationDirection,setNavigationDirection] = useState("next");
   const translateY = useSharedValue(0);
 
   // console.log("isanimate",isAnimating);
-  console.log("current",currentSlide);
+  // console.log("current",currentSlide);
   // Function to trigger animation
   const animateSlide = (x,y) => {
 
@@ -121,14 +122,14 @@ const handlePrevClick = () => {
 }
 
 const handleInnerPrev = () => {
-    console.log("ok");
+
     setAnimationTrigger((prev) => prev + 1); 
     animateInnerSlide("prev");
     setDirection("prev");
     animateSlide(-90,150);
 }
 const handleInnerNext = ()=> {
-    console.log("ok-2");
+    // console.log("ok-2");
     setAnimationTrigger((prev) => prev + 1); 
     animateInnerSlide("next");
      animateSlide(90,150); // Move from -50 to 0
@@ -174,7 +175,7 @@ const animateInnerSlide = (direction) => {
   setPrevContentClones((prev) => {
     return prev.filter((clone) => clone.name !== firstCloneIndex);
   });
- }, 1000);
+ }, 1800);
          
     }
     if (direction === "prev") {
@@ -193,7 +194,7 @@ const animateInnerSlide = (direction) => {
       };
    setTimeout(() => {
     setNextContentClones((prev) => prev.slice(0, prev.length - 1));
-   }, 1000);
+   }, 1800);
 
       setPrevContentClones((prevClones) => [currentClone, ...prevClones]);
       setActiveId(currentInnerSlide);
@@ -279,9 +280,9 @@ animateAirplanes(initialIndex + 1, "next");
     // Pass 'initial' to distinguish page load animation
     setImagePosition((prev) => prev + 50);
   }, []);
-const handleBackYears = () => {
-
-  console.log("clicked");
+const handleBackYears = (curr) => {
+  handleChangeYearFlag(curr)
+  animateAirplanes(currentSlide + 1 , "prev");
 
 }
 
@@ -346,50 +347,18 @@ const handleBackYears = () => {
      
           className=" flex-1 slider-item w-full h-full "
         >
-          <View className="relative w-[430px] m-auto bg-white " style={{   ...boxShadow("#00000040", 0, 25, 0.25, 50, 10)}}>
-               
+          <View className="relative w-[430px] m-auto" style={{   ...boxShadow("#00000040", 0, 25, 0.25, 50, 10)}}>
+          {/* style={{   ...boxShadow("#00000040", 0, 25, 0.25, 50, 10)}}   */}
               
            
             <View className="w-[16px] h-[180px] absolute bg-[#E11C37] top-0 -left-[16px]" />
             <View className="main_box  h-[350px] ">
-            <Svg
-        width="100%"
-    height="100%"
-    viewBox="0 0 430 350" 
-    
-            preserveAspectRatio="xMidYMid meet"
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          zIndex: -1, 
-
-        }}
-      >
-        {/* Define the clip path */}
-        <Defs>
-          <ClipPath id="clipPathId">
-          <Polygon points="215,0, 430,0, 430,280, 359,350, 229,350, 0,350, 0,0" />
-          </ClipPath>
-        </Defs>
-        {/* <G opacity="0.3">
-          <Polygon points="215,5 435,5 435,285 364,355 234,355 5,355 5,5" fill="black" />
-        </G> */}
-
-        {/* Apply the clip path to a rectangle */}
-        <Rect
-          x="0"
-          y="0"
-          width="430"  // Match the width of your container
-          height="350" // Match the height of your container
-          fill="white" // Add the background color as needed
-          clipPath="url(#clipPathId)" // Apply the clip path
-        />
-      </Svg>
+            <ClippedView width={430} height={350} backgroundColor="white" clipPathId="slidecard1" slug="variant11" />
+         
 
               <Animated.View className="main_box2 card_clip py-[30px] pl-[20px] pr-[30px] h-full bg-transparent" style={[ mainSlideStyle ]}>
                 <View className="absolute top-0 right-0">
-                <CustomCloseButton onPress={handleBackYears} type={2} />
+                <CustomCloseButton onPress={()=> handleBackYears(currentSlide)} type={2} />
                 </View>
             
                 <View className="relative w-full flex flex-row items-center">
@@ -404,36 +373,36 @@ const handleBackYears = () => {
                   />
                   <View className="" style={{ flex: 1 }}>
               
-                      <Text className="year font-[900] text-[1.5rem] text-red-600 font-objektiv">
+                      <Text className="year  text-[1.5rem] text-red-600 font-objectiveBlk">
                         {innerSlideStatus
                           ? slide?.innerSlidesData[currentInnerSlide]?.year
                           : slide?.year}
                       </Text>
               
-                    <Text className="font-[900] text-[1.15rem] leading-tight font-objektiv">
+                    <Text className=" text-[1.15rem] leading-tight font-objectiveBlk">
                       {innerSlideStatus
                         ? slide?.innerSlidesData[currentInnerSlide]?.title
                         : slide.title}
                     </Text>
                   </View>
                 </View>
-                {/* <View className=" pt-3">
+                <View className=" pt-3">
                     <InnerCarousel
                       images={
                         slide?.innerSlidesData[currentInnerSlide].slideImages ?? []
                       }
                     />
 
-                  </View> */}
+                  </View>
                 <View className="w-full pt-5">
                   <Text className="text-[20px]  pb-2">
-                    <Text className="font-[600] text-[0.8rem] font-objektiv">
+                    <Text className=" text-[0.82rem] font-ObjektivSBd">
                       {innerSlideStatus
                         ? slide?.innerSlidesData[currentInnerSlide]?.subtitle
                         : slide?.subtitle}
                     </Text>
                   </Text>
-                  <Text className=" text-[0.64rem] pb-5 font-[600]  leading-tight">
+                  <Text className=" text-[0.7rem] pb-5   leading-tight font-frutigerReg">
                     {innerSlideStatus
                       ? slide?.innerSlidesData[currentInnerSlide]?.description
                       : slide?.description}
@@ -441,7 +410,7 @@ const handleBackYears = () => {
                 </View>
 
                 <View className="flex flex-row z-50 ">
-                  <MyTextBtn onPress={goToYearExplore}  className={"w-[96px] h-[26px] mt-8"}
+                  <MyTextBtn onPress={goToYearExplore}  className={"w-[96px] h-[26px]"}
                                         title={"Gallery"}
                                         bg="black"
                                         textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "} />
@@ -451,7 +420,7 @@ const handleBackYears = () => {
                   
                   </TouchableOpacity> */}
                
-                  <MyTextBtn onPress={goToYearExplore}  className={"w-[96px] h-[26px] mt-8 ml-4"}
+                  <MyTextBtn onPress={goToYearExplore}  className={"w-[96px] h-[26px]  ml-4"}
                                         title={"Explore"}
                                         textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "} />
                     {/* <TouchableOpacity onPress={goToYearExplore} className="bg-[#D91027] clipped-button-2 flex justify-center items-center gap-2 w-[100px]  px-4 p-2 ml-4 text-[0.8rem] tracking-[0.6px] hover:bg-red-900 transition-all">
@@ -509,10 +478,10 @@ currentInnerSlide={currentInnerSlide ?? 0}
                 <View className="w-[95px] h-[95px] bg-white  rounded-full p-2  left-1/2 transform -translate-x-1/2 "   style={{  ...boxShadow("#dddddd80", 0, 3, 0.2, 5, 5) }}>
                   <View className=" rounded-full w-full h-full  bg-white flex justify-center items-center " style={{  ...boxShadow("#dddddd80", 0, 3, 0, 5, 5) }}>
                     <View className="p-1">
-                      <Text className="text-red-400 font-[700] text-[20px] text-center">
+                      <Text className="text-red-400  text-[20px] text-center font-objectiveBlk">
                         {timeline.year}
                       </Text>
-                      <Text className="text-[0.5rem] text-center">
+                      <Text className="text-[0.5rem] font-[800] text-center font-objektiv">
                         {timeline.text}
                       </Text>
                     </View>

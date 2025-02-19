@@ -77,13 +77,13 @@ const handleExplore = () => {
       className={`item-${index} ${ middleIndex === index ? 'active' : ''} ${middleIndex > index  ? 'left' : 'right'}`}
     >
       <View  style={{  ...boxShadow("#6b6464", 3, 7, 0.2, 10, 10), width: ITEM_WIDTH, height:ITEM_WIDTH }} className="rounded-full bg-white overflow-hidden   z-40 p-[13px] transition-transform duration-300 ease-in-out relative">
-      { middleIndex === index && (<View className="absolute bg-[#E11C37] -left-[26px] w-[90px] h-[80px] top-[4px] -z-10" />)}
+      { middleIndex === index && (<View className="absolute bg-[#E11C37] -left-[26px]  top-[4px] -z-10"      style={{ width: ITEM_WIDTH/3, height:ITEM_WIDTH/2 }} />)}
 <View style={{ ...boxShadow("#b9b7b7", 1, 0, 0.3, 11, 8)}} className={`flex  justify-center items-center rounded-full w-full h-full transition-all duration-300  ease-in-out bg-white ${
                     middleIndex === index
                       ? "opacity-100"
                       : "bg-white text-black opacity-80"
                   }`}>
-                    <Text className="text-[2.6rem] font-[800] text-[#D91027] font-objektiv">
+                    <Text className="text-[2.6rem] text-[#D91027] font-objectiveBlk">
                     {item.year}
                   </Text>
                   <Text className="text-[0.9rem] p-2 font-bold text-center font-objektiv">
@@ -101,9 +101,11 @@ const handleExplore = () => {
            <Text className="text-[0.58rem] text-white font-frutigerBold">   Explore</Text>
            <Image source={yearImages.tringleArrow} className="w-[10px] h-[10px]" resizeMode="contain" />
          </TouchableOpacity> */}
-         <MyTextBtn onPress={handleExplore}  className={"w-[98px] h-[26px] mt-8 ml-4"}
+       <View className=" m-auto">
+       <MyTextBtn onPress={handleExplore}  className={"w-[98px] h-[26px]  mt-8 ml-4"}
                                         title={"Explore"}
                                         textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "} />
+       </View>
       
        </Animated.View>
       )}
@@ -131,14 +133,29 @@ console.log("currentindex",currentIndex);
     setYearDetails("view");
    }
 
-   const handleChangeYearFlag = () => {
-    setYearDetails("")
+   const handleChangeYearFlag = (curr) => {
+    console.log("curr---",curr);
+    if(curr === null) return;
+    setYearDetails("");
+    
+    // setCurrentIndex(currentIndex + 1);
+    // setMiddleIndex(middleIndex + 1);
+
+    // if(curr && curr !== null){
+    //   // setCurrentIndex(curr)
+    //   // setMiddleIndex(middleIndex );
+    //   scrollToIndex(curr + 1);
+    // }
     
   }
  
   
   const scrollToIndex = (index) => {
-    flatListRef.current.scrollToIndex({ animated: true, index });
+    console.log("index--",index);
+    if (flatListRef.current) {
+      flatListRef.current.scrollToIndex({ animated: true, index });
+    }
+  
   };
   const handleScroll = useCallback((event) => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
@@ -271,7 +288,7 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
 
 
   return (
-    <SafeAreaView className="bg-white">
+    <SafeAreaView className="bg-[#f5f5f5]">
          <View className=" w-full h-screen overflow-hidden relative">
         {/* Header */}
         <View className="h-[80px] flex flex-row justify-between items-center  px-12">

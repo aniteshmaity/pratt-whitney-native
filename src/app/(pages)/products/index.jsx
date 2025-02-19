@@ -223,10 +223,10 @@ export default function Products() {
         />
         <View className="flex-row items-center gap-4">
           <View className="flex-row">
-            <Text className="text-red-600 text-[1.3rem]  pr-2 font-objectiveBlk">
+            <Text className="text-red-600 text-[1.1rem]  pr-2 font-objectiveBlk">
               INDIA
             </Text>
-            <Text className="text-black text-[1.3rem]  font-objectiveBlk">
+            <Text className="text-black text-[1.1rem]  font-objectiveBlk">
               INTERACTIVE
             </Text>
           </View>
