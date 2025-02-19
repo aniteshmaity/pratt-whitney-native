@@ -12,7 +12,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout()
 {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   const [fontsLoaded, error] = useFonts({
    
     "Frutiger-bold": require("../assets/fonts/Frutiger_bold.ttf"),
@@ -46,7 +46,8 @@ export default function RootLayout()
   return (
     <>
       {
-        isLoading ? <PWSplashScreen/> : <GestureHandlerRootView>
+        // isLoading ? <PWSplashScreen/> : 
+        <GestureHandlerRootView>
           <Stack className="bg-white">
             <Stack.Screen
               name="index"
