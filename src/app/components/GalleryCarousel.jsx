@@ -1,6 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, Image, TouchableOpacity, FlatList, Dimensions } from "react-native";
-import Animated, { useSharedValue, useAnimatedScrollHandler, useAnimatedStyle, interpolate, withSpring } from "react-native-reanimated";
+import Animated, { useSharedValue, useAnimatedScrollHandler, useAnimatedStyle, interpolate, withSpring, runOnJS } from "react-native-reanimated";
 import yearImages from "../constants/yearImages";
 import PrevNextButton from "./buttons/PrevNextButton";
 
@@ -20,22 +20,35 @@ const data = [
   { id: 7, image: yearImages.layer3, description: "Card 7 Description" },
 ];
 // Duplicate the data to create a looping effect
-const loopingData = [...data, ...data, ...data].map((item, index) => ({
-  ...item,
-  uniqueId: `${item.id}-${index}`, // Add a unique identifier
-}));
+const loopingData = [...data, ...data, ...data]
 
-const CarouselItem = ({ item, index, currentIndex,itemWidth }) => {
-  console.log("currentindex",currentIndex);
+const CarouselItem = ({ item, index, currentIndex,itemWidth,scrollX }) => {
+  // console.log("currentindex",currentIndex);
+  // const animatedStyle = useAnimatedStyle(() => {
+  //   const scale = index === currentIndex ? scaleFactor : 0.5; // Scale the current item
+  //   return {
+  //     transform: [{ scale: withSpring(scale) }],
+  //   };
+  // });
   const animatedStyle = useAnimatedStyle(() => {
-    const scale = index === currentIndex ? scaleFactor : 0.5; // Scale the current item
-    return {
-      transform: [{ scale: withSpring(scale) }],
-    };
+    const scale = interpolate(
+      scrollX.value,
+      [
+        (index - 2) * itemWidth, // Two items before center
+        (index - 1) * itemWidth, // One item before center
+        index * itemWidth, // Current item (center)
+        (index + 1) * itemWidth, // One item after center
+        (index + 2) * itemWidth, // Two items after center
+      ],
+      [0.5, 0.5, 1, 0.5, 0.5], // Scaling effect
+      'clamp'
+    );
+
+    return { transform: [{ scale }] };
   });
 
   return (
-    <Animated.View style={[{ width: itemWidth,  marginHorizontal: 5 }, animatedStyle]}>
+    <Animated.View style={[{ width: itemWidth }, animatedStyle]}>
   
   <Image
                   source={item.image}
@@ -52,54 +65,82 @@ const CarouselItem = ({ item, index, currentIndex,itemWidth }) => {
   );
 };
 const GalleryCarousel = ({ parentWidth }) => {
+  const scrollX = useSharedValue(0);
   const itemWidth = parentWidth / 5; // Width of each item
-  const [currentIndex, setCurrentIndex] = useState(1); // Track the current focused item
+
   const flatListRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(data.length); // Start in the middle of duplicated data
 
-  const handlePrev = () => {
-    if (currentIndex <= 0) return; // Prevent negative index
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollX.value = event.contentOffset.x; // Update shared value
+    },
+    onMomentumScrollEnd: (event) => {
+      const offset = event.contentOffset.x;
+      const totalWidth = data.length * itemWidth;
 
-    const newIndex = currentIndex - 1;
-    if (newIndex <= 0) return; // Prevent negative index
-    setCurrentIndex(newIndex);
+      // Reset to the middle of duplicated data when reaching the end
+      if (offset >= totalWidth * 2) {
+        flatListRef.current?.scrollToIndex({ index: data.length, animated: false });
+      } else if (offset <= 0) {
+        flatListRef.current?.scrollToIndex({ index: data.length, animated: false });
+      }
+
+      // Update currentIndex
+      const index = Math.round(offset / itemWidth);
+      setCurrentIndex(index);
+    },
+  });
+
+  // const handlePrev = () => {
+  //   if (currentIndex <= 0) return; // Prevent negative index
+
+  //   const newIndex = currentIndex - 1;
+  //   if (newIndex <= 0) return; // Prevent negative index
+  //   setCurrentIndex(newIndex);
    
-    flatListRef.current?.scrollToIndex({ index: newIndex - 1, animated: true });
-  };
+  //   flatListRef.current?.scrollToIndex({ index: newIndex - 1, animated: true });
+  // };
 
-  const handleNext = () => {
-    if(currentIndex === loopingData.length - 3) return;
+  // const handleNext = () => {
+  //   if(currentIndex === loopingData.length - 3) return;
 
-    const newIndex = currentIndex + 1;
-    setCurrentIndex(newIndex);
+  //   const newIndex = currentIndex + 1;
+  //   setCurrentIndex(newIndex);
 
-    flatListRef.current?.scrollToIndex({ index: newIndex - 1, animated: true });
-  };
+  //   flatListRef.current?.scrollToIndex({ index: newIndex - 1, animated: true });
+  // };
 
   return (
     <View
       className=" relative"  
     >
      
-           <FlatList
+           <Animated.FlatList
         ref={flatListRef}
         data={loopingData}
         horizontal
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(item) => item.uniqueId.toString()}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
-          <CarouselItem item={item} index={index} itemWidth={itemWidth} currentIndex={currentIndex} />
+          <CarouselItem item={item} index={index} itemWidth={itemWidth} currentIndex={currentIndex} scrollX={scrollX} />
         )}
-
+        onScroll={scrollHandler}
         snapToInterval={itemWidth} // Snap to the width of each item
         decelerationRate="fast" // Smooth scrolling
+        contentContainerStyle={{ paddingHorizontal: (parentWidth - itemWidth) / 4 }} 
+        initialScrollIndex={data.length} // Start in the middle of duplicated data
+        getItemLayout={(data, index) => ({
+          length: itemWidth,
+          offset: itemWidth * index,
+          index,
+        })}
        
       />
           
           {/* Navigation Buttons */}
-          <View className="absolute top-1/2 -translate-y-1/2 left-3">
-            {/* <TouchableOpacity onPress={handlePrev} className="bg-red-600 p-2 rounded-full shadow-lg">
-              <Text className="text-white">P</Text>
-            </TouchableOpacity> */}
+          {/* <View className="absolute top-1/2 -translate-y-1/2 left-3">
+    
                <PrevNextButton
                     isColor={currentIndex === 0 ? "grey" : "red"} 
                     isIcon='prev'
@@ -111,9 +152,7 @@ const GalleryCarousel = ({ parentWidth }) => {
           </View>
 
           <View className="absolute top-1/2 -translate-y-1/2 right-3">
-            {/* <TouchableOpacity onPress={handleNext} className="bg-red-600 p-2 rounded-full shadow-lg">
-              <Text className="text-white">N</Text>
-            </TouchableOpacity> */}
+      
                <PrevNextButton
                     isColor={currentIndex === 0 ? "grey" : "red"} 
                     isIcon='next'
@@ -121,7 +160,7 @@ const GalleryCarousel = ({ parentWidth }) => {
                             onPress={handleNext}
                           />
             
-          </View>
+          </View> */}
       
     </View>
   );

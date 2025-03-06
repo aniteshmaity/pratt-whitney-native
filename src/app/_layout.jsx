@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import "../styles/global.css";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
+import {  Stack } from "expo-router";
+import * as SplashScreen from 'expo-splash-screen';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
@@ -13,7 +14,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout()
 {
   const [isLoading, setIsLoading] = useState(true);
-  const [fontsLoaded, error] = useFonts({
+  const [loaded, error] = useFonts({
    
     "Frutiger-bold": require("../assets/fonts/Frutiger_bold.ttf"),
     "Frutiger": require("../assets/fonts/Frutiger.ttf"),
@@ -22,40 +23,50 @@ export default function RootLayout()
     "ObjektivVF_Blk": require("../assets/fonts/objektiv_Blk.ttf"),
     "ObjektivVF_SBd": require("../assets/fonts/objektiv_SBd.ttf"),
     "ObjektivVF_Md": require("../assets/fonts/objektiv_Md.ttf"),
+    "ObjektivMk1_Bold": require("../assets/fonts/ObjektivMk1_Trial_Bd.ttf"),
+    "ObjektivMk2_Black": require("../assets/fonts/ObjektivMk2_Trial_Blk.ttf"),
+    "ObjektivMk2_SemiBold": require("../assets/fonts/ObjektivMk2_Trial_SBd.ttf"),
+    "ObjektivMk2_Medium": require("../assets/fonts/ObjektivMk1_Trial_Md.ttf"),
   });
 
   useEffect(() => {
     if (error) throw error;
 
-    if (fontsLoaded) {
+    if (loaded) {
       SplashScreen.hideAsync();
       setTimeout(() =>
         {
           setIsLoading(false)
         }, 1000)
     }
-  }, [fontsLoaded, error]);
+  }, [loaded, error]);
 
-  if (!fontsLoaded) {
+  if (!loaded) {
     return null;
   }
 
-  if (!fontsLoaded && !error) {
+  if (!loaded && !error) {
     return null;
   }
   return (
     <>
       {
-        // isLoading ? <PWSplashScreen/> : 
+
         <GestureHandlerRootView>
-          <Stack className="bg-white">
+          <Stack
+            screenOptions={{
+              headerShown: false,  // Global header configuration
+              animation: 'slide_from_right',  // Optional: adds smooth transition
+            }}
+          >
             <Stack.Screen
               name="index"
-              options={{ headerShown: false }}
             />
             <Stack.Screen
               name="(pages)"
-              options={{ headerShown: false }}
+            />
+            <Stack.Screen 
+              name="not-found"
             />
           </Stack>
         </GestureHandlerRootView>

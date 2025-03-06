@@ -13,7 +13,11 @@ import yearImages from "../../constants/yearImages";
 import CustomCloseButton from "../../components/buttons/CustomCloseButton";
 import Animated, {
   Easing,
+  interpolate,
+  runOnJS,
+  useAnimatedScrollHandler,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withSpring,
   withTiming,
@@ -24,12 +28,14 @@ import ProductCard from "../../components/ProductCard";
 import boxShadow from "../../constants/boxShadow";
 import ClippedView from "../../components/ClippedView";
 import { useRouter } from "expo-router";
+import RedDotSvg from "../../components/RedDotSvg";
+import { LinearGradient } from "expo-linear-gradient";
 const { height } = Dimensions.get("window");
-const ITEM_HIGHT = (height - 80) / 5 ;
+const ITEM_HIGHT = (height - 80) / 3 ;
 const ContainerHeight = height - 80
 
 const Engine = [
-  null,
+ 
   null,
   { engine: "Military Engines", description: "This is the description 3 " },
   { engine: "Pratt Engines", description: "This is the description 4" },
@@ -37,7 +43,7 @@ const Engine = [
   { engine: "Auxiliary Engines", description: "This is the description 6" },
   { engine: "Aftermarket", description: "This is the description 7" },
   null,
-  null,
+  
 ];
 
 const EngineItem = ({
@@ -48,40 +54,59 @@ const EngineItem = ({
   onItemPress,
   scrollToIndex,
   setCurrentIndex,
+  scrollY
 }) => {
   console.log("middleindex", middleIndex);
   console.log("curr", currentIndex);
   // console.log("index",index);
-  const scale = useSharedValue(0.5);
-  const animatedStyle = useAnimatedStyle(() => {
-    scale.value = withSpring(index === middleIndex ? 1 : 0.5, {
-      damping: 20,
-      stiffness: 100,
-    });
-    return {
-      transform: [{ scale: scale.value }],
-    };
-  });
-
+  // const scale = useSharedValue(0.5);
   if (item === null) {
-    // Render an empty placeholder for null items
     return <View style={{ height: ITEM_HIGHT }} />;
   }
+  const realIndex = Engine.filter((e) => e !== null).indexOf(item);
+  const scale = useDerivedValue(() => {
+    const targetScale = interpolate(
+      scrollY.value,
+      [
+        (realIndex - 1) * ITEM_HIGHT,
+        realIndex * ITEM_HIGHT,
+        (realIndex + 1) * ITEM_HIGHT,
+      ],
+      [0.4, 0.9, 0.4], // Scale effect
+      "clamp"
+    );
+
+    return withSpring(targetScale, {
+      damping: 15, // Control smoothness
+      stiffness: 90, // Control speed of animation
+    });
+  });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+
+  // if (item === null) {
+  //   // Render an empty placeholder for null items
+  //   return <View style={{ height: ITEM_HIGHT }} />;
+  // }
 
   return (
     <TouchableOpacity onPress={() => onItemPress(index)}>
-      <Animated.View
-        style={[{ width: ITEM_HIGHT, height: ITEM_HIGHT }, animatedStyle]}
-        className={`item-${index} ${middleIndex === index ? "active" : ""} ${
-          middleIndex > index ? "top" : "bottom"
-        }`}
-      >
-        <View
-          style={{  ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10),width: ITEM_HIGHT, height: ITEM_HIGHT }}
-          className="rounded-full bg-white overflow-hidden   z-40 p-[13px]  relative"
+    <Animated.View
+      style={[
+        { width: ITEM_HIGHT, height: ITEM_HIGHT },
+        animatedStyle,
+      ]}
+      className={`item-${index} ${middleIndex === index ? "active" : ""}`}
+    >
+     <View
+          style={{  ...boxShadow("#bdbdbd", 3, 7, 0.2, 20, 6),width: ITEM_HIGHT, height: ITEM_HIGHT }}
+          className="rounded-full bg-white  overflow-hidden  z-40 p-[18px]  relative"
         >
           {middleIndex === index && (
-            <View className="absolute bg-[#E11C37] right-0 w-[90px] h-[70px] top-[25%] -z-10" />
+            <View className="absolute bg-[#E11C37] right-0 w-[120px] h-[120px] top-[50%]   -translate-y-1/2 -z-10" />
           )}
           <View
           style={{...boxShadow("#b9b7b730", 1, 0, 0.2, 11, 8)}}
@@ -91,16 +116,23 @@ const EngineItem = ({
                 : "bg-white text-black opacity-80"
             }`}
           >
-            <Text className="text-[0.7rem] font-[800] text-[#D91027] font-objektiv w-[90%] text-center">
+            <Text className="text-[1.7rem]  text-[#D91027] font-ObjektivMk2Black w-[90%] text-center">
               {item.engine}
             </Text>
-            <Text className="text-[0.45rem] p-2 font-bold text-center font-objektiv">
+           {middleIndex === index && ( <Text className="text-[0.85rem] px-2 pt-3 text-center font-ObjektivMk1Bold">
               {item.description}
-            </Text>
+            </Text>)}
           </View>
+          
         </View>
-      </Animated.View>
-    </TouchableOpacity>
+       
+        { middleIndex !== index && (<View className="absolute -top-[25px]  left-1/2 -translate-x-1/2 z-[100] ">
+          <RedDotSvg width={35} height ={35} />
+      
+        </View>)}
+    </Animated.View>
+
+  </TouchableOpacity>
   );
 };
 
@@ -108,7 +140,7 @@ export default function Products() {
   const router = useRouter();
   const flatListRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0); // Initial current index
-  const [middleIndex, setMiddleIndex] = useState(2); // Initial middle index (3rd card)
+  const [middleIndex, setMiddleIndex] = useState(1); // Initial middle index (3rd card)
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [cardSize, setCardSize] = useState({ width: 0, height: 0 });
   // const [containerHeight, setContainerHeight] = useState(0);
@@ -119,8 +151,21 @@ export default function Products() {
   const currentTranslateX = useSharedValue(-50); // Start at 0% (visible)
   const nextTranslateX = useSharedValue(-400); // Start at 400% (hidden)
   const middleIndexShared = useSharedValue(2);
+  const scrollY = useSharedValue(0);
   // console.log("containerheight",containerHeight);
   // console.log("cardheight",cardHeight);
+  // console.log("middle-index",middleIndex);
+  const rotation = useSharedValue(90); // Start at 90 degrees
+
+  useEffect(() => {
+    rotation.value = withTiming(0, { duration: 1000 }); // Animate to 0 degrees
+  }, []);
+
+  const lineAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ rotate: `${rotation.value}deg` }],
+    };
+  });
   const handleClose = () => {
  router.push("home")
   };
@@ -131,8 +176,8 @@ export default function Products() {
   const translateXValues = validEngines.map((_, index) =>
     useSharedValue(index === 0 ? -30 : -ContainerHeight * 4)
   );
-  console.log("fullengine", validEngines);
-  console.log("container-height",ContainerHeight);
+  // console.log("fullengine", validEngines);
+  // console.log("container-height",ContainerHeight);
   const scrollToIndex = (index) => {
     flatListRef.current.scrollToIndex({ animated: true, index });
   };
@@ -143,8 +188,8 @@ export default function Products() {
       translateYValues[currentIndex].value = withTiming(ContainerHeight * 4, { duration: 900 });
       translateXValues[currentIndex].value = withTiming(-ContainerHeight * 4, { duration: 900 });
       // Animate the next item to 50%
-      translateYValues[index - 2].value = withTiming(ContainerHeight * 0.5 - 538 * 0.5, { duration: 900 });
-      translateXValues[index - 2].value = withTiming(30, { duration: 900 });
+      translateYValues[index - 1].value = withTiming(ContainerHeight * 0.5 - 538 * 0.5, { duration: 900 });
+      translateXValues[index - 1].value = withTiming(-30, { duration: 900 });
       setCurrentIndex(currentIndex - 1);
       setMiddleIndex(middleIndex - 1);
       scrollToIndex(currentIndex - 1);
@@ -157,8 +202,8 @@ export default function Products() {
       translateYValues[currentIndex].value = withTiming(-ContainerHeight * 4, { duration: 900 });
       translateXValues[currentIndex].value = withTiming(-ContainerHeight * 4, { duration: 900 });
       // Animate the next item to 50%
-      translateYValues[index - 2].value = withTiming(ContainerHeight * 0.5 - 538 * 0.5, { duration: 900 });
-      translateXValues[index - 2].value = withTiming(30, { duration: 900 });
+      translateYValues[index - 1].value = withTiming(ContainerHeight * 0.5 - 538 * 0.5, { duration: 900 });
+      translateXValues[index - 1].value = withTiming(-30, { duration: 900 });
       setCurrentIndex(currentIndex + 1);
       setMiddleIndex(middleIndex + 1);
       scrollToIndex(currentIndex + 1);
@@ -173,12 +218,12 @@ export default function Products() {
     }
     console.log("clicked-index", index);
   };
-  const onScrollEnd = (event) => {
-    const contentOffsetY = event.nativeEvent.contentOffset.y;
-    console.log("conttenty", contentOffsetY);
-    const newIndex = Math.round(contentOffsetY / ITEM_HIGHT); // Calculate the nearest index
-    scrollToIndex(newIndex);
-  };
+  // const onScrollEnd = (event) => {
+  //   const contentOffsetY = event.nativeEvent.contentOffset.y;
+  //   console.log("conttenty", contentOffsetY);
+  //   const newIndex = Math.round(contentOffsetY / ITEM_HIGHT); // Calculate the nearest index
+  //   scrollToIndex(newIndex);
+  // };
 
   // // Move the currently active item up (-400%)
   // const animateOut = () => {
@@ -211,6 +256,20 @@ export default function Products() {
 
     };
 });
+
+const scrollHandler = useAnimatedScrollHandler((event) => {
+
+  scrollY.value = event.contentOffset.y;
+   const newIndex = Math.round(event.contentOffset.y / ITEM_HIGHT)+1;
+      console.log("newindex",newIndex);
+  
+      runOnJS(setMiddleIndex)(newIndex);
+});
+const onMomentumScrollEnd = (event) => {
+  scrollY.value = event.nativeEvent.contentOffset.y;
+};
+
+
   return (
     <SafeAreaView className="w-screen h-screen bg-white">
       {/* Header */}
@@ -235,9 +294,15 @@ export default function Products() {
       </View>
 
       {/* Main Content */}
-      <View className="flex-1 flex-row h-[calc(100vh-80px)] gap-5 px-12">
+      <View className="flex-1 flex-row h-[calc(100vh-80px)] gap-5 px-12 bg-[#f5f5f5]">
+      {/* <LinearGradient
+                  colors={["#00000014", "#E11C37"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 2, y: 0 }}
+                 className="absolute w-[50%] h-[1px] top-[50%] left-[0%] "
+                /> */}
         {/* Sidebar Navigation */}
-        <View className="w-[58px] justify-start items-center ">
+        <View className="w-[58px] justify-start items-center mt-4">
         <ClippedView width={58} height={26} backgroundColor="#918F8F" clipPathId="backClip" slug="variant7" />
           <TouchableOpacity onPress={handleClose} className=" px-3 py-2 flex flex-row justify-center items-center gap-2">
             <Image source={yearImages.leftArrow} className="w-[7px] h-[7px]" resizeMode="contain" />
@@ -246,15 +311,19 @@ export default function Products() {
             </Text>
           </TouchableOpacity>
         </View>
-        <View className=" bg-gray-100 ">
-          <FlatList
+        <View className="bg-[#f5f5f5] ">
+          <Animated.View className="absolute w-[1px] h-[100%] left-[50%] bg-[#00000014] " style={[ lineAnimatedStyle]} />
+           
+          <View className="absolute w-[1px] h-[100%] left-[50%] bg-[#00000014] rotate-90" />
+          <Animated.FlatList
             ref={flatListRef}
             data={Engine}
             keyExtractor={(item, index) => index.toString()}
             showsVerticalScrollIndicator={false}
             snapToInterval={ITEM_HIGHT} // Snap to each engine card
             decelerationRate="fast"
-            onMomentumScrollEnd={onScrollEnd}
+            onScroll = {scrollHandler}
+            onMomentumScrollEnd={onMomentumScrollEnd}
             renderItem={(
               { item, index } // Corrected: Added parentheses for implicit return
             ) => (
@@ -266,6 +335,8 @@ export default function Products() {
                 setCurrentIndex={setCurrentIndex}
                 scrollToIndex={scrollToIndex}
                 onItemPress={onItemPress}
+                scrollY={scrollY}
+          
               />
             )}
             scrollEventThrottle={16} // Smooth scroll event handling
@@ -279,6 +350,7 @@ export default function Products() {
 
         {/* Content Section */}
         <View className="flex-1 items-center px-4 ml-10"   >
+     
           {validEngines?.map((item, index) => {
            const animatedStyle = useAnimatedStyle(() => ({
             transform: [{ translateY: translateYValues[index].value },
@@ -286,7 +358,7 @@ export default function Products() {
           }));
             return (
               <Animated.View
-                className=" shadow-lg bg-white  w-full absolute"
+                className="    w-full absolute"
                 key={index}
                 onLayout={(event) => {
                   const { width, height } = event.nativeEvent.layout;
@@ -308,7 +380,7 @@ export default function Products() {
       elevation: 5, // Required for Android shadows
     }}
   > */}
-                  {/* <ClippedView width={cardSize.width} height={cardSize.height} backgroundColor="#fff" clipPathId="Cardclip" slug="variant9" /> */}
+                  <ClippedView width={cardSize.width} height={cardSize.height} backgroundColor="white" clipPathId="Cardclip" slug="variant9" />
                  {/* </View>  */}
                 <Image
                   style={{ height: 240, width: "100%" }}
@@ -318,7 +390,7 @@ export default function Products() {
                   alt=""
                 />
                 <View className="w-full py-5 px-6">
-                  <Text className="text-[2.2rem] font-bold pb-2font-objektiv">
+                  <Text className="text-[2.2rem]   pb-2 font-ObjektivMk1Bold">
                     {item?.engine}
                   </Text>
                   <Text className="text-[0.95rem] pb-5 font-objektiv">

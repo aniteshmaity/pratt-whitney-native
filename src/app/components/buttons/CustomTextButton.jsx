@@ -40,8 +40,8 @@ export default function CustomTextButton({
           activeOpacity={1}
         >
           <View className={`w-full h-full border border-[#A10000] bg-[#D91027] text-white font-bold text-lg flex justify-center items-center rounded-br rounded-tl z-0 shadow shadow-red-400`}>
-            <View className={`w-[18px] absolute ${num=== 0 ? "-right-[9px] border-b" : "-left-[9px] "} -top-[9px]  h-[18px] bg-white rotate-45  border-[#A10000] z-10`}/>
-            <View className={`w-[18px] absolute -bottom-[9px] ${num=== 0 ? "-left-[9px] border-t" : "-right-[9px] "} h-[18px] bg-white rotate-45  border-[#A10000] z-10`}/>
+            <View className={`w-[18px] absolute ${num=== 0 ? "-right-[9px] " : "-left-[9px] border-r"} -top-[9px]  h-[18px] bg-white rotate-45  border-[#A10000] z-10 `}/>
+            <View className={`w-[18px] absolute -bottom-[9px] ${num=== 0 ? "-left-[9px]" : "-right-[9px] border-l"} h-[18px] bg-white rotate-45  border-[#A10000] z-10`}/>
             <Text className={`text-white ${textClass}`}>
               {title}
             </Text>

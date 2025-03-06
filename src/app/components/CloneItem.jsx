@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { View, Text, Image,Button, TouchableOpacity } from "react-native";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
 import boxShadow from "../constants/boxShadow";
+import ClippedView from "./ClippedView";
 
-const CloneItem = ({ clone, index, activeId, isPrev, slide, redDot, activeRedDot,animationTrigger,currentInnerSlide,direction }) => {
+const CloneItem = ({ clone, index, activeId, isPrev, slide, redDot, activeRedDot,animationTrigger,currentInnerSlide,direction,bgColor }) => {
     // console.log("current",currentInnerSlide);
     // console.log("direction",direction);
     // console.log("animationtrigger",animationTrigger);
@@ -18,7 +19,7 @@ const CloneItem = ({ clone, index, activeId, isPrev, slide, redDot, activeRedDot
     scale: isPrev ? clone.scale : 1,
     translateX: clone.x,
     translateY:  clone.y,
-    height: isPrev ? 52 : 340,
+    height: isPrev ? 52 : 350,
     width: isPrev ? 140 : 430,
    }
    }else{
@@ -27,7 +28,7 @@ const CloneItem = ({ clone, index, activeId, isPrev, slide, redDot, activeRedDot
       scale: isPrev ? 1 : 0.9,
       translateX: clone.x,
       translateY: clone.y,
-      height: isPrev ? 340 : 52,
+      height: isPrev ? 350 : 52,
       width: isPrev ? 430 : 140,
      }
    }
@@ -69,7 +70,7 @@ if(direction === "next"){
         width.value = withTiming(140, { duration: 600 });
        }
   }
-}else{
+}else{  
   if(isPrev){
   if(clone.id === currentInnerSlide+1 ){
     // console.log("this is right---");
@@ -148,27 +149,30 @@ const animatedStyle = useAnimatedStyle(() => {
             animatedStyle,
         {
             position: "absolute",
-            height: activeId === clone.id ? "100%" : "52px",
-            maxWidth: activeId === clone.id ? "100%" : "140px",
+            // height: activeId === clone.id ? "100%" : "52px",
+            // maxWidth: activeId === clone.id ? "100%" : "140px",
             width: "100%",
             top: 0,
             [isPrev ? "right" : "left"]: 0,
             transform: `translate(${clone.x}, ${clone.y}) scale(${clone.scale})`,
             opacity: clone.opacity,
-            zIndex: isPrev ? -1 - index * 20 : -1,
-            ...boxShadow("#00000040", 0, 25, 0.25, 50, 10) 
+            zIndex: isPrev ? -1 - index * 20 : -1
+            // ...boxShadow("#00000040", 0, 25, 0.25, 50, 10) 
         }
         ]}
       >
-        <View className="card_clip_2 py-[10px] px-[10px] h-full w-full bg-white">
+
+      {/* <ClippedView width={activeId === clone.id ? "430" : "140"} height={activeId === clone.id ? "350" : "52"} backgroundColor={bgColor} clipPathId="slidecard22" slug="variant11" /> */}
+        <View className="card_clip_2 py-[10px] px-[10px] h-full w-full ">
           <View className="relative w-full flex flex-row justify-center gap-5">
             <Image
               style={{
                 width: activeId === clone.id ? 160 : 35,  // Change width dynamically
                 height: activeId === clone.id ? 100 : 36, // Change height dynamically
               }}
-              className={`${activeId === clone.id ? "w-[200px]" : "w-[100px]"} image h-full`}
+              // className={`${activeId === clone.id ? "w-[200px]" : "w-[100px]"} image `}
               source={clone?.image}
+              resizeMode="cover"
               alt="Slide Image"
             />
             <View style={{ flex: 1 }}>

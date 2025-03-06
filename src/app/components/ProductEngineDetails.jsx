@@ -5,6 +5,7 @@ import yearImages from "../constants/yearImages";
 import CloseButton from "./CloseButton ";
 import EngineComponent from "./EngineComponent";
 import ClippedView from "./ClippedView";
+import CustomCloseButton from "./buttons/CustomCloseButton";
 
 export default function ProductEngineDetails({handleEngineClose}) {
     const [size, setSize] = useState({ width: 0, height: 0 });
@@ -33,7 +34,7 @@ export default function ProductEngineDetails({handleEngineClose}) {
                   <Text className="text-[#E11C37] pr-2">INDIA</Text>
                   <Text className="text-black">INTERACTIVE</Text>
                 </View>
-                <CloseButton onPress={handleClose} />
+                <CustomCloseButton onPress={handleClose} />
               </View>
             </View>
             <View className="relative ">

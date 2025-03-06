@@ -1,16 +1,26 @@
-import { View, Text, Image, ImageBackground } from "react-native";
+import { View, Text, Image, ImageBackground, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import yearImages from "../../constants/yearImages";
 import CloseButton from "../../components/CloseButton ";
 import EngineComponent from "../../components/EngineComponent";
 import ClippedView from "../../components/ClippedView";
+import Svg, { Path } from "react-native-svg";
+import { useRouter } from "expo-router";
+import CustomCloseButton from "../../components/buttons/CustomCloseButton";
 
 export default function yearEngineDetails() {
+  const router = useRouter();
     const [size, setSize] = useState({ width: 0, height: 0 });
   const handleClose = () => {
     console.log("ok");
+    router.push('/hundred-years/yearCarousal')
   };
+  const onPressHome = () => {
+    router.push("home")
+  }
+  
+
   return (
     <SafeAreaView className="">
       <View className=" w-full h-screen overflow-hidden relative">
@@ -33,7 +43,7 @@ export default function yearEngineDetails() {
                   <Text className="text-[#E11C37] pr-2">INDIA</Text>
                   <Text className="text-black">INTERACTIVE</Text>
                 </View>
-                <CloseButton onPress={handleClose} />
+                 <CustomCloseButton onPress={handleClose} />
               </View>
             </View>
             <View className="relative ">
@@ -41,16 +51,33 @@ export default function yearEngineDetails() {
         const { width, height } = event.nativeEvent.layout;
         setSize({ width, height });
       }}>
-             
-                <View className=" text-white flex-1  justify-center items-center px-4 py-2 gap-1 ">
-                <ClippedView width={size.width / 2 + 0.5} height={size.height} backgroundColor="#918F8F" clipPathId="Engineclip6" slug="variant6" />
-                  <Text className="text-[1rem]">Previous</Text>
+             <TouchableOpacity  onPress={handleClose}>
+             <View className=" text-white flex-1 flex-row justify-center items-center px-4 py-2 gap-2">
+                <ClippedView width={size.width / 2 + 5} height={size.height} backgroundColor="#918F8F" clipPathId="Engineclip6" slug="variant6" />
+                <Image className="w-[10px] h-[10px]" source={yearImages.leftArrow} resizeMode="contain" />
+                  <Text className="text-[1rem] text-white">Previous</Text>
                 </View>
-
-                <View className=" text-white flex-1 justify-center items-center px-3 py-2 gap-2 ">
+             </TouchableOpacity>
+               
+<TouchableOpacity onPress={onPressHome}>
+  
+<View className=" text-white flex-1 flex-row justify-center items-center px-3 py-2 gap-2 " >
                 <ClippedView width={size.width / 2} height={size.height} backgroundColor="#CE2028" clipPathId="Engineclip7" slug="variant7" />
-                  <Text className="text-[1rem]">Home</Text>
+                <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="10"
+    height="10"
+    fill="none"
+    viewBox="0 0 14 16"
+  >
+    <Path
+      fill="#fff"
+      d="M0 16V5.5L7 .212 14 5.5V16H8.808V9.616H5.192V16z"
+    ></Path>
+  </Svg>
+                  <Text className="text-[1rem] text-white">Home</Text>
                 </View>
+</TouchableOpacity>
                
               </View>
 

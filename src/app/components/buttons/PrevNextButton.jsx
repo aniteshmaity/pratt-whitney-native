@@ -10,7 +10,7 @@ export default function PrevNextButton({ onPress, isColor, isIcon, isPolygon, is
 
     // Dynamic width & height
     const size = isWidth === "small" ? 16 : 27;
-    const arrowSize = isWidth === 'small' ? 10 : 16;
+    const arrowSize = isWidth === 'small' ? 10 : 12;
 
     // Define clipPath points based on isPolygon
     const clipPathPoints = isPolygon === 'first'

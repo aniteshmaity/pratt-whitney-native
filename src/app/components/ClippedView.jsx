@@ -11,7 +11,7 @@ const ClippedView = ({ width, height, backgroundColor, clipPathId, children,slug
           case "variant2": // New Polygon based on given points
             return `${width},0 ${width},0 ${width},${height} ${width * 0.2},${height} 0,${height * 0.8} 0,0`;
             case "variant3": // New Polygon based on given points
-            return `${width},0 ${width},${height} ${width * 0.9},${height} ${width * 0.2},${height} 0,${height * 0.6} 0,0`;
+            return `${width},0 ${width},${height} ${width},${height} ${width * 0.2},${height} 0,${height * 0.56} 0,0`;
             case "variant4": // New Polygon based on given points
             return `${width},0 ${width},0 ${width},${height * 0.8} ${width * 0.8},${height} 0,${height} 0,${height} 0,0`;
             case "variant5": // New Polygon based on given points
@@ -28,6 +28,8 @@ const ClippedView = ({ width, height, backgroundColor, clipPathId, children,slug
                   return `${width},0 ${width},${height} ${width * 0.9},${height} ${width * 0.2},${height} 0,${height * 0.6} 0,0`;
                   case "variant11":
                     return `${width * 0.5},0, ${width},0, ${width},${height * 0.8}, ${width * 0.83},${height}, ${width * 0.53},${height}, 0,${height}, 0,0`;
+                    case "map1":
+                      return `${width * 0.5},0 ${width},0 ${width},${height * 0.57} ${width * 0.79},${height} ${width * 0.53},${height} 0,${height} 0,0`;
           default:
             return `${width},0 ${width},0 ${width},${height / 2} ${width * 0.9},${height} 0,${height} 0,0`; 
         }

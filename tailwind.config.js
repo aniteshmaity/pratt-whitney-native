@@ -13,6 +13,11 @@ module.exports = {
         frutigerBlack :['Frutige-Black','sans-serif'],
         ObjektivSBd :['ObjektivVF_SBd','sans-serif'],
         ObjektivMd :['ObjektivVF_Md','sans-serif'],
+        ObjektivMk1Bold :['ObjektivMk1_Bold','sans-serif'],
+        ObjektivMk2Black :['ObjektivMk2_Black','sans-serif'],
+        ObjektivMk2SemiBold :['ObjektivMk2_SemiBold','sans-serif'],
+        ObjektivMk1Medium :['ObjektivMk1_Medium','sans-serif'],
+      
       },
     },
   },

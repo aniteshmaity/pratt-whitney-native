@@ -60,7 +60,7 @@ const homeCardData = [
         "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
       imageUrl:
       homeImages.new1,
-      link: "/innovations",
+      link: "mapPage",
     },
     
   ];

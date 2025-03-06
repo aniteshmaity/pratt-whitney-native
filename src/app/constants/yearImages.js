@@ -30,8 +30,9 @@ import gtfImg from '../../assets/images/project/gtf-family.png';
 import v2500_1 from '../../assets/images/project/v2500-1.png';
 import v2500_2 from '../../assets/images/project/v2500-2.png';
 import v2500_3 from '../../assets/images/project/machine-1.png';
+import Fan1 from '../../assets/images/project/fan-1.png';
 
 
 
 
-export default { hundredLogo, closeIcon, pwLogo, whiteArrow,firstImg,secondImg,thirdImg,leftArrow,rightArrow,moveCity,bracket,aero1,aero2 ,aero3,aero4,logo100,machine1,machine2,layer1,layer2,layer3,pwLogoWhite,exploreBgImage,galleryText,gtf,tringleArrow,blueEngine,rotateImg,gtfImg,v2500_1,v2500_2,v2500_3};
+export default { hundredLogo, closeIcon, pwLogo, whiteArrow,firstImg,secondImg,thirdImg,leftArrow,rightArrow,moveCity,bracket,aero1,aero2 ,aero3,aero4,logo100,machine1,machine2,layer1,layer2,layer3,pwLogoWhite,exploreBgImage,galleryText,gtf,tringleArrow,blueEngine,rotateImg,gtfImg,v2500_1,v2500_2,v2500_3,Fan1};

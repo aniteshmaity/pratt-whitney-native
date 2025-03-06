@@ -1,9 +1,9 @@
 import {Dimensions, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {SafeAreaView} from "react-native-safe-area-context";
 import CustomCloseButton from "../components/buttons/CustomCloseButton";
 import yearImages from "../constants/yearImages";
-import Animated, { useSharedValue, useAnimatedStyle, withTiming, useAnimatedScrollHandler, interpolate } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, useAnimatedScrollHandler, interpolate, runOnJS } from 'react-native-reanimated';
 import homeImages from '../constants/homeImages';
 import homeCardData from '../constants/homeCardData';
 import { useRouter } from 'expo-router';
@@ -15,11 +15,12 @@ import ClippedView from '../components/ClippedView';
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const CARD_WIDTH = screenWidth / 3; // Width of each card
 console.log("scenwidht",screenWidth);
-
+const customheight = (screenHeight/2 - 175) - 80
+console.log("cusheight",customheight);
 const VISIBLE_CARDS = 5; // Number of visible cards
 const LOOP_DATA = homeCardData;
 const loopData = [...LOOP_DATA, ...LOOP_DATA, ...LOOP_DATA]; 
-const Card = ({ item, index, scrollX }) => {
+const Card = ({ item, index, scrollX,centeredIndex  }) => {
   // console.log("item,i",item);
  const router = useRouter();
 
@@ -44,17 +45,24 @@ const Card = ({ item, index, scrollX }) => {
       [-50, -50, 0, -50, -50], // Move scaled-down cards up by -50px
       'clamp'
     );
+    const opacity = interpolate(
+      scrollX.value,
+      inputRange,
+      [0.6, 0.6, 1, 0.6, 0.6], // Middle card full opacity (1), others at 0.3
+      'clamp'
+    );
     return {
       transform: [{ scale }, { translateY }],
+      opacity
     };
   });
 
   return (
     <Animated.View
     style={[{width:CARD_WIDTH,...boxShadow("#00000040", 0, 25, 0.25, 50, 10)},animatedStyle]}
-    className=" h-[350px] "
+    className=" h-[350px]"
   >
-    <ClippedView width={430} height={350} backgroundColor="white" clipPathId="slidecardFirst1" slug="variant11" />
+    <ClippedView width={CARD_WIDTH} height={350} backgroundColor="white" clipPathId="slidecardFirst1" slug="variant11" />
       {/* Red side bar */}
       <View className="w-[16px] h-[175px] absolute bg-[#E11C37] top-0 -left-[16px]" />
 
@@ -71,10 +79,10 @@ const Card = ({ item, index, scrollX }) => {
 
           {/* Content section */}
           <View className="w-full p-5">
-            <Text className="pb-2">
-              <Text className="text-black pr-2 text-[1.6rem] font-objectiveBlk">{item.title.startName}</Text>
-              <Text className="text-[#E11C37] text-[1.6rem] font-objectiveBlk">{item.title.endName}</Text>
-            </Text>
+            <View className="pb-2 flex flex-row ">
+              <Text className="text-black pr-2 text-[1.6rem] font-ObjektivMk2Black">{item.title.startName}</Text>
+              <Text className="text-[#E11C37] text-[1.6rem] font-ObjektivMk2Black ">{item.title.endName}</Text>
+            </View>
             <Text className=" text-[0.85rem] font-objektiv pb-5">{item.description}</Text>
   
               
@@ -89,18 +97,23 @@ const Card = ({ item, index, scrollX }) => {
             
           </View>
    
-        <View className="absolute bottom-[0] left-1/2 -translate-x-1/2 translate-y-[100px]"><RedDotSvg /></View>
+          {centeredIndex !== index && (
+        <View className="absolute bottom-[0] left-1/2 -translate-x-1/2 translate-y-[70px]">
+          <RedDotSvg width={33} height={34} />
+        </View>
+      )}
   </Animated.View>
 
   );
 };
-
+  
 
 export default function Home() {
   const translateX = useSharedValue(screenWidth / 2); // Start from the center of the screen (X-axis)
   const translateY = useSharedValue(screenHeight / 3); // Start from the center of the screen (Y-axis)
   const scrollX = useSharedValue(0); // Track scroll position
   const flatListRef = useRef(null);
+  const [centeredIndex, setCenteredIndex] = useState(LOOP_DATA.length); 
   const handleClose = () => {
     console.log("ok");
   }
@@ -123,23 +136,20 @@ export default function Home() {
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
       scrollX.value = event.contentOffset.x;
+      const index = Math.round(event.contentOffset.x / CARD_WIDTH);
+      runOnJS(setCenteredIndex)(index);
     },
-    // onEndDrag: (event) => {
-    //   const offset = event.contentOffset.x;
-    //   const index = Math.round(offset / (CARD_WIDTH));
-    //   flatListRef.current?.scrollToIndex({ index, animated: true });
-    // },
   });
 
  
 
   return (
-    <SafeAreaView className="w-screen h-screen bg-[#f5f5f5]">
+    <SafeAreaView className="w-screen h-screen bg-white">
       <View className="h-[80px] flex-row justify-between items-center w-[90%] m-auto  border-b border-black/5">
         <Animated.Image
           source={yearImages.pwLogo}
           alt="homeLogo"
-          className="max-w-[180px] max-h-[50px]"
+          className="max-w-[180px] max-h-[50px] relative z-40"
           resizeMode="contain"
           style={imageAnimatedStyle}
         />
@@ -156,10 +166,12 @@ export default function Home() {
         </View>
       </View>
 
-      <View className="flex-1 justify-center items-center mt-[100px]">
-<View className="absolute top-1/2 -translate-y-[20px] h-[1px] w-full bg-gray-900" />
+      <View className="flex-1 items-start  bg-[#f5f5f5]">
 
-      <Animated.FlatList
+
+    <View className="h-[350px]  relative " style={{marginTop:customheight}}>
+    <View className="absolute top-1/2 translate-y-[70px] h-[2px] w-full bg-[#c1c0c066] "  />
+    <Animated.FlatList
         ref={flatListRef}
         data={loopData}
         keyExtractor={(item, index) => `${item.id}-${index}`} // Unique key for duplicated items
@@ -171,7 +183,7 @@ export default function Home() {
         contentContainerStyle={{ paddingHorizontal: (screenWidth - CARD_WIDTH) / 2 }}// Center the first card
       
         renderItem={({ item, index }) => (
-          <Card item={item} index={index} scrollX={scrollX} />
+          <Card item={item} index={index} scrollX={scrollX} centeredIndex={centeredIndex} />
         )}
         initialScrollIndex={LOOP_DATA.length} // Start in the middle for looping effect
         getItemLayout={(data, index) => ({
@@ -191,6 +203,7 @@ export default function Home() {
           }
         }}
       />
+    </View>
     </View>
     <View className="w-screen absolute bottom-0 left-0">
       <Image source={homeImages.Terrain} className="w-full h-[190px]" alt="terrain" resizeMode='cover' />

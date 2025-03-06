@@ -347,7 +347,7 @@ const handleBackYears = (curr) => {
      
           className=" flex-1 slider-item w-full h-full "
         >
-          <View className="relative w-[430px] m-auto" style={{   ...boxShadow("#00000040", 0, 25, 0.25, 50, 10)}}>
+          <View className="relative w-[430px] m-auto ">
           {/* style={{   ...boxShadow("#00000040", 0, 25, 0.25, 50, 10)}}   */}
               
            
@@ -358,7 +358,7 @@ const handleBackYears = (curr) => {
 
               <Animated.View className="main_box2 card_clip py-[30px] pl-[20px] pr-[30px] h-full bg-transparent" style={[ mainSlideStyle ]}>
                 <View className="absolute top-0 right-0">
-                <CustomCloseButton onPress={()=> handleBackYears(currentSlide)} type={2} />
+                <CustomCloseButton onPress={()=> handleBackYears(currentSlide)} type={2} bgOpacity="true" />
                 </View>
             
                 <View className="relative w-full flex flex-row items-center">
@@ -379,7 +379,7 @@ const handleBackYears = (curr) => {
                           : slide?.year}
                       </Text>
               
-                    <Text className=" text-[1.15rem] leading-tight font-objectiveBlk">
+                    <Text className=" text-[1.15rem] leading-tight font-ObjektivMk2Black">
                       {innerSlideStatus
                         ? slide?.innerSlidesData[currentInnerSlide]?.title
                         : slide.title}
@@ -414,18 +414,12 @@ const handleBackYears = (curr) => {
                                         title={"Gallery"}
                                         bg="black"
                                         textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "} />
-              
-                  {/* <TouchableOpacity onPress={goToYearExplore} className="bg-[#393637] clipped-button-2 flex gap-2 justify-center items-center w-[100px]  px-4 p-2 text-[0.65rem] tracking-[0.6px] hover:bg-neutral-500 transition-all">
-                 <Text className="text-white text-[0.7rem]">   Gallery</Text>
-                  
-                  </TouchableOpacity> */}
+
                
                   <MyTextBtn onPress={goToYearExplore}  className={"w-[96px] h-[26px]  ml-4"}
                                         title={"Explore"}
                                         textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "} />
-                    {/* <TouchableOpacity onPress={goToYearExplore} className="bg-[#D91027] clipped-button-2 flex justify-center items-center gap-2 w-[100px]  px-4 p-2 ml-4 text-[0.8rem] tracking-[0.6px] hover:bg-red-900 transition-all">
-                  <Text className="text-white text-[0.7rem]">    Explore</Text>
-                    </TouchableOpacity> */}
+
                 
                 </View>
               </Animated.View>
@@ -442,6 +436,7 @@ const handleBackYears = (curr) => {
       animationTrigger={animationTrigger}
       direction={direction}
 currentInnerSlide={currentInnerSlide ?? 0} 
+bgColor={index % 2 === 0 ? "white" : "#fafafa"}
     //   redDot={redDot}
     //   activeRedDot={activeRedDot}
     />
@@ -459,6 +454,7 @@ currentInnerSlide={currentInnerSlide ?? 0}
       animationTrigger={animationTrigger}
       currentInnerSlide={currentInnerSlide ?? 0} 
       direction={direction}
+      bgColor={index % 2 === 0 ? "#fafafa" : "white"}
     //   redDot={redDot}
     //   activeRedDot={activeRedDot}
     />

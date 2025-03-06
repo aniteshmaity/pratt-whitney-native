@@ -81,7 +81,7 @@ export default function ProductCard({handleExploreClick}) {
                 </View>
               </TouchableOpacity>
             </Animated.View>
-            <Text className="text-[#D91027] font-[900] text-[1rem] bottom-0">
+            <Text className="text-[#D91027] font-ObjektivMk2Black text-[1rem] bottom-0">
               {index === activeEngineIndex ? null : engine.title}
             </Text>
           </View>
@@ -93,8 +93,8 @@ export default function ProductCard({handleExploreClick}) {
               className="bg-white p-3 rounded-md"
             >
               <View className="flex gap-[8px]">
-                <Text className="text-[1rem] font-[900]">{engine.title}</Text>
-                <Text className="text-[8px] font-[600] max-w-[117px]">{engine.description}</Text>
+                <Text className="text-[1rem] font-ObjektivMk2Black">{engine.title}</Text>
+                <Text className="text-[8px]  max-w-[117px] font-frutigerReg">{engine.description}</Text>
                 <TouchableOpacity onPress={handleExploreClick}>
                   
                   <ClippedView width={98} height={20} backgroundColor="#D91027" clipPathId="EnginePclip1" slug="variant8"  />

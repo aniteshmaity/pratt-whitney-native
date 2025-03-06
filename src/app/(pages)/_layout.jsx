@@ -1,13 +1,21 @@
-import {Stack} from "expo-router";
-import React from 'react'
+import { Stack } from "expo-router";
+import React from "react";
+import { StatusBar, useColorScheme } from "react-native";
 
-export default function HomeLayout()
-{
+export default function HomeLayout() {
+  // const theme = useColorScheme(); // Detect system dark/light mode
+
   return (
-    <Stack>
-      <Stack.Screen name="home" options={{headerShown: false}}/>
-      <Stack.Screen name="hundred-years" options={{headerShown: false}}/>
-      <Stack.Screen name="products" options={{headerShown: false}}/>
-    </Stack>
-  )
+    <>
+      {/* Hide status bar only on fullscreen screens */}
+      <StatusBar hidden={true}  />
+      
+      <Stack>
+        <Stack.Screen name="home" options={{ headerShown: false }} />
+        <Stack.Screen name="mapPage" options={{ headerShown: false, presentation: "modal" }} />
+        <Stack.Screen name="hundred-years" options={{ headerShown: false }} />
+        <Stack.Screen name="products" options={{ headerShown: false }} />
+      </Stack>
+    </>
+  );
 }

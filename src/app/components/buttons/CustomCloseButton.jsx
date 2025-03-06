@@ -1,12 +1,14 @@
 import React from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { Image, TouchableOpacity, View } from 'react-native'
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import { Path, Svg } from "react-native-svg";
 // import {useStore} from "zustand/react";
 import CrossSvg from "../CrossSvg";
+import yearImages from '../../constants/yearImages';
+import homeImages from '../../constants/homeImages';
 
-export default function CustomCloseButton({ onPress, type }) {
+export default function CustomCloseButton({ onPress, type,bgOpacity }) {
 
   const scaleDownAnimation = useSharedValue(1);
 
@@ -45,7 +47,17 @@ export default function CustomCloseButton({ onPress, type }) {
                 fill="none"
                 viewBox="0 0 44 32"
               >
-                <Path fill="#918F8F" fillOpacity="0.2" d="M44 0H0v23l9.5 9H44z"></Path>
+                <Path fill="#918F8F" fillOpacity={bgOpacity==="true" ? "0.2" : "1"} d="M44 0H0v23l9.5 9H44z"></Path>
+              </Svg>
+            ) : type === 3 ? (
+              <Svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="20"
+                fill="none"
+                viewBox="0 0 44 32"
+              >
+                <Path fill="#918F8F" fillOpacity="1" d="M44 0H0v23l9.5 9H44z"></Path>
               </Svg>
             ) : (
               <Svg
@@ -62,7 +74,7 @@ export default function CustomCloseButton({ onPress, type }) {
               </Svg>
             )}
             <View className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-              <CrossSvg />
+             {type === 3 ? <Image source={homeImages.leftCroppedLogo} className="h-[10px] w-[10px]" /> : <CrossSvg />}
             </View>
           </View>
         </TouchableOpacity>

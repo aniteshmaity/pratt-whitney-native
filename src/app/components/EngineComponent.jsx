@@ -31,6 +31,7 @@ export default function EngineComponent({ type, onEngineClose }) {
   const [isScrollableOverflowing, setIsScrollableOverflowing] = useState(false);
   const [scrollParentHeight1, setScrollParentHeight1] = useState(0);
   const [scrollParentHeight2, setScrollParentHeight2] = useState(0);
+  const [contentHeight, setContentHeight] = useState(0);
   const videoRef = useRef(null);
   const rotation = useSharedValue(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -40,10 +41,19 @@ export default function EngineComponent({ type, onEngineClose }) {
 
   const scrollY1 = useSharedValue(0);
   const scrollY2 = useSharedValue(0);
+  const animatedHeight = useSharedValue(40);
   console.log("scrollparent-1".scrollParentHeight1);
   console.log("scrollparent-2".scrollParentHeight1);
   const toggleDescription = (index) => {
-    setExpandedIndex(expandedIndex === index ? null : index);
+    if (expandedIndex === index) {
+      // Collapse
+      animatedHeight.value = withTiming(40, { duration: 300 });
+      setExpandedIndex(null);
+    } else {
+      // Expand
+      setExpandedIndex(index);
+      animatedHeight.value = withTiming(140, { duration: 300 });
+    }
   };
   console.log("activetab", activeTab);
   // useEffect(() => {
@@ -178,12 +188,13 @@ export default function EngineComponent({ type, onEngineClose }) {
   // ✅ Check if content overflows for second ScrollView
   const handleContentSizeChange2 = (contentWidth, contentHeight) => {
     setIsOverflowing(contentHeight > scrollParentHeight2);
+    setContentHeight(contentHeight);
   };
   const redAnimatedStyle1 = useAnimatedStyle(() => ({
     top: interpolate(
       scrollY1.value,
       [0, 50], // Adjust 500 based on the actual scrollable height
-      [0, 40], // Moves within the height of the indicator track
+      [0, 70], // Moves within the height of the indicator track
       "clamp"
     ),
 
@@ -191,7 +202,12 @@ export default function EngineComponent({ type, onEngineClose }) {
   }));
   const redAnimatedStyle2 = useAnimatedStyle(() => {
     return {
-      top: interpolate(scrollY2.value, [0, 500], [0, scrollParentHeight2 * 0.8], "clamp"),
+      top: interpolate(
+        scrollY2.value,
+        [0, contentHeight - scrollParentHeight2], // Use actual scroll range
+        [0, (scrollParentHeight2 + 8) * 0.7], // Adjust scroll track height (70% of parent)
+        "clamp"
+      ),
     };
   });
 
@@ -292,7 +308,7 @@ export default function EngineComponent({ type, onEngineClose }) {
           //     "polygon(100% 0%, 100% 100%, 90% 100%, 20% 100%, 0% 56%, 0% 0%)",
           // }}
           >
-            <ClippedView width={Math.max(size.width / 2 - 4, 0)} height={type === "product" ? Math.max(size.height * 0.5 - 2, 0) : Math.max(size.height * 0.46 - 2, 0)} backgroundColor="#393636" clipPathId="Engineclip1" slug={type === "product" ? "variant10" : "variant3"} />
+            <ClippedView width={Math.max(size.width / 2 - 4, 0)} height={type === "product" ? Math.max(size.height * 0.5 - 2, 0) : Math.max(size.height * 0.46 - 2, 0)} backgroundColor="#393636" clipPathId={type === "product" ? "Engineclip2" : "Engineclip3"} slug={type === "product" ? "variant10" : "variant3"} />
             <View>
               <View className="w-[90%] m-auto">
                 <Image
@@ -316,9 +332,10 @@ export default function EngineComponent({ type, onEngineClose }) {
       <View className=" overflow-y-hidden relative flex-1 h-full"
       >
         <View className=" h-[54%] bg-slate-400 flex  justify-around">
-          <TouchableOpacity className="w-[40px] absolute z-40 right-[8px] top-[1px]">
-            <View><CustomCloseButton onPress={onEngineClose} /></View>
-          </TouchableOpacity>
+          {type === "product" && (  <View className="absolute top-0 right-0 z-50">
+                          <CustomCloseButton onPress={onEngineClose} type={2} bgOpacity="false" />
+                          </View>)}
+        
           <ClippedView width={Math.max(size.width / 2 - 1, 0)} height={size.height} backgroundColor="white" clipPathId="Engineclip2" slug="variant4" />
 
 
@@ -331,11 +348,11 @@ export default function EngineComponent({ type, onEngineClose }) {
             >
 
               <ClippedView width={400} height={87} backgroundColor="#393637" clipPathId="clip2" />
-              <Text className="text-[2.2rem] font-[900] leading-tight text-white">
+              <Text className="text-[2.2rem]  leading-tight text-white font-ObjektivMk2Black">
 
                 {type === "product" ? "GTF Engine" : "TF33 Engine"}
               </Text>
-              <Text className="text-[#CE2028] text-[0.8rem] font-medium pt-1">
+              <Text className="text-[#CE2028] text-[0.8rem] font-ObjektivMk1Bold pt-1">
                 A Legend Engine For a legedary Bombar
               </Text>
             </View>
@@ -351,7 +368,7 @@ export default function EngineComponent({ type, onEngineClose }) {
                 />
               </View>
             </View>
-            <Animated.ScrollView onContentSizeChange={handleContentSizeChange1}
+            <Animated.ScrollView showsVerticalScrollIndicator={false} onContentSizeChange={handleContentSizeChange1}
               onScroll={scrollHandler1} ref={scrollableRef} scrollEventThrottle={16} showsHorizontalScrollIndicator={false}>
               <Text
 
@@ -373,7 +390,7 @@ export default function EngineComponent({ type, onEngineClose }) {
             </Animated.ScrollView>
 
             {isScrollableOverflowing && (
-              <View className="bg-[#D9D9D9] w-1.5  right-0 top-0 h-[40px] translate-x-1/2  absolute">
+              <View className="bg-[#D9D9D9] w-[3px]  right-0 top-0 h-[70px] translate-x-1/2  absolute">
                 <Animated.View
                   ref={redDot2Ref}
                   style={[redAnimatedStyle1]}
@@ -385,7 +402,7 @@ export default function EngineComponent({ type, onEngineClose }) {
             )}
           </View>
           <View className="flex gap-[40px] flex-row ml-5  items-center">
-            <Text className="text-[#CE2028] text-[12px] font-[800]">Select Variat</Text>
+            <Text className="text-[#CE2028] text-[12px] font-ObjektivMk1Bold">Select Variat</Text>
 
             {Varients.map((item, index) => {
               return (
@@ -409,9 +426,9 @@ export default function EngineComponent({ type, onEngineClose }) {
           </View>
         </View>
 
-        <View className=" relative   h-[45%] " onLayout={onParentLayout2}>
+        <View className=" relative   h-[42%] " onLayout={onParentLayout2}>
           {type === "100year" ? (<View className="w-full h-[24px]  absolute top-[1px] " style={{ ...boxShadow("#514b4b33", -1, 4, 0.6, 5, 1) }} />) : null}
-          <View className="ml-5  overflow-hidden w-[86%] h-full">
+          <View className="ml-5 relative overflow-hidden w-[86%] h-full">
             {/* Tabs Navigation */}
             <View
               className="flex flex-row justify-between  w-[86%]"
@@ -432,11 +449,13 @@ export default function EngineComponent({ type, onEngineClose }) {
             </View>
 
             {/* Tabs Content */}
-            <Animated.ScrollView
+            <View className="relative w-full " style={{height:scrollParentHeight2-20+8}}>
+          <Animated.ScrollView
+             showsVerticalScrollIndicator={false}
               ref={contentRef}
               onContentSizeChange={handleContentSizeChange2}
               onScroll={scrollHandler2} scrollEventThrottle={16} showsHorizontalScrollIndicator={false}
-              className="relative mt-1 h-[100%] w-[89%] no-scrollbar pl-[20px] "
+              className="  h-[100%] w-[89%] no-scrollbar mt-2"
             >
               {tabsData[activeTab]?.content?.map((item, idx) =>
                 typeof item === "string" ? (
@@ -446,25 +465,27 @@ export default function EngineComponent({ type, onEngineClose }) {
                 ) : (
                   <Animated.View
                     key={idx}
-                    style={[{borderBottomColor: "#d9d9d9e9", borderBottomWidth: 1},animatedStyle]}
+                    style={[idx !== tabsData.length && { borderBottomColor: "#00000014", borderBottomWidth: 1 },animatedStyle]}
                     className={`flex  ${tabsData[activeTab].title === "Platforms"
-                        ? "flex-row "
+                        ? "flex-row pl-[10px]"
                         : " flex-row "
-                      }  gap-[30px] py-2`}
+                      }  gap-[20px] py-4`}
                   >
+                    <View className="flex-1 bg-white">
                     <View className="bg-white  rounded-full   w-[60px] h-[60px] p-1" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
-                      <View className="w-full h-full overflow-hidden  rounded-full">
+                      <View className="w-full h-full overflow-hidden  rounded-full ">
                         <Image
-                          source={yearImages.gtf}
+                          source={item.fanImage}
                           className="w-full h-full"
 
                           resizeMode="cover"
                         />
                       </View>
                     </View>
+                    </View>
                     {tabsData[activeTab].title !== "Platforms" ? (
-                      <View>
-                        <Text className="font-bold text-[1rem]">
+                      <View className="flex-[2] bg-white">
+                        <Text className="font-objektiv text-[1rem]">
                           {item.heading}
                         </Text>
                         <View>
@@ -480,8 +501,8 @@ export default function EngineComponent({ type, onEngineClose }) {
                       null
                     )}
 
-                    <View>
-                      <Text className="text-[#CE2028] text-[1.3rem] font-[900] font-objektiv">
+                    <View className="flex-1 bg-white">
+                      <Text className="text-[#CE2028] text-[1.3rem] font-ObjektivMk1Bold">
                         {item.bypassRatio}
                       </Text>
                       <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-objektiv">
@@ -489,7 +510,7 @@ export default function EngineComponent({ type, onEngineClose }) {
                       </Text>
                     </View>
                     {tabsData[activeTab].title !== "Platforms" ? (
-                      <View>
+                      <View className="bg-white flex-1">
                         <Text className="text-[#CE2028] font-[800] text-[1.3rem] font-objektiv">
                           {item.fanDiameter}
                         </Text>
@@ -501,13 +522,14 @@ export default function EngineComponent({ type, onEngineClose }) {
                       null
                     )}
                     {tabsData[activeTab]?.title === "Platforms" ? (
-                      <View className="flex-1">
-                        <Text className="text-[0.8rem]">
+                      <View className="flex-[3]">
+                       <Animated.View className="" style={{ height: expandedIndex === idx ? animatedHeight : 40, overflow: 'hidden' }}>
+                       <Text className="text-[0.8rem] font-objektiv">
                           {expandedIndex === idx
                             ? item.description
                             : `${item.description.slice(0, 50)}...`}{" "}
                           <Text
-                            className="text-[#CE2028] text-[0.7rem] font-medium cursor-pointer block"
+                            className="text-[#CE2028] text-[0.7rem] font-frutigerBold cursor-pointer block"
                             onPress={() => toggleDescription(idx)}
                           >
                             {expandedIndex === idx
@@ -515,6 +537,7 @@ export default function EngineComponent({ type, onEngineClose }) {
                               : "Tap for more"}
                           </Text>
                         </Text>
+                       </Animated.View>
                       </View>
                     ) : (
                       null
@@ -525,7 +548,7 @@ export default function EngineComponent({ type, onEngineClose }) {
               {/* Custom Scrollbar Red Dot */}
             </Animated.ScrollView>
             {isOverflowing && (
-              <View className="bg-[#D9D9D9] w-1.5 right-[100px] top-[50px] h-[30%] translate-x-1/2 absolute">
+              <View className="bg-[#D9D9D9] w-[3px] right-[20px] top-[0px] h-[80%]  absolute">
                 <Animated.View
                   ref={redDotRef}
                   style={[redAnimatedStyle2]}
@@ -535,6 +558,7 @@ export default function EngineComponent({ type, onEngineClose }) {
                 </Animated.View>
               </View>
             )}
+          </View>
           </View>
         </View>
       </View>

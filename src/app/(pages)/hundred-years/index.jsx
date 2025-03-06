@@ -323,7 +323,7 @@ if(type === "prev"){
       </Animated.View>
     </View>
           <View className="p-4 ">
-          <Text className="text-black text-[1rem] font-[800] font-objektiv">We are Pratt & Whitney. We are Dependable Engines.</Text>
+          <Text className="text-black text-[1rem] font-ObjektivMk1Bold">We are Pratt & Whitney. We are Dependable Engines.</Text>
           </View>
 
           {/* <TouchableOpacity
@@ -430,7 +430,7 @@ if(type === "prev"){
             ]}>
               <View className="absolute inset-0 z-[100]">
                 <Animated.View className={`para para${index} z-[100] absolute w-[153px]  opacity-100 bottom-32 text-white left-3`} style={[animatedStyle]}>
-                  <Text className="font-objective text-white text-[1.3rem] font-[800] pb-3">
+                  <Text className=" text-white text-[1.3rem]  pb-3 font-ObjektivMk1Bold">
                     {paragraphShows.heading}
                   </Text>
                   <Text className="font-frutigerReg text-[0.8rem] text-white leading-[21px]">

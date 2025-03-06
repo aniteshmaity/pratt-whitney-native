@@ -11,7 +11,7 @@ import boxShadow from "../../constants/boxShadow";
 
 // import React, { useState, useRef, useCallback } from 'react';
 
-import Animated, { withSpring, useAnimatedStyle, useSharedValue,withTiming, Easing } from 'react-native-reanimated';
+import Animated, { withSpring, useAnimatedStyle, useSharedValue,withTiming, Easing, useAnimatedScrollHandler, interpolate, runOnJS } from 'react-native-reanimated';
 import YearTimelineCarousel from "../../components/YearTimelineCarousel";
 import ClippedView from "../../components/ClippedView";
 import CustomCloseButton from "../../components/buttons/CustomCloseButton";
@@ -19,10 +19,23 @@ import MyTextBtn from "../../components/buttons/MyTextBtn";
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = width / 5; // Calculate width for 5 visible cards
 
+const years = [
+  null,
+  null,
+  { year: "1920s", name: "1920", description: "Pioneering propulsion" },
+  { year: "1930s", name: "1930", description: "Advancing aviation" },
+  { year: "1940s", name: "1940", description: "Defending freedom" },
+  { year: "1950s", name: "1950", description: "Ushering in the jet age" },
+  { year: "1960s", name: "1960", description: "Higher, faster, further" },
+  { year: "1970s", name: "1970", description: "Powerful, agile, dependable" },
+  { year: "1980s", name: "1980", description: "Innovating advancements" },
+  { year: "1990s", name: "1990", description: "Lorem Ipsum" },
+  null,
+  null
+];
 
 
-
-const Card = ({ index, middleIndex ,item, currentIndex,handleStateUp}) => {
+const Card = ({ index, middleIndex ,item, currentIndex,handleStateUp,scrollX}) => {
     const router = useRouter();
   const fadeAnim = useSharedValue(0); // Shared value for opacity
 const translateY = useSharedValue(10); // Shared value for slide effect
@@ -44,39 +57,42 @@ const handleExplore = () => {
 });
   // console.log("itemss", item);
 
-  const scale = useSharedValue(0.5); // Initialize scale to 0.5
-  
-  // let translateValue = 0;
+  if (!item) {
+    return <View style={{ width: ITEM_WIDTH, height: ITEM_WIDTH }} />;
+  }
+  const validIndex = years.map((item, index) => (item ? index : null)).filter(i => i !== null).indexOf(index);
 
-  // if (middleIndex === index) {
-  //   translateValue = 0; // Active card
-  // }
-  // else if (middleIndex +1 === index || middleIndex -1 === index) {
-  //   translateValue = 0;
-  // } else if (middleIndex > index) {
-  //   translateValue = 50 * index; // Left card
-  // } else if (middleIndex < index) {
-  //   translateValue = -50 * index; // Right card
-  // }
+ 
   // Update the scale of the card based on whether it's the middle card
   const animatedStyle = useAnimatedStyle(() => {
-    scale.value = withSpring(index === middleIndex ? 1 : 0.5, { damping: 20, stiffness: 100 });
+    const scale = interpolate(
+      scrollX.value,
+      [
+        (validIndex - 2) * ITEM_WIDTH, // Far left
+        (validIndex - 1) * ITEM_WIDTH, // Left
+        validIndex * ITEM_WIDTH,       // Center
+        (validIndex + 1) * ITEM_WIDTH, // Right
+        (validIndex + 2) * ITEM_WIDTH  // Far right
+      ],
+      [0.5, 0.5, 1, 0.5, 0.5], // Scaling effect
+      "clamp"
+    );
+
     return {
-      transform: [{ scale: scale.value }],
+      transform: [{ scale }],
     };
   });
 
-  if (item === null) {
-    // Render an empty placeholder for null items
-    return <View style={{ width: ITEM_WIDTH }} />;
-  }
+  
+
+
 
   return (
     <Animated.View
       style={[{ width: ITEM_WIDTH, height:ITEM_WIDTH }, animatedStyle]}
       className={`item-${index} ${ middleIndex === index ? 'active' : ''} ${middleIndex > index  ? 'left' : 'right'}`}
     >
-      <View  style={{  ...boxShadow("#6b6464", 3, 7, 0.2, 10, 10), width: ITEM_WIDTH, height:ITEM_WIDTH }} className="rounded-full bg-white overflow-hidden   z-40 p-[13px] transition-transform duration-300 ease-in-out relative">
+      <View  style={{  ...boxShadow("#6b6464", 3, 7, 0.2, 10, 10), width: ITEM_WIDTH, height:ITEM_WIDTH }} className="rounded-full bg-white overflow-hidden   z-40 p-[15px] transition-transform duration-300 ease-in-out relative">
       { middleIndex === index && (<View className="absolute bg-[#E11C37] -left-[26px]  top-[4px] -z-10"      style={{ width: ITEM_WIDTH/3, height:ITEM_WIDTH/2 }} />)}
 <View style={{ ...boxShadow("#b9b7b7", 1, 0, 0.3, 11, 8)}} className={`flex  justify-center items-center rounded-full w-full h-full transition-all duration-300  ease-in-out bg-white ${
                     middleIndex === index
@@ -86,7 +102,7 @@ const handleExplore = () => {
                     <Text className="text-[2.6rem] text-[#D91027] font-objectiveBlk">
                     {item.year}
                   </Text>
-                  <Text className="text-[0.9rem] p-2 font-bold text-center font-objektiv">
+                  <Text className="text-[1.2rem] p-2  text-center font-ObjektivMk1Bold">
                     {item.description}
                   </Text>
                   </View>
@@ -126,48 +142,92 @@ const router = useRouter();
     const [direction, setDirection] = useState("next"); 
   const flatListRef = useRef(null);
   const airplaneRefs = useRef([]);
+  const scrollX = useSharedValue(0.5); 
   const animatedX = useSharedValue(0);
 console.log("currentindex",currentIndex);
+console.log("imageposition",imagePosition);
+console.log("direction",direction);
+// At the top of your component
+const [savedPosition, setSavedPosition] = useState(null);
+const isRestoringPosition = useRef(false); 
+// Before switching to YearTimelineCarousel
+const handleStateUp = () => {
+  setSavedPosition({
+    currentIndex,
+    middleIndex,
+    scrollPosition: scrollX.value
+  });
+  setYearDetails("view");
+};
 
-  const handleStateUp = ()=> {
-    setYearDetails("view");
-   }
 
    const handleChangeYearFlag = (curr) => {
-    console.log("curr---",curr);
-    if(curr === null) return;
-    setYearDetails("");
+    console.log("curr---", curr);
+    if (curr === null) return;
     
-    // setCurrentIndex(currentIndex + 1);
-    // setMiddleIndex(middleIndex + 1);
-
-    // if(curr && curr !== null){
-    //   // setCurrentIndex(curr)
-    //   // setMiddleIndex(middleIndex );
-    //   scrollToIndex(curr + 1);
-    // }
+    setYearDetails(""); // Reset to carousel view
     
-  }
+    // Ensure the carousel is properly centered on return
+    if (savedPosition) {
+      isRestoringPosition.current = true;
+      setTimeout(() => {
+        setCurrentIndex(savedPosition.currentIndex);
+        setMiddleIndex(savedPosition.middleIndex);
+        scrollX.value = savedPosition.scrollPosition;
+        scrollToIndex(savedPosition.currentIndex);
+      }, 100);
+    }
+  };
  
   
-  const scrollToIndex = (index) => {
-    console.log("index--",index);
-    if (flatListRef.current) {
-      flatListRef.current.scrollToIndex({ animated: true, index });
-    }
+  // useEffect(() => {
+  //   if (yearDetails === "" && flatListRef.current) {
+  //     // When returning to carousel view, ensure proper centering
+  //     scrollToIndex(currentIndex);
+  //   }
+  // }, [yearDetails]);
   
-  };
-  const handleScroll = useCallback((event) => {
-    const contentOffsetX = event.nativeEvent.contentOffset.x;
-    // console.log("contentoffset",contentOffsetX);
-    const newIndex = Math.round(contentOffsetX / ITEM_WIDTH + 2); // Round to nearest index
-    console.log("go", newIndex);
+  // Modify scrollToIndex function for better accuracy
+  const scrollToIndex = (index) => {
+    console.log("index--", index);
+    if (flatListRef.current) {
+      flatListRef.current.scrollToIndex({ 
+        animated: true, 
+        index,
 
-    // Only update middleIndex if the new index is different from the current middle index
-    if (newIndex !== middleIndex) {
-      setMiddleIndex(newIndex);
+      });
+      
+      // Update states to maintain consistency
+      setCurrentIndex(index);
+      setMiddleIndex(index + 2);
     }
-  }, [middleIndex]);
+  };
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    scrollX.value = event.contentOffset.x;
+    const newIndex = Math.round(event.contentOffset.x / ITEM_WIDTH)+ 2;
+  
+ // Only update indices if we're not restoring position
+ if (!isRestoringPosition.current) {
+  const newIndex = Math.round(event.contentOffset.x / ITEM_WIDTH);
+  console.log("newindex",newIndex);
+  runOnJS(setDirection)(newIndex > currentIndex ? "next" : "prev" );
+  runOnJS(setCurrentIndex)(newIndex);
+
+  runOnJS(setMiddleIndex)(newIndex + 2);
+}
+    // runOnJS(setImagePosition)((prev) => prev + 50);
+  });
+  // const handleScroll = useCallback((event) => {
+  //   const contentOffsetX = event.nativeEvent.contentOffset.x;
+  //   // console.log("contentoffset",contentOffsetX);
+  //   const newIndex = Math.round(contentOffsetX / ITEM_WIDTH + 2); // Round to nearest index
+  //   console.log("go", newIndex);
+
+  //   // Only update middleIndex if the new index is different from the current middle index
+  //   if (newIndex !== middleIndex) {
+  //     setMiddleIndex(newIndex);
+  //   }
+  // }, [middleIndex]);
   const handlePrev = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
@@ -197,20 +257,7 @@ console.log("currentindex",currentIndex);
     // Navigate to another screen or action
     router.push("/hundred-years");
   };
-const years = [
-  null,
-  null,
-  { year: "1920s", name: "1920", description: "Pioneering propulsion" },
-  { year: "1930s", name: "1930", description: "Advancing aviation" },
-  { year: "1940s", name: "1940", description: "Defending freedom" },
-  { year: "1950s", name: "1950", description: "Ushering in the jet age" },
-  { year: "1960s", name: "1960", description: "Higher, faster, further" },
-  { year: "1970s", name: "1970", description: "Powerful, agile, dependable" },
-  { year: "1980s", name: "1980", description: "Innovating advancements" },
-  { year: "1990s", name: "1990", description: "Lorem Ipsum" },
-  null,
-  null
-];
+
 console.log("year-lenght ",years.length);
   const airplaneImages = [
     yearImages.aero1,
@@ -273,13 +320,13 @@ useEffect(() => {
    animateAirplanes(currentIndex,direction);
   }
  }, [currentIndex]);
- useEffect(() => {
-  // Smooth transition using `withTiming`
-  animatedX.value = withTiming(-imagePosition, {
-    duration: 500, // 0.5s duration
-    easing: Easing.inOut(Easing.ease), // Smooth effect
-  });
-}, [imagePosition]);
+//  useEffect(() => {
+//   // Smooth transition using `withTiming`
+//   animatedX.value = withTiming(-imagePosition, {
+//     duration: 500, // 0.5s duration
+//     easing: Easing.inOut(Easing.ease), // Smooth effect
+//   });
+// }, [imagePosition]);
 
 // Define animated styles
 const moveImgAnimatedStyle = useAnimatedStyle(() => ({
@@ -288,7 +335,7 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
 
 
   return (
-    <SafeAreaView className="bg-[#f5f5f5]">
+    <SafeAreaView className="bg-white">
          <View className=" w-full h-screen overflow-hidden relative">
         {/* Header */}
         <View className="h-[80px] flex flex-row justify-between items-center  px-12">
@@ -306,7 +353,7 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
           </View>
         </View>
         {/* main */}
-        <View className="flex-row justify-center items-center relative">
+        <View className="flex-row justify-center items-center relative bg-[#f5f5f5]">
           <Image
             source={yearImages.logo100}
          
@@ -316,20 +363,24 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
         </View>
 
         {yearDetails === "" ? (
-          <View className="flex justify-center items-center h-[calc(100vh-316px)] bg-white">
+          <View className="flex justify-center items-center h-[calc(100vh-316px)] bg-[#f5f5f5]">
             <View className="flex  justify-center items-center h-full w-full">
               <View className="slider-container-100years  flex  h-[80%] w-full relative  z-[999999]">
        
               <View className="flex-1  transform">
-       <FlatList
+       <Animated.FlatList
         ref={flatListRef}
         data={years}
         horizontal
         showsHorizontalScrollIndicator={false}
- 
+        initialScrollIndex={currentIndex} // Add this
+        maintainVisibleContentPosition={{ // Add this
+          minIndexForVisible: 0,
+          autoscrollToTopThreshold: 10,
+        }}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
-          <Card index={index} item={item} middleIndex={middleIndex} currentIndex={currentIndex} handleStateUp = {handleStateUp}  />
+          <Card index={index} item={item} middleIndex={middleIndex} currentIndex={currentIndex} scrollX={scrollX} handleStateUp = {handleStateUp}  />
         )}
         snapToInterval={ITEM_WIDTH}
         decelerationRate="fast"
@@ -338,9 +389,12 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
           offset: ITEM_WIDTH * index,
           index,
         })}
-        onScroll={handleScroll} // Listen to scroll events
+        onScroll={scrollHandler} // Listen to scroll events
         scrollEventThrottle={16} // Update the scroll position frequently
-       
+        onMomentumScrollEnd={() => {
+          // Reset flag after scroll momentum ends
+          isRestoringPosition.current = false;
+        }}
       />
         <View className="h-[2.1px] w-full bg-gray-100 absolute -z-50  " style={{top:ITEM_WIDTH/2}} />
         {/* <View className="h-60 w-screen bg-slate-500 absolute left-1/2 transform -translate-x-1/2  top-[20%] "></View> */}
@@ -377,7 +431,7 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
             </View>
           </View>
        ) : (
-        <View className="h-[calc(100vh-80px)] flex items-center">
+        <View className="h-[calc(100vh-80px)] flex items-center bg-[#f5f5f5]">
         <YearTimelineCarousel Year={years[middleIndex]?.name} animateAirplanes={animateAirplanes} setImagePosition={setImagePosition} animatedX={animatedX} handleChangeYearFlag={handleChangeYearFlag} />
     </View>
       )}
