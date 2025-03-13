@@ -147,7 +147,7 @@ export default function App() {
             onPress={() => {
               router.push("/home");
             }}
-            num="0"
+            num={0}
             title={"Tap to Start"}
             textClass={"text-xl tracking-widest "}
           />

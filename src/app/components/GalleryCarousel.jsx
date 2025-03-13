@@ -53,9 +53,9 @@ const CarouselItem = ({ item, index, currentIndex,itemWidth,scrollX }) => {
   <Image
                   source={item.image}
                   alt={`Card ${item.uniqueId}`}
-                  className="h-[100px] w-full"
+                  className=" w-full"
                   resizeMode="cover"
-                  style={{width:'100%', height:60}}
+                  style={{width:'100%', height:80}}
                 />
                 <Text className=" w-full  bg-opacity-50 text-white text-center text-[0.6rem] p-1">
                   {item.description}

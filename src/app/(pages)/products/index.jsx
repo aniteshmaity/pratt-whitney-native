@@ -142,6 +142,7 @@ export default function Products() {
   const [currentIndex, setCurrentIndex] = useState(0); // Initial current index
   const [middleIndex, setMiddleIndex] = useState(1); // Initial middle index (3rd card)
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
+  const [isFlag, setIsFlag] = useState(false);
   const [cardSize, setCardSize] = useState({ width: 0, height: 0 });
   // const [containerHeight, setContainerHeight] = useState(0);
   // const [cardHeight, setCardHeight] = useState(0);
@@ -156,7 +157,7 @@ export default function Products() {
   // console.log("cardheight",cardHeight);
   // console.log("middle-index",middleIndex);
   const rotation = useSharedValue(90); // Start at 90 degrees
-
+  const isProgrammaticScroll = useRef(false);
   useEffect(() => {
     rotation.value = withTiming(0, { duration: 1000 }); // Animate to 0 degrees
   }, []);
@@ -183,6 +184,8 @@ export default function Products() {
   };
   const onItemPress = (index) => {
     if (middleIndex === index) return;
+    setIsFlag(true);
+    setTimeout(() => setIsFlag(false), 500); 
   
     if (middleIndex > index) {
       translateYValues[currentIndex].value = withTiming(ContainerHeight * 4, { duration: 900 });
@@ -257,13 +260,41 @@ export default function Products() {
     };
 });
 
+// const scrollHandler = useAnimatedScrollHandler((event) => {
+
+//   scrollY.value = event.contentOffset.y;
+//    const newIndex = Math.round(event.contentOffset.y / ITEM_HIGHT)+1;
+//       console.log("newindex",newIndex);
+  
+//       runOnJS(setMiddleIndex)(newIndex);
+
+// });
 const scrollHandler = useAnimatedScrollHandler((event) => {
 
+  console.log("go");
   scrollY.value = event.contentOffset.y;
    const newIndex = Math.round(event.contentOffset.y / ITEM_HIGHT)+1;
+   const newIndex2 = Math.round(event.contentOffset.y / ITEM_HIGHT);
+   const isScrollingDown = newIndex > currentIndex;
       console.log("newindex",newIndex);
-  
-      runOnJS(setMiddleIndex)(newIndex);
+
+     if(!isFlag){
+      if (newIndex >= 0 && newIndex < Engine.length) {
+        runOnJS(setMiddleIndex)(newIndex);
+       
+        // Animate the current item out of view
+        translateYValues[currentIndex].value = withTiming(  isScrollingDown ? -ContainerHeight * 4 : ContainerHeight * 4, { duration: 900 });
+        translateXValues[currentIndex].value = withTiming(-ContainerHeight * 4, { duration: 900 });
+    
+        // Animate the new item into view
+        translateYValues[newIndex2].value = withTiming(ContainerHeight * 0.5 - 538 * 0.5, { duration: 900 });
+        translateXValues[newIndex2].value = withTiming(-30, { duration: 900 });
+    
+        // Update the current index
+        runOnJS(setCurrentIndex)(newIndex2);
+      }
+     }
+   
 });
 const onMomentumScrollEnd = (event) => {
   scrollY.value = event.nativeEvent.contentOffset.y;

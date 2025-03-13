@@ -378,7 +378,7 @@ if(type === "prev"){
             {
               heading: "Performance",
               paragraphs:
-                "Pratt & Whitney continues to transform the aerospace industry. Every step of the process is powered by our innovators, visionaries, and engineers with exacting precision to innovate a new and exciting future. We are powering the horizon of aerospace with the most",
+                "Pratt & Whitney continues to transform the aerospace industry. Every step of the process is powered by our innovators, visionaries, and engineers with exacting precision to innovate a new and exciting future. We are powering the horizon of aerospace with the most.",
             },
             {
               heading: "Possibilities",
@@ -429,12 +429,12 @@ if(type === "prev"){
                 : thirdStyle,
             ]}>
               <View className="absolute inset-0 z-[100]">
-                <Animated.View className={`para para${index} z-[100] absolute w-[153px]  opacity-100 bottom-32 text-white left-3`} style={[animatedStyle]}>
+                <Animated.View className={`para para${index} z-[100] absolute w-[153px]   opacity-100 bottom-32 text-white left-3 `} style={[animatedStyle]}>
                   <Text className=" text-white text-[1.3rem]  pb-3 font-ObjektivMk1Bold">
                     {paragraphShows.heading}
                   </Text>
-                  <Text className="font-frutigerReg text-[0.8rem] text-white leading-[21px]">
-                    {`${paragraphShows.paragraphs.slice(0, 220)}...`}
+                  <Text className="font-frutigerReg text-[0.8rem] text-white leading-[21px]  min-h-[200px]">
+                  {`${paragraphShows.paragraphs.slice(0, 220)}...`}
                   </Text>
                   {/* <TouchableOpacity
                     onPress={() => handleMoreClick(index)}
@@ -510,10 +510,10 @@ if(type === "prev"){
                   </View>
                 </Animated.View>
               </View>
-              <TouchableOpacity className="top-4 right-[120px] z-[100] absolute" onPress={() => handleContentClose(index)}>
+              <View className="top-4 right-[120px] z-[100] absolute">
               <CustomCloseButton onPress={() => handleContentClose(index)} />
-              {/* <Text className="bg-orange-400">close</Text> */}
-              </TouchableOpacity>
+           </View>
+             
              
      
               {/* <View

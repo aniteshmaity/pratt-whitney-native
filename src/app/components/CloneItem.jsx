@@ -1,15 +1,17 @@
 import { useEffect } from "react";
 import { View, Text, Image,Button, TouchableOpacity } from "react-native";
-import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from "react-native-reanimated";
 import boxShadow from "../constants/boxShadow";
 import ClippedView from "./ClippedView";
+import yearImages from "../constants/yearImages";
 
 const CloneItem = ({ clone, index, activeId, isPrev, slide, redDot, activeRedDot,animationTrigger,currentInnerSlide,direction,bgColor }) => {
     // console.log("current",currentInnerSlide);
+    // console.log("isprev",isPrev);
     // console.log("direction",direction);
     // console.log("animationtrigger",animationTrigger);
   
-    // console.log("clone",clone);
+    // console.log("clone",clone.id);
     
    // Function to get initial animation values based on `isPrev`
   const getInitialValues = (isPrev,direction) => {
@@ -19,7 +21,7 @@ const CloneItem = ({ clone, index, activeId, isPrev, slide, redDot, activeRedDot
     scale: isPrev ? clone.scale : 1,
     translateX: clone.x,
     translateY:  clone.y,
-    height: isPrev ? 52 : 350,
+    height: isPrev ? 52 : 340,
     width: isPrev ? 140 : 430,
    }
    }else{
@@ -28,7 +30,7 @@ const CloneItem = ({ clone, index, activeId, isPrev, slide, redDot, activeRedDot
       scale: isPrev ? 1 : 0.9,
       translateX: clone.x,
       translateY: clone.y,
-      height: isPrev ? 350 : 52,
+      height: isPrev ? 340 : 52,
       width: isPrev ? 430 : 140,
      }
    }
@@ -52,12 +54,12 @@ if(direction === "next"){
   if(isPrev){
     if (currentInnerSlide === clone.id) {
       // Active item animation (expands to full size)
-      opacity.value = withTiming(0, { duration: 300 });
-      scale.value = withTiming(1, { duration: 600 });
-      translateX.value = withTiming(0, { duration: 600 });
-      translateY.value = withTiming(0, { duration: 600 });
-      height.value = withTiming(350, { duration: 600 });
-      width.value = withTiming(430, { duration: 600 });
+      opacity.value = withTiming(1, { duration: 100 });
+      scale.value = withTiming(1, { duration: 300 });
+      translateX.value = withTiming(0, { duration: 300,easing: Easing.linear });
+      translateY.value = withTiming(0, { duration: 300,easing: Easing.linear });
+      height.value = withTiming(350, { duration: 300 });
+      width.value = withTiming(430, { duration: 300 });
   }
 
   }else{
@@ -68,6 +70,9 @@ if(direction === "next"){
         translateY.value = withTiming(100, { duration: 600 });
         height.value = withTiming(52, { duration: 600 });
         width.value = withTiming(140, { duration: 600 });
+       }
+       else{
+        opacity.value = withTiming(0.4, { duration: 100 });
        }
   }
 }else{  
@@ -83,15 +88,17 @@ if(direction === "next"){
       // console.log("After Animation - translateX:", translateX.value, "translateY:", translateY.value);
     height.value = withTiming(52, { duration: 600 });
     width.value = withTiming(140, { duration: 600 });
-  }
+  }else{
+    opacity.value = withTiming(0.4, { duration: 100 });
+   }
   }else{
    if(index === currentInnerSlide){
-    opacity.value = withTiming(0, { duration: 600 });
-    scale.value = withTiming(1, { duration: 500 });
-    translateX.value = withTiming(0, { duration: 600 });
-    translateY.value = withTiming(0, { duration: 600 });
-    height.value = withTiming(350, { duration: 600 });
-    width.value = withTiming(430, { duration: 600 });
+    opacity.value = withTiming(0, { duration: 100 });
+    scale.value = withTiming(1, { duration: 300 });
+    translateX.value = withTiming(0, { duration: 300 });
+    translateY.value = withTiming(0, { duration: 300 });
+    height.value = withTiming(350, { duration: 300 });
+    width.value = withTiming(430, { duration: 300 });
    }
   }
 }
@@ -149,21 +156,30 @@ const animatedStyle = useAnimatedStyle(() => {
             animatedStyle,
         {
             position: "absolute",
-            // height: activeId === clone.id ? "100%" : "52px",
-            // maxWidth: activeId === clone.id ? "100%" : "140px",
+            height: activeId === clone.id ? "100%" : "52px",
+            maxWidth: activeId === clone.id ? "100%" : "140px",
             width: "100%",
-            top: 0,
+            top: 50,
             [isPrev ? "right" : "left"]: 0,
             transform: `translate(${clone.x}, ${clone.y}) scale(${clone.scale})`,
             opacity: clone.opacity,
-            zIndex: isPrev ? -1 - index * 20 : -1
-            // ...boxShadow("#00000040", 0, 25, 0.25, 50, 10) 
+            zIndex: isPrev ? -1 - index * 20 : -1,
+            ...boxShadow("#00000040", 0, 25, 0.25, 50, 10) 
         }
         ]}
       >
+              {/* <View className="absolute bottom-0 left-1/2 -translate-x-1/2  z-40 " style={{
+    transform: [{ translateY: 45 }], // Adjusting X & Y translations
+  }}> */}
+       {isPrev ? (  <Image source={currentInnerSlide+1 === clone.id ? yearImages.redDotDouble : yearImages.redDotone} className="absolute bottom-0 left-1/2 -translate-x-1/2  z-40 w-[30px] h-[30px] " resizeMode='contain' style={{
+    transform: [{ translateX: -15 },{ translateY: 45 }],}}  />) : (
+      <Image source={currentInnerSlide-1 === clone.id ? yearImages.redDotDouble : yearImages.redDotone} className="absolute bottom-0 left-1/2 -translate-x-1/2  z-40 w-[30px] h-[30px] " resizeMode='contain' style={{
+        transform: [{ translateX: -15 },{ translateY: 45 }],}}  />
+    )}
+         {/* </View>  */}
 
       {/* <ClippedView width={activeId === clone.id ? "430" : "140"} height={activeId === clone.id ? "350" : "52"} backgroundColor={bgColor} clipPathId="slidecard22" slug="variant11" /> */}
-        <View className="card_clip_2 py-[10px] px-[10px] h-full w-full ">
+        <View className="card_clip_2 py-[10px] px-[10px] h-full w-full bg-white">
           <View className="relative w-full flex flex-row justify-center gap-5">
             <Image
               style={{
@@ -191,7 +207,7 @@ const animatedStyle = useAnimatedStyle(() => {
             <>
               <View className="flex gap-3">
                 {slide?.slideImages?.map((e, idx) => (
-                  <Image key={idx} source={e.img} alt={`Slide Image ${idx}`} className="w-[60px] h-[60px] object-cover" />
+                  <Image key={idx} source={e.img} alt={`Slide Image ${idx}`} className="w-[60px] h-[60px] object-cover h-full" />
                 ))}
               </View>
               <View className="w-full p-2">

@@ -94,11 +94,7 @@ const handleExplore = () => {
     >
       <View  style={{  ...boxShadow("#6b6464", 3, 7, 0.2, 10, 10), width: ITEM_WIDTH, height:ITEM_WIDTH }} className="rounded-full bg-white overflow-hidden   z-40 p-[15px] transition-transform duration-300 ease-in-out relative">
       { middleIndex === index && (<View className="absolute bg-[#E11C37] -left-[26px]  top-[4px] -z-10"      style={{ width: ITEM_WIDTH/3, height:ITEM_WIDTH/2 }} />)}
-<View style={{ ...boxShadow("#b9b7b7", 1, 0, 0.3, 11, 8)}} className={`flex  justify-center items-center rounded-full w-full h-full transition-all duration-300  ease-in-out bg-white ${
-                    middleIndex === index
-                      ? "opacity-100"
-                      : "bg-white text-black opacity-80"
-                  }`}>
+<View style={{ ...boxShadow("#b9b7b7", 1, 0, 0.3, 11, 8)}} className={`flex  justify-center items-center rounded-full w-full h-full  bg-white `}>
                     <Text className="text-[2.6rem] text-[#D91027] font-objectiveBlk">
                     {item.year}
                   </Text>
@@ -445,7 +441,7 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
     alt="terrain"
     resizeMode="cover"
   />
-  <View className="absolute flex-row w-[93%] left-[50%] bottom-[50px] gap-[80px]" style={{ transform: [{ translateX: -0.5 * 93 + "%" }] }}>
+  <View className="absolute flex-row w-[93%] left-[50%] bottom-[90px] gap-[80px]" style={{ transform: [{ translateX: -0.5 * 93 + "%" }] }}>
     {airplaneImages.map((airplane, index) => {
       const animatedStyle = animatedStyles(index);
       return (
@@ -461,11 +457,11 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
     })}
   </View>
   <View className="absolute bottom-0 w-full px-3">
-  <Image
+  {/* <Image
     source={yearImages.bracket}
     className="w-full h-[140px]"
     resizeMode="cover"
-  />
+  /> */}
 </View>
 </View>
       </View>
