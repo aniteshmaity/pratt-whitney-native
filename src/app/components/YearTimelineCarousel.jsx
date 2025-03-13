@@ -6,7 +6,7 @@ import Swiper from "react-native-swiper";
 import PrevNextButton from './buttons/PrevNextButton';
 import yearSlideData from '../constants/yearSlideData'
 import CloneItem from './CloneItem';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import yearSlidedata from '../constants/yearSlideData';
 import InnerCarousel from './InnerCarousel';
 import { useRouter } from 'expo-router';
@@ -15,6 +15,7 @@ import boxShadow from '../constants/boxShadow';
 import MyTextBtn from './buttons/MyTextBtn';
 import CustomCloseButton from './buttons/CustomCloseButton';
 import ClippedView from './ClippedView';
+import yearImages from '../constants/yearImages';
 export default function YearTimelineCarousel({Year, animateAirplanes,handleChangeYearFlag,setImagePosition,animatedX}) {
   const clipWidth = "100%";
   const clipHeight = "350"
@@ -126,13 +127,17 @@ const handleInnerPrev = () => {
     setAnimationTrigger((prev) => prev + 1); 
     animateInnerSlide("prev");
     setDirection("prev");
-    animateSlide(-90,150);
+    setTimeout(() => {
+      animateSlide(-90, 150);
+    }, 100);
 }
 const handleInnerNext = ()=> {
     // console.log("ok-2");
     setAnimationTrigger((prev) => prev + 1); 
     animateInnerSlide("next");
-     animateSlide(90,150); // Move from -50 to 0
+     setTimeout(() => {
+      animateSlide(90, 150);
+    }, 100);
      setDirection("next");
 
 }
@@ -171,11 +176,9 @@ const animateInnerSlide = (direction) => {
             return prevSlide < maxIndex ? prevSlide + 1 : prevSlide;
           });
             // Remove the first clone from the array without altering others
- setTimeout(() => {
-  setPrevContentClones((prev) => {
-    return prev.filter((clone) => clone.name !== firstCloneIndex);
-  });
- }, 1800);
+            setImmediate(() => {
+              setPrevContentClones((prev) => prev.filter((clone) => clone.name !== firstCloneIndex));
+            });
          
     }
     if (direction === "prev") {
@@ -192,9 +195,9 @@ const animateInnerSlide = (direction) => {
         opacity: 0,
         scale: 1,
       };
-   setTimeout(() => {
+      setImmediate(() => {
     setNextContentClones((prev) => prev.slice(0, prev.length - 1));
-   }, 1800);
+   });
 
       setPrevContentClones((prevClones) => [currentClone, ...prevClones]);
       setActiveId(currentInnerSlide);
@@ -471,6 +474,8 @@ bgColor={index % 2 === 0 ? "white" : "#fafafa"}
                 className={`w-[3px] absolute h-[260px] ${i === 0 ? "left-[7%]" : "right-[7%]"} bg-[#00000014] bottom-0`}
               >
                 <View className="bg-[#B7B7B7] w-2.5 h-2.5 rounded-full absolute bottom-0 left-1/2 trasform -translate-x-1/2"></View>
+          
+               
                 <View className="w-[95px] h-[95px] bg-white  rounded-full p-2  left-1/2 transform -translate-x-1/2 "   style={{  ...boxShadow("#dddddd80", 0, 3, 0.2, 5, 5) }}>
                   <View className=" rounded-full w-full h-full  bg-white flex justify-center items-center " style={{  ...boxShadow("#dddddd80", 0, 3, 0, 5, 5) }}>
                     <View className="p-1">

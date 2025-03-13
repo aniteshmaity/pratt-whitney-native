@@ -11,6 +11,10 @@ import leftCroppedLogo from "../../assets/images/home/left-arrow-croped.png";
 import curveLogo from "../../assets/images/home/image-shadow-1.png";
 import notFound from "../../assets/images/home/man-with-404-error-logo_1150725-165.jpg";
 import mapcontent1 from "../../assets/images/home/mapContent-1.png";
+import map3d from "../../assets/images/home/map-3d.png";
+import frameMap from "../../assets/images/home/Frame-bg.jpg";
+import logo1 from "../../assets/images/home/PW Logo 1.png";
 
 
-export default { homeMap,cardImg,yearGif,Terrain,groupAero,building,new1,nameLogo,circleLogo,leftCroppedLogo,curveLogo,notFound,mapcontent1};
+
+export default { homeMap,cardImg,yearGif,Terrain,groupAero,building,new1,nameLogo,circleLogo,leftCroppedLogo,curveLogo,notFound,mapcontent1,map3d,frameMap,logo1};

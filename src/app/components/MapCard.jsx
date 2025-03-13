@@ -8,15 +8,15 @@ import Animated, { useSharedValue, useAnimatedStyle, withSpring, useDerivedValue
 import Svg, { Path } from 'react-native-svg'
 import RedDotSvg from './RedDotSvg'
 import homeImages from '../constants/homeImages'
-export default function MapCard({city,cardRef,cardclass,handlePrevClick,handleNextClick,index,currentIndex }) {
-  console.log("currentindex-index",currentIndex.value,index);
-
+export default function MapCard({city,cardRef,cardclass,handlePrevClick,handleNextClick,index,currentIndex,totalCities }) {
+//   console.log("currentindex-index",currentIndex.value,index);
+// console.log("city",city);
   const cardOpacity = useSharedValue(0);
   const cardScale = useSharedValue(0.3);
   const translateY = useSharedValue(60);
   const isActive = useDerivedValue(() => {
     const active = currentIndex.value === index;
-    console.log(`Card ${index}: currentIndex = ${currentIndex.value}, isActive = ${active}`);
+    // console.log(`Card ${index}: currentIndex = ${currentIndex.value}, isActive = ${active}`);
     return active;
   });
 
@@ -80,13 +80,13 @@ className="h-[140px] p-5 "
  
 <View className='absolute -right-[28%] top-0 flex flex-row gap-4'>
  <PrevNextButton
-        isColor={"grey" } 
+        isColor={currentIndex.value === index ? "grey" : "red" } 
         isIcon='prev'
         isPolygon="first"
                 onPress={handlePrevClick}
               />
         <PrevNextButton
-                 isColor={ "red"}
+                 isColor={ index === totalCities-1 ? "grey" : "red"}
                  isIcon='next'
                  onPress={handleNextClick}
                />
@@ -114,10 +114,11 @@ className="h-[140px] p-5 "
      
 
   </Animated.View>
-  <Animated.View className="absolute bottom-0 left-0 z-[400] flex flex-row gap-5" style={[{ transform: [{ translateX: "-100%" }] }, nonActiveContentStyle]}>
-        <RedDotSvg width={30} height={30} className=" -bottom-[10px] left-[10px]" />
+  <Animated.View className="absolute bottom-0 left-0 z-[400] flex flex-row items-center gap-5 " style={[{ transform: [{ translateX: "-100%" }] }, nonActiveContentStyle]}>
+        <RedDotSvg width={20} height={20} className=" top-[20%] left-[10px]" />
         <View>
-          <Text className="text-[0.96rem] font-objektiv text-[#E11C37]">{city.name}</Text>
+          <Text className="text-[0.96rem] font-ObjektivMk1Bold text-[#E11C37]">{city.name}</Text>
+          <Text className="text-[0.76rem] font-frutigerBold">Training Centre</Text>
         </View>
       </Animated.View> 
    </View>

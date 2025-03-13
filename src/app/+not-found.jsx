@@ -27,7 +27,7 @@ const NotFoundPage = () => {
                  onPress={() => {
                    router.push("/home");
                  }}
-                 num="0"
+                 num={0}
                  title={"Back to Home"}
                  textClass={"text-xl tracking-widest "}
                />

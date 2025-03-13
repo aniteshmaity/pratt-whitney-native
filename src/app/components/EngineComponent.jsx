@@ -10,7 +10,7 @@ import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing, interpo
 import ClippedView from "./ClippedView";
 import CustomCloseButton from "./buttons/CustomCloseButton";
 import boxShadow from "../constants/boxShadow";
-import {Video} from "expo-av"
+import {ResizeMode, Video} from "expo-av"
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const screenHeight = Dimensions.get("window").height;
@@ -258,7 +258,7 @@ export default function EngineComponent({ type, onEngineClose }) {
 
       <View className="w-full h-full flex-1">
         <ClippedView width={size.width / 2} height={size.height} backgroundColor="#D91027" clipPathId="Engineclip0" slug="variant2" />
-        <View className={`relative z-[20] overflow-hidden w-full `} style={{ height: type === "product" ? "50%" : "54%" }}>
+        <View className={`relative z-[20] overflow-hidden w-full bg-red-900`} style={{ height: type === "product" ? "50%" : "54%" }}>
           {/* <Image
             source={type === "product" ? yearImages.gtfImg : yearImages.machine1}
 
@@ -267,9 +267,26 @@ export default function EngineComponent({ type, onEngineClose }) {
           /> */}
 
     {/* <Video  source={{ uri: "http://commondatastorage.g  oogleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" }}  */}
-    
-<Video ref={videoRef} style={{width:"99.5%", height:"100%"}}  className="  pr-1" source={{ uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" }} isLooping  
-        resizeMode="cover" shouldPlay={isPlaying}  allowsPictureInPicture />
+    {type === "product" ? (<Video ref={videoRef} style={{width:"99.5%", height:"100%"}}  className="  pr-1" source={require('../../assets/images/project/big_buck_bunny_360p_5mb.mp4')} isLooping  
+        resizeMode="cover" shouldPlay={isPlaying}  allowsPictureInPicture />) : (
+          <Video  
+                 style={{
+                position: 'absolute',
+                width: "99.5%",
+                height: "120%",
+                left: 0,
+                top: "-10%",
+                right: "3%"
+              }} 
+              source={require('../../assets/images/project/big_buck_bunny_360p_5mb.mp4')} 
+              isLooping  
+              shouldPlay={true}
+              isMuted={true}  
+              resizeMode={ResizeMode.COVER}   
+              allowsPictureInPicture 
+            />
+        )}
+
 
         </View>
         <View className={`  relative px-[2.2px] pb-[2.2px]`} style={{ height: type === "product" ? "50%" : "46%" }}>

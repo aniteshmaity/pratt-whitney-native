@@ -15,6 +15,7 @@ export default function HomeLayout() {
         <Stack.Screen name="mapPage" options={{ headerShown: false, presentation: "modal" }} />
         <Stack.Screen name="hundred-years" options={{ headerShown: false }} />
         <Stack.Screen name="products" options={{ headerShown: false }} />
+        <Stack.Screen name="startScreen" options={{ headerShown: false }} />
       </Stack>
     </>
   );

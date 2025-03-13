@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Image, TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView, Image, TouchableOpacity, Dimensions } from 'react-native'
 import React, { useState } from 'react'
 import yearImages from '../constants/yearImages'
 import CustomCloseButton from '../components/buttons/CustomCloseButton'
@@ -15,12 +15,15 @@ import BlurSvg from '../components/BlurSvg';
 import homeImages from '../constants/homeImages';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-export default function mapPage() {
 
+const { height } = Dimensions.get("window");
+
+export default function mapPage() {
+  const calculatedHeight = height - 80; 
     const cities = [
-        { name: "Delhi", x: "0%", y: "0%", position: "top-[30%] left-[40%]" },
-        { name: "Bangalore", x: "-15%", y: "-30%", position: "top-[60%] left-[38%]" },
-        { name: "Chennai", x: "-20%", y: "-40%", position: "top-[80%] left-[40%]" },
+        {id:1, name: "Delhi", x: "0%", y: "0%", position: "top-[10%] left-[50%]" },
+        {id:2, name: "Bangalore", x: "-10%", y: "-20%", position: "top-[60%] left-[45%]" },
+        {id:3, name: "Chennai", x: "-20%", y: "-30%", position: "top-[78%] left-[45%]" },
       ];
 
     const selectedIndex = useSharedValue(-1); 
@@ -46,7 +49,7 @@ export default function mapPage() {
        router.push("/home")
       }
       const handleClick = (index) => {
-        selectedIndex.value = index; // ✅ Properly update shared value
+        selectedIndex.value = index; // 
       };
 
     
@@ -103,7 +106,7 @@ export default function mapPage() {
          
          </View>
 
-     <View className="">
+     <View className=""  style={{ height: calculatedHeight }}>
      <LinearGradient
         colors={["rgba(0, 0, 0, 0.4)", "rgba(255, 255, 255, 0.4)"]}
         start={{ x: 0, y: 0 }}
@@ -193,9 +196,12 @@ export default function mapPage() {
 
     </View>
     
-    <View className='overflow-hidden w-full   bg-[#f5f5f5]'>
-<Animated.View ref={mapRef} className='relative w-[80%] ml-auto ' style={[mapAnimatedStyle]}>
-  <MapSvg />
+    <View className='overflow-hidden w-full  h-full bg-[#f5f5f5]'>
+      <View className="absolute w-full h-full bg-[#c6bebe2c] z-10" />
+    <Image source={homeImages.frameMap} className="absolute top-0 left-0 w-full h-full" />
+<Animated.View ref={mapRef} className='relative w-[80%]  ml-auto z-30' style={[mapAnimatedStyle]}>
+  {/* <MapSvg /> */}
+  <Image source={homeImages.map3d} className="w-full h-full" resizeMode='contain' />
 {/* <img src={indiaSvg} alt="" className='w-[100%] ' /> */}
 {/* <MapCard  cardclass="absolute top-[50%] left-[40%]" /> */}
 {cities?.map((city, index) => (
@@ -209,6 +215,7 @@ export default function mapPage() {
           cardRef={(el) => (cardRef.current[index] = el)}
           index={index}
            currentIndex={currentIndex}
+           totalCities={cities.length}
         />
    
         

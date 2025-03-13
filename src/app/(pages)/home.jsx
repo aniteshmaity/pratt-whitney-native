@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import {SafeAreaView} from "react-native-safe-area-context";
 import CustomCloseButton from "../components/buttons/CustomCloseButton";
 import yearImages from "../constants/yearImages";
-import Animated, { useSharedValue, useAnimatedStyle, withTiming, useAnimatedScrollHandler, interpolate, runOnJS } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, useAnimatedScrollHandler, interpolate, runOnJS, withRepeat, Easing } from 'react-native-reanimated';
 import homeImages from '../constants/homeImages';
 import homeCardData from '../constants/homeCardData';
 import { useRouter } from 'expo-router';
@@ -56,6 +56,8 @@ const Card = ({ item, index, scrollX,centeredIndex  }) => {
       opacity
     };
   });
+
+
 
   return (
     <Animated.View
@@ -113,9 +115,11 @@ export default function Home() {
   const translateY = useSharedValue(screenHeight / 3); // Start from the center of the screen (Y-axis)
   const scrollX = useSharedValue(0); // Track scroll position
   const flatListRef = useRef(null);
-  const [centeredIndex, setCenteredIndex] = useState(LOOP_DATA.length); 
+  const [centeredIndex, setCenteredIndex] = useState(LOOP_DATA.length);  
+  const router = useRouter();
   const handleClose = () => {
-    console.log("ok");
+
+    router.push("/startScreen");
   }
 
   useEffect(() => {
@@ -140,7 +144,22 @@ export default function Home() {
       runOnJS(setCenteredIndex)(index);
     },
   });
+  const scale = useSharedValue(1);
 
+  // Continuous Scale Animation
+  scale.value = withRepeat(
+    withTiming(1.1, {
+      duration: 3000, // 3 seconds for smooth transition
+      easing: Easing.inOut(Easing.ease),
+    }),
+    -1, // Infinite repeat
+    true // Reverse direction
+  );
+
+  // Animated style
+  const animatedTerrainStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
  
 
   return (
@@ -206,7 +225,7 @@ export default function Home() {
     </View>
     </View>
     <View className="w-screen absolute bottom-0 left-0">
-      <Image source={homeImages.Terrain} className="w-full h-[190px]" alt="terrain" resizeMode='cover' />
+      <Animated.Image source={homeImages.Terrain} className="w-full h-[190px]" alt="terrain" resizeMode='cover' style={animatedTerrainStyle} />
       <Image source={homeImages.groupAero} className="absolute bottom-[60px] right-[10%] w-[360px] h-[80px]" resizeMode='cover' />
       <Image
         source={homeImages.building}
