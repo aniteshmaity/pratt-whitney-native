@@ -1,5 +1,5 @@
 import { View, Text, Image, Button, TouchableOpacity, ScrollView, Pressable, Dimensions } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import yearImages from "../constants/yearImages";
 import GalleryCarousel from "./GalleryCarousel";
 import tabsData from "../constants/tabsData";
@@ -12,10 +12,13 @@ import CustomCloseButton from "./buttons/CustomCloseButton";
 import boxShadow from "../constants/boxShadow";
 import {ResizeMode, Video} from "expo-av"
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { useVideoPlayer, VideoView } from 'expo-video';
+import { useFocusEffect } from "expo-router";
 
 const screenHeight = Dimensions.get("window").height;
 const adjustedHeight = screenHeight - 100; // Equivalent to calc(100vh - 100px)
-
+const videoSource =
+  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 export default function EngineComponent({ type, onEngineClose }) {
   console.log("type---", type);
   const [activeTab, setActiveTab] = useState(0);
@@ -55,7 +58,33 @@ export default function EngineComponent({ type, onEngineClose }) {
       animatedHeight.value = withTiming(140, { duration: 300 });
     }
   };
-  console.log("activetab", activeTab);
+  // console.log("activetab", activeTab);
+
+  const productPlayer  = useVideoPlayer(videoSource, player => {
+    player.loop = true;
+
+  });
+  const nonProductPlayer = useVideoPlayer(videoSource, player => {
+    player.loop = true;
+    // player.play();
+
+  });
+
+  useFocusEffect(
+    useCallback(() => {
+      if (type !== "product") {
+        console.log("Screen focused, starting video"); // Debugging
+        nonProductPlayer.play(); // Play when screen is focused
+      }
+
+      return () => {
+        console.log("Screen blurred, pausing video"); // Debugging
+        if (type !== "product") {
+          nonProductPlayer.pause(); // Pause when screen loses focus
+        }
+      };
+    }, [type, nonProductPlayer]) // Dependencies
+  );
   // useEffect(() => {
   //   const content = contentRef.current;
 
@@ -82,49 +111,61 @@ export default function EngineComponent({ type, onEngineClose }) {
   //   };
   // }, [tabsData, activeTab]);
 
-  const handleScroll1 = (event) => {
-    const contentOffsetY = event.nativeEvent.contentOffset.y; // Vertical scroll position
-    const contentHeight = event.nativeEvent.contentSize.height; // Total scrollable height
-    const layoutHeight = event.nativeEvent.layoutMeasurement.height; // Viewable height
+  // const handleScroll1 = (event) => {
+  //   const contentOffsetY = event.nativeEvent.contentOffset.y; // Vertical scroll position
+  //   const contentHeight = event.nativeEvent.contentSize.height; // Total scrollable height
+  //   const layoutHeight = event.nativeEvent.layoutMeasurement.height; // Viewable height
 
-    // Calculate the scroll percentage
-    const scrollPercentage = (contentOffsetY / (contentHeight - layoutHeight)) * 100;
+  //   // Calculate the scroll percentage
+  //   const scrollPercentage = (contentOffsetY / (contentHeight - layoutHeight)) * 100;
 
-    // console.log("contentheight", contentHeight);
-    // console.log("layoutheight", layoutHeight);
-    if (redDot2Ref.current) {
-      redDot2Ref.current.style.top = `${scrollPercentage}%`;
-    }
+  //   // console.log("contentheight", contentHeight);
+  //   // console.log("layoutheight", layoutHeight);
+  //   if (redDot2Ref.current) {
+  //     redDot2Ref.current.style.top = `${scrollPercentage}%`;
+  //   }
 
-  };
-  const handleScroll = (event) => {
-    const contentOffsetY = event.nativeEvent.contentOffset.y; // Vertical scroll position
-    const contentHeight = event.nativeEvent.contentSize.height; // Total scrollable height
-    const layoutHeight = event.nativeEvent.layoutMeasurement.height; // Viewable height
+  // };
+  // const handleScroll = (event) => {
+  //   const contentOffsetY = event.nativeEvent.contentOffset.y; // Vertical scroll position
+  //   const contentHeight = event.nativeEvent.contentSize.height; // Total scrollable height
+  //   const layoutHeight = event.nativeEvent.layoutMeasurement.height; // Viewable height
 
-    // Calculate the scroll percentage
-    const scrollPercentage = (contentOffsetY / (contentHeight - layoutHeight)) * 100;
+  //   // Calculate the scroll percentage
+  //   const scrollPercentage = (contentOffsetY / (contentHeight - layoutHeight)) * 100;
 
-    console.log("contentheight", contentHeight);
-    console.log("layoutheight", layoutHeight);
-    if (redDotRef.current) {
-      redDotRef.current.style.top = `${scrollPercentage}%`;
-    }
+  //   console.log("contentheight", contentHeight);
+  //   console.log("layoutheight", layoutHeight);
+  //   if (redDotRef.current) {
+  //     redDotRef.current.style.top = `${scrollPercentage}%`;
+  //   }
 
-  };
+  // };
   const handleStartVideo = async () => {
     console.log("👆 Tap Started - Video Should Play");
     rotation.value = withRepeat(withTiming(360, { duration: 1000, easing: Easing.linear }), -1, false);
-    setIsPlaying(true);
-    await videoRef.current?.playAsync();
+    // setIsPlaying(true);
+    // await videoRef.current?.playAsync();
+    productPlayer.play();
   };
 
   // Function to stop video
   const handleStopVideo = async () => {
     rotation.value = withTiming(0, { duration: 500 });
-    setIsPlaying(false);
-    await videoRef.current?.pauseAsync();
+    // setIsPlaying(false);
+    // await videoRef.current?.pauseAsync();
+    productPlayer.pause();
   };
+
+  // useEffect(() => {
+  //   return () => {
+  //     if (player) {
+  //       player.pause(); // Pause the video
+  //       player.destroy(); // Destroy the player instance (if available)
+  //     }
+  //   };
+  // }, [player]);
+
 
   const rotateAnimatedStyle = useAnimatedStyle(() => ({
     transform: [ { rotate: `${rotation.value}deg` }],
@@ -258,7 +299,7 @@ export default function EngineComponent({ type, onEngineClose }) {
 
       <View className="w-full h-full flex-1">
         <ClippedView width={size.width / 2} height={size.height} backgroundColor="#D91027" clipPathId="Engineclip0" slug="variant2" />
-        <View className={`relative z-[20] overflow-hidden w-full bg-red-900`} style={{ height: type === "product" ? "50%" : "54%" }}>
+        <View className={`relative z-[20] overflow-hidden w-full bg-[#D91027]`} style={{ height: type === "product" ? "50%" : "54%" }}>
           {/* <Image
             source={type === "product" ? yearImages.gtfImg : yearImages.machine1}
 
@@ -267,24 +308,39 @@ export default function EngineComponent({ type, onEngineClose }) {
           /> */}
 
     {/* <Video  source={{ uri: "http://commondatastorage.g  oogleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" }}  */}
-    {type === "product" ? (<Video ref={videoRef} style={{width:"99.5%", height:"100%"}}  className="  pr-1" source={require('../../assets/images/project/big_buck_bunny_360p_5mb.mp4')} isLooping  
-        resizeMode="cover" shouldPlay={isPlaying}  allowsPictureInPicture />) : (
-          <Video  
-                 style={{
-                position: 'absolute',
-                width: "99.5%",
-                height: "120%",
-                left: 0,
-                top: "-10%",
-                right: "3%"
-              }} 
-              source={require('../../assets/images/project/big_buck_bunny_360p_5mb.mp4')} 
-              isLooping  
-              shouldPlay={true}
-              isMuted={true}  
-              resizeMode={ResizeMode.COVER}   
-              allowsPictureInPicture 
-            />
+    {type === "product" ? (<VideoView ref={videoRef} style={{width:"99.5%", height:"100%"}}  className="  pr-1"       player={productPlayer}  allowsFullscreen
+          allowsPictureInPicture  nativeControls={false} 
+        resizeMode="cover"  />) : (
+          // <Video  
+          //        style={{
+          //       position: 'absolute',
+          //       width: "99.5%",
+          //       height: "120%",
+          //       left: 0,
+          //       top: "-10%",
+          //       right: "3%"
+          //     }} 
+          //     source={require('../../assets/images/project/big_buck_bunny_360p_5mb.mp4')} 
+          //     isLooping  
+          //     shouldPlay={true}
+          //     isMuted={true}  
+          //     resizeMode={ResizeMode.COVER}   
+          //     allowsPictureInPicture 
+          //   />
+          <View className="w-[99.5%] h-full bg-slate-500 overflow-hidden">
+            <VideoView
+          style={{
+       
+            flex: 1, // Fill the parent container
+            width: '100%',
+            height: '100%',
+            aspectRatio: 16 / 9,
+          }}
+          player={nonProductPlayer}
+          allowsFullscreen
+          allowsPictureInPicture
+        />
+          </View>
         )}
 
 
