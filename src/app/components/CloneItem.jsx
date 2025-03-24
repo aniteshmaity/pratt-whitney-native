@@ -66,7 +66,7 @@ if(direction === "next"){
        if( currentInnerSlide === index+1){
         opacity.value = withTiming(1, { duration: 600 });
         scale.value = withTiming(0.9, { duration: 500 });
-        translateX.value = withTiming(-180 + clone.id * 30, { duration: 600 });
+        translateX.value = withTiming(-240 + clone.id * 30, { duration: 600 });
         translateY.value = withTiming(100, { duration: 600 });
         height.value = withTiming(52, { duration: 600 });
         width.value = withTiming(140, { duration: 600 });
@@ -180,14 +180,14 @@ const animatedStyle = useAnimatedStyle(() => {
 
       {/* <ClippedView width={activeId === clone.id ? "430" : "140"} height={activeId === clone.id ? "350" : "52"} backgroundColor={bgColor} clipPathId="slidecard22" slug="variant11" /> */}
         <View className="card_clip_2 py-[10px] px-[10px] h-full w-full bg-white">
-          <View className="relative w-full flex flex-row justify-center gap-5">
+          <View className="relative w-full flex flex-row justify-center gap-2">
             <Image
               style={{
                 width: activeId === clone.id ? 160 : 35,  // Change width dynamically
                 height: activeId === clone.id ? 100 : 36, // Change height dynamically
               }}
               // className={`${activeId === clone.id ? "w-[200px]" : "w-[100px]"} image `}
-              source={clone?.image}
+              source={clone?.thumbnail}
               resizeMode="cover"
               alt="Slide Image"
             />

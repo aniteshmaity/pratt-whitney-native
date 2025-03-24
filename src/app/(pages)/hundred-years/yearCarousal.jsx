@@ -22,7 +22,7 @@ const ITEM_WIDTH = width / 5; // Calculate width for 5 visible cards
 const years = [
   null,
   null,
-  { year: "1920s", name: "1920", description: "Pioneering propulsion" },
+  { year: "1920s", name: "1920", description: "Pioneering the future of flight" },
   { year: "1930s", name: "1930", description: "Advancing aviation" },
   { year: "1940s", name: "1940", description: "Defending freedom" },
   { year: "1950s", name: "1950", description: "Ushering in the jet age" },

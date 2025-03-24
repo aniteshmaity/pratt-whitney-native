@@ -1,4 +1,4 @@
-import { View, Text, Image, Button, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Image, Button, TouchableOpacity, ScrollView, Linking } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import CloseButton from './CloseButton ';
 
@@ -46,7 +46,7 @@ export default function YearTimelineCarousel({Year, animateAirplanes,handleChang
     const [direction, setDirection] = useState("next");
 const [navigationDirection,setNavigationDirection] = useState("next");
     const [isAnimating, setIsAnimating] = useState(false);
-  
+  console.log("currentinner",currentInnerSlide);
     const opacity = useSharedValue(1);
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
@@ -263,6 +263,7 @@ const data = [
 
   useEffect(() => {
     const initialPrevClones = generatePrevClones(slideDataIndex);
+  
     const initialNextClones = generateNextClones(slideDataIndex);
    if(navigationDirection === "next"){
 
@@ -344,9 +345,17 @@ const handleBackYears = (curr) => {
  {/* Apply Tailwind styles to the container */}
 
       <Swiper   index={currentSlide} onIndexChanged={(index) =>{ setCurrentSlide(index)}}    showsPagination={false} loop={false} ref={swiperRef} className="!overflow-y-visible">
-      {yearSlideData.map((slide, index) => (
+      {yearSlideData.map((slide, index) => {
+        // Determine the description based on the condition
+  const description = innerSlideStatus
+  ? slide?.innerSlidesData[currentInnerSlide]?.description
+  : slide?.description;
+  const formattedDescription = Array.isArray(description)
+  ? description
+  : [{ text: description, bold: false }];
+        return (
           <View
-          key={index}
+          key={index} 
      
           className=" flex-1 slider-item w-full h-full "
         >
@@ -392,7 +401,7 @@ const handleBackYears = (curr) => {
                 <View className=" pt-3">
                     <InnerCarousel
                       images={
-                        slide?.innerSlidesData[currentInnerSlide].slideImages ?? []
+                        slide?.innerSlidesData[currentInnerSlide]?.slideImages ?? []
                       }
                     />
 
@@ -405,14 +414,50 @@ const handleBackYears = (curr) => {
                         : slide?.subtitle}
                     </Text>
                   </Text>
-                  <Text className=" text-[0.7rem] pb-5   leading-tight font-frutigerReg">
+               <ScrollView className="h-[60px] ">
+               <Text style={{ fontSize: 14, lineHeight: 18, fontFamily: "Frutiger" }}>
+               {formattedDescription?.map((part, index) => (
+  part.link ? (
+    <Text
+        key={index}
+        className="text-blue-600 text-[0.7rem] underline leading-tight font-frutigerReg"
+        onPress={() => Linking.openURL(part.link)} 
+      >
+        {part.text}
+      </Text>
+    // <TouchableOpacity key={index} onPress={() => Linking.openURL(part.link)}>
+   
+    // </TouchableOpacity>
+  ) : (
+    <Text 
+      key={index} 
+      className={`text-[0.7rem]   leading-tight ${part.bold ? "font-frutigerBlack" : "font-frutigerReg"}`}
+
+    >
+      {part.text}
+    </Text>
+  )
+))}
+      </Text>
+               {/* <Text className=" text-[0.7rem] pb-3   leading-tight font-frutigerReg">
                     {innerSlideStatus
                       ? slide?.innerSlidesData[currentInnerSlide]?.description
                       : slide?.description}
                   </Text>
+                  <Text className=" text-[0.7rem] pb-3   leading-tight font-frutigerReg">
+                    {innerSlideStatus
+                      ? slide?.innerSlidesData[currentInnerSlide]?.description1
+                      : slide?.description}
+                  </Text>
+                  <Text className=" text-[0.7rem] pb-2   leading-tight font-frutigerReg">
+                    {innerSlideStatus
+                      ? slide?.innerSlidesData[currentInnerSlide]?.description1
+                      : slide?.description}
+                  </Text> */}
+               </ScrollView>
                 </View>
 
-                <View className="flex flex-row z-50 ">
+                <View className="flex flex-row z-50 mt-3">
                   <MyTextBtn onPress={goToYearExplore}  className={"w-[96px] h-[26px]"}
                                         title={"Gallery"}
                                         bg="black"
@@ -493,7 +538,8 @@ bgColor={index % 2 === 0 ? "white" : "#fafafa"}
           </View>
 
         </View>
-      ))}
+      )
+      })}
     </Swiper>
  
     </View>
