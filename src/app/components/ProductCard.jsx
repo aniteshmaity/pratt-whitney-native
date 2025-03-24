@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image,ScrollView } from 'react-native';
 import Animated, { Easing, withTiming, useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
 import yearImages from '../constants/yearImages';
 import ClippedView from './ClippedView';
 import boxShadow from '../constants/boxShadow';
 
-export default function ProductCard({handleExploreClick}) {
+export default function ProductCard({handleExploreClick,engines = []}) {
+  // console.log("engines",engines);
   const [activeEngineIndex, setActiveEngineIndex] = useState(0);
-  const engines = [
-    { id: 'gtf', img: yearImages.v2500_1, title: 'GTF Engine', description: "Powering today's Most efficient single aircraft" },
-    { id: 'v2500_1', img: yearImages.v2500_1, title: 'v2500_1', description: "Powering today's Most efficient single aircraft" },
-    { id: 'v2500_2', img: yearImages.v2500_2, title: 'v2500_2', description: "Powering today's Most efficient single aircraft" },
-    { id: 'v2500_3', img: yearImages.v2500_3, title: 'v2500_3', description: "Powering today's Most efficient single aircraft" },
-  ];
 
-  const contentOpacity = engines?.map((_, index) => useSharedValue(index === activeEngineIndex ? 1 : 0));
-  const contentTranslateX =  engines?.map((_, index) => useSharedValue(index === activeEngineIndex ? 0 : -50));
-  const engineScale = engines?.map((_, index) => useSharedValue(index === activeEngineIndex ? 1.3 : 1));
+  const MAX_ENGINES = 5;
+  const contentOpacity = Array(MAX_ENGINES).fill().map(() => useSharedValue(0));
+  const contentTranslateX = Array(MAX_ENGINES).fill().map(() => useSharedValue(-50));
+  const engineScale = Array(MAX_ENGINES).fill().map(() => useSharedValue(1));
+
+  // Set initial values for the active engine
+  useEffect(() => {
+    if (engines.length > 0) {
+      contentOpacity[activeEngineIndex].value = 1;
+      contentTranslateX[activeEngineIndex].value = 0;
+      engineScale[activeEngineIndex].value = 1.3;
+    }
+  }, [engines]);
 
   const handleEngineClick = (index) => {
 
@@ -56,6 +61,10 @@ export default function ProductCard({handleExploreClick}) {
       transform: [{ translateX: contentTranslateX[index].value }]
     }));
 
+  if (!engines || engines.length === 0) {
+    return null; // or return a loading state
+  }
+
   // const animatedEngineStyle = (index) =>
   //   useAnimatedStyle(() => ({
   //     opacity: 1,
@@ -64,7 +73,8 @@ export default function ProductCard({handleExploreClick}) {
     
   
   return (
-    <View className="flex flex-row gap-8 items-start justify-start pl-[10px] py-[20px]">
+   <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+     <View className="flex flex-row gap-8 items-start justify-start pl-[10px] py-[20px] ">
       {engines.map((engine, index) => (
         <View key={engine.id} className="flex flex-row items-center gap-[50px] relative">
           {/* Engine Image */}
@@ -106,5 +116,6 @@ export default function ProductCard({handleExploreClick}) {
         </View>
       ))}
     </View>
+   </ScrollView>
   );
 }

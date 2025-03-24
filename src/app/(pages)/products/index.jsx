@@ -30,21 +30,22 @@ import ClippedView from "../../components/ClippedView";
 import { useRouter } from "expo-router";
 import RedDotSvg from "../../components/RedDotSvg";
 import { LinearGradient } from "expo-linear-gradient";
+import { productEngines } from "../../constants/productEngineData";
 const { height } = Dimensions.get("window");
 const ITEM_HIGHT = (height - 80) / 3 ;
 const ContainerHeight = height - 80
 
-const Engine = [
+// const Engine = [
  
-  null,
-  { engine: "Military Engines", description: "This is the description 3 " },
-  { engine: "Pratt Engines", description: "This is the description 4" },
-  { engine: "Commercial Engines", description: "This is the description 5" },
-  { engine: "Auxiliary Engines", description: "This is the description 6" },
-  { engine: "Aftermarket", description: "This is the description 7" },
-  null,
+//   null,
+//   { engine: "Military Engines", description: "This is the description 3 " },
+//   { engine: "Pratt Engines", description: "This is the description 4" },
+//   { engine: "Commercial Engines", description: "This is the description 5" },
+//   { engine: "Auxiliary Engines", description: "This is the description 6" },
+//   { engine: "Aftermarket", description: "This is the description 7" },
+//   null,
   
-];
+// ];
 
 const EngineItem = ({
   item,
@@ -63,7 +64,7 @@ const EngineItem = ({
   if (item === null) {
     return <View style={{ height: ITEM_HIGHT }} />;
   }
-  const realIndex = Engine.filter((e) => e !== null).indexOf(item);
+  const realIndex = productEngines.filter((e) => e !== null).indexOf(item);
   const scale = useDerivedValue(() => {
     const targetScale = interpolate(
       scrollY.value,
@@ -170,7 +171,7 @@ export default function Products() {
   const handleClose = () => {
  router.push("home")
   };
-  const validEngines = Engine.filter((item) => item !== null);
+  const validEngines = productEngines.filter((item) => item !== null);
   const translateYValues = validEngines.map((_, index) =>
     useSharedValue(index === 0 ? ContainerHeight * 0.5 - 538 * 0.5 : ContainerHeight * 4)
   );
@@ -279,7 +280,7 @@ const scrollHandler = useAnimatedScrollHandler((event) => {
       console.log("newindex",newIndex);
 
      if(!isFlag){
-      if (newIndex >= 0 && newIndex < Engine.length) {
+      if (newIndex >= 0 && newIndex < productEngines.length) {
         runOnJS(setMiddleIndex)(newIndex);
        
         // Animate the current item out of view
@@ -325,7 +326,7 @@ const onMomentumScrollEnd = (event) => {
       </View>
 
       {/* Main Content */}
-      <View className="flex-1 flex-row h-[calc(100vh-80px)] gap-5 px-12 bg-[#f5f5f5]">
+      <View className="flex flex-row  gap-5 px-12 bg-[#f5f5f5]" style={{height:ContainerHeight}}>
       {/* <LinearGradient
                   colors={["#00000014", "#E11C37"]}
                   start={{ x: 0, y: 0 }}
@@ -348,7 +349,7 @@ const onMomentumScrollEnd = (event) => {
           <View className="absolute w-[1px] h-[100%] left-[50%] bg-[#00000014] rotate-90" />
           <Animated.FlatList
             ref={flatListRef}
-            data={Engine}
+            data={productEngines}
             keyExtractor={(item, index) => index.toString()}
             showsVerticalScrollIndicator={false}
             snapToInterval={ITEM_HIGHT} // Snap to each engine card
@@ -429,7 +430,9 @@ const onMomentumScrollEnd = (event) => {
                     radial cooled engine in 1925 to the hybrid electric
                     technologies of today.
                   </Text>
-                  <ProductCard handleExploreClick={handleExploreClick} />
+         
+           <ProductCard handleExploreClick={handleExploreClick} engines={productEngines[middleIndex]?.engines || []} />
+      
                   {/* <TouchableOpacity
                     className="bg-slate-400 "
                     onPress={handleExploreClick}

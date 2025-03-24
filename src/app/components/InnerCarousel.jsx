@@ -65,7 +65,7 @@ export default function InnerCarousel({ images }) {
             background: "linear-gradient(270deg, #f3f3f3, transparent)",
           }}
         ></View> */}
-        <LinearGradient start={{ x: 1, y: 0 }}  end={{ x: 0, y: 0 }}  colors={['#f3f3f3', 'transparent']} className={`h-full w-full z-30  absolute top-0 ${images?.length > 6 ? 'opacity-100' : 'opacity-0'} `}  />
+        {/* <LinearGradient start={{ x: 1, y: 0 }}  end={{ x: 0, y: 0 }}  colors={['#f3f3f3', 'transparent']} className={`h-full w-full z-30  absolute top-0 ${images?.length > 6 ? 'opacity-100' : 'opacity-0'} `}  /> */}
 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             {/* FlatList for Image Slider */}
             <FlatList
@@ -77,9 +77,9 @@ export default function InnerCarousel({ images }) {
           
                   keyboardShouldPersistTaps="handled"
                 //   scrollEventThrottle={16}
-                renderItem={({ item }) => (
+                renderItem={({ item,index }) => (
                     <Animated.View className="flex flex-row items-center mr-[6px]">
-                        <Image source={item?.img} className="w-full h-[42px] object-cover" resizeMode='cover' style={{ width: 42, height: 42 }} />
+                        <Image source={item?.img} className="w-full h-[42px] object-cover " resizeMode='cover' style={{ width: 42, height: 42, opacity: Math.max(0.1, 1 - index * 0.1), }} />
                     </Animated.View>
                 )}
             />
