@@ -1,5 +1,5 @@
-import { View, Text, Image, Button, TouchableOpacity, ScrollView, Pressable, Dimensions } from "react-native";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { View, Text, Image, Button, TouchableOpacity, ScrollView, Pressable, Dimensions, Modal, ActivityIndicator } from "react-native";
+import React, { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import yearImages from "../constants/yearImages";
 import GalleryCarousel from "./GalleryCarousel";
 import tabsData from "../constants/tabsData";
@@ -10,17 +10,37 @@ import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing, interpo
 import ClippedView from "./ClippedView";
 import CustomCloseButton from "./buttons/CustomCloseButton";
 import boxShadow from "../constants/boxShadow";
-import {ResizeMode, Video} from "expo-av"
+import { ResizeMode, Video } from "expo-av"
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { useFocusEffect } from "expo-router";
+import { Canvas, useFrame } from '@react-three/fiber/native';
+import { OrbitControls, useGLTF } from '@react-three/drei/native';
+import models3D from "../constants/models3D";
+import { Test3d } from "./3dModels/Test3d";
 
 const screenHeight = Dimensions.get("window").height;
 const adjustedHeight = screenHeight - 100; // Equivalent to calc(100vh - 100px)
 const videoSource =
   'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
-export default function EngineComponent({ type, onEngineClose }) {
-  console.log("type---", type);
+
+// GLB Model Component
+function Model({ url }) {
+  if (typeof url !== "string") {
+    console.error("Invalid URL for 3D model:", url);
+    return null; // Prevent errors if URL is incorrect
+  }
+
+  const { scene } = useGLTF(url);
+  useFrame(() => {
+    scene.rotation.y += 0.01;
+  });
+  return <primitive object={scene} scale={1} />;
+}
+
+export default function EngineComponent({ type, onEngineClose, engineData }) {
+  // console.log("enginedata---", engineData);
+  const [OrbitControls, events] = useControls()
   const [activeTab, setActiveTab] = useState(0);
   const contentRef = useRef(null);
   const gtfImageRef = useRef(null);
@@ -35,6 +55,9 @@ export default function EngineComponent({ type, onEngineClose }) {
   const [scrollParentHeight1, setScrollParentHeight1] = useState(0);
   const [scrollParentHeight2, setScrollParentHeight2] = useState(0);
   const [contentHeight, setContentHeight] = useState(0);
+  const [show3DModel, setShow3DModel] = useState(false);
+  console.log("showmodel---------------",show3DModel);
+  // const [tabsData, setTabsData] = useState(engineData?.defaultTabsData);
   const videoRef = useRef(null);
   const rotation = useSharedValue(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -60,7 +83,7 @@ export default function EngineComponent({ type, onEngineClose }) {
   };
   // console.log("activetab", activeTab);
 
-  const productPlayer  = useVideoPlayer(videoSource, player => {
+  const productPlayer = useVideoPlayer(videoSource, player => {
     player.loop = true;
 
   });
@@ -70,21 +93,21 @@ export default function EngineComponent({ type, onEngineClose }) {
 
   });
 
-  useFocusEffect(
-    useCallback(() => {
-      if (type !== "product") {
-        console.log("Screen focused, starting video"); // Debugging
-        nonProductPlayer.play(); // Play when screen is focused
-      }
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     if (type !== "product") {
+  //       console.log("Screen focused, starting video"); 
+  //       nonProductPlayer.play();
+  //     }
 
-      return () => {
-        console.log("Screen blurred, pausing video"); // Debugging
-        if (type !== "product") {
-          nonProductPlayer.pause(); // Pause when screen loses focus
-        }
-      };
-    }, [type, nonProductPlayer]) // Dependencies
-  );
+  //     return () => {
+  //       console.log("Screen blurred, pausing video");
+  //       if (type !== "product") {
+  //         nonProductPlayer.pause();
+  //       }
+  //     };
+  //   }, [type, nonProductPlayer]) 
+  // );
   // useEffect(() => {
   //   const content = contentRef.current;
 
@@ -168,7 +191,7 @@ export default function EngineComponent({ type, onEngineClose }) {
 
 
   const rotateAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [ { rotate: `${rotation.value}deg` }],
+    transform: [{ rotate: `${rotation.value}deg` }],
   }));
 
   // const hoverGesture = Gesture.Tap()
@@ -285,7 +308,7 @@ export default function EngineComponent({ type, onEngineClose }) {
   // }));
   return (
     <View
-      className="flex flex-row"
+      className="flex flex-row "
       style={{ height: adjustedHeight }}
       // style={{
       //   clipPath:
@@ -296,8 +319,17 @@ export default function EngineComponent({ type, onEngineClose }) {
         setSize({ width, height });
       }}
     >
+      {show3DModel && (<View className="bg-black flex-1 w-full h-full absolute z-[50000]">
+        <View className="flex-1">
+          <Canvas>
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[5, 5, 5]} intensity={1} />
+            <Test3d position={[0, 0, 0]} />
+          </Canvas>
+        </View>
+      </View>)}
 
-      <View className="w-full h-full flex-1">
+      <View className="w-full h-full flex-1 ">
         <ClippedView width={size.width / 2} height={size.height} backgroundColor="#D91027" clipPathId="Engineclip0" slug="variant2" />
         <View className={`relative z-[20] overflow-hidden w-full bg-[#D91027]`} style={{ height: type === "product" ? "50%" : "54%" }}>
           {/* <Image
@@ -307,46 +339,46 @@ export default function EngineComponent({ type, onEngineClose }) {
             resizeMode="cover"
           /> */}
 
-    {/* <Video  source={{ uri: "http://commondatastorage.g  oogleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" }}  */}
-    {type === "product" ? (<VideoView ref={videoRef} style={{width:"99.5%", height:"100%"}}  className="  pr-1"       player={productPlayer}  allowsFullscreen
-          allowsPictureInPicture  nativeControls={false} 
-        resizeMode="cover"  />) : (
-          // <Video  
-          //        style={{
-          //       position: 'absolute',
-          //       width: "99.5%",
-          //       height: "120%",
-          //       left: 0,
-          //       top: "-10%",
-          //       right: "3%"
-          //     }} 
-          //     source={require('../../assets/images/project/big_buck_bunny_360p_5mb.mp4')} 
-          //     isLooping  
-          //     shouldPlay={true}
-          //     isMuted={true}  
-          //     resizeMode={ResizeMode.COVER}   
-          //     allowsPictureInPicture 
-          //   />
-          <View className="w-[99.5%] h-full bg-slate-500 overflow-hidden">
-            <VideoView
-          style={{
-       
-            flex: 1, // Fill the parent container
-            width: '100%',
-            height: '100%',
-            aspectRatio: 16 / 9,
-          }}
-          player={nonProductPlayer}
-          allowsFullscreen
-          allowsPictureInPicture
-        />
-          </View>
-        )}
+          {/* <Video  source={{ uri: "http://commondatastorage.g  oogleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" }}  */}
+          {type === "product" ? (<VideoView ref={videoRef} style={{ width: "99.5%", height: "100%" }} className="  pr-1" player={productPlayer} allowsFullscreen
+            allowsPictureInPicture nativeControls={false}
+            resizeMode="cover" />) : (
+            // <Video  
+            //        style={{
+            //       position: 'absolute',
+            //       width: "99.5%",
+            //       height: "120%",
+            //       left: 0,
+            //       top: "-10%",
+            //       right: "3%"
+            //     }} 
+            //     source={require('../../assets/images/project/big_buck_bunny_360p_5mb.mp4')} 
+            //     isLooping  
+            //     shouldPlay={true}
+            //     isMuted={true}  
+            //     resizeMode={ResizeMode.COVER}   
+            //     allowsPictureInPicture 
+            //   />
+            <View className="w-[99.5%] h-full bg-slate-500 overflow-hidden">
+              <VideoView
+                style={{
+
+                  flex: 1, // Fill the parent container
+                  width: '100%',
+                  height: '100%',
+                  aspectRatio: 16 / 9,
+                }}
+                player={nonProductPlayer}
+                allowsFullscreen
+                allowsPictureInPicture
+              />
+            </View>
+          )}
 
 
         </View>
         <View className={`  relative px-[2.2px] pb-[2.2px]`} style={{ height: type === "product" ? "50%" : "46%" }}>
-          {type === "product" ? (
+          {/* {type === "product" ? (
             <>
               <View className="top-0 absolute w-[150px] h-[150px] left-1/2 -translate-x-1/2 -translate-y-1/2 z-[15]" >
                 <Animated.Image
@@ -372,6 +404,16 @@ export default function EngineComponent({ type, onEngineClose }) {
                 </TouchableWithoutFeedback>
               </View>
               </>
+          ) : null} */}
+          {type === "product" ? (
+            <TouchableOpacity
+              className="absolute bg-[#404040] border-[#D91027] border-[8px] w-[130px] h-[130px] rounded-full transform -translate-y-1/2 left-1/2 -translate-x-1/2 z-[999] flex justify-center items-center"
+              onPress={() => setShow3DModel(true)}
+            >
+              <Text className="w-[65%] text-[17px] text-[#ffff] font-[600] text-center">
+                Explore 3D
+              </Text>
+            </TouchableOpacity>
           ) : null}
 
           <View
@@ -405,10 +447,10 @@ export default function EngineComponent({ type, onEngineClose }) {
       <View className=" overflow-y-hidden relative flex-1 h-full"
       >
         <View className=" h-[54%] bg-slate-400 flex  justify-around">
-          {type === "product" && (  <View className="absolute top-0 right-0 z-50">
-                          <CustomCloseButton onPress={onEngineClose} type={2} bgOpacity="false" />
-                          </View>)}
-        
+          {type === "product" && (<View className="absolute top-0 right-0 z-50">
+            <CustomCloseButton onPress={onEngineClose} type={2} bgOpacity="false" />
+          </View>)}
+
           <ClippedView width={Math.max(size.width / 2 - 1, 0)} height={size.height} backgroundColor="white" clipPathId="Engineclip2" slug="variant4" />
 
 
@@ -423,10 +465,10 @@ export default function EngineComponent({ type, onEngineClose }) {
               <ClippedView width={400} height={87} backgroundColor="#393637" clipPathId="clip2" />
               <Text className="text-[2.2rem]  leading-tight text-white font-ObjektivMk2Black">
 
-                {type === "product" ? "GTF Engine" : "TF33 Engine"}
+                {type === "product" ? engineData?.title : "TF33 Engine"}
               </Text>
               <Text className="text-[#CE2028] text-[0.8rem] font-ObjektivMk1Bold pt-1">
-                A Legend Engine For a legedary Bombar
+                {engineData?.subTitle || "A Legend Engine For a legedary Bombar"}
               </Text>
             </View>
           </View>
@@ -447,18 +489,8 @@ export default function EngineComponent({ type, onEngineClose }) {
 
                 className="text-[#000000b3]  pr-[40px] text-[0.75rem] font-objektiv"
               >
-                The Pratt & Whitney GTF™ engine is the only geared propulsion system
-                delivering industry-leading fuel efficiency and sustainability
-                benefits. Our geared fan has fundamentally changed how more
-                sustainable propulsion works. Having quickly become the foundation
-                of our industry’s The Pratt & Whitney GTF™ engine is the only geared
-                changed how more sustainable propulsion works. Having quickly become
-                the foundation of our industry’s The Pratt & Whitney GTF™ engine is
-                the only geared.
-                Having quickly become
-                the foundation of our industry’s The Pratt & Whitney GTF™ engine is
-                the only geared.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, fuga animi. Beatae nulla sed, doloremque voluptate et eius esse recusandae ea corporis dolor nesciunt, non consequuntur, aliquid vero deleniti tempora?
+                {engineData?.description || "The Pratt & Whitney GTF™ engine is the only geared propulsion system delivering industry-leading fuel efficiency and sustainability benefits. Its geared fan has fundamentally changed how sustainable propulsion works, quickly becoming a foundation of our industry."}
+
               </Text>
             </Animated.ScrollView>
 
@@ -474,29 +506,56 @@ export default function EngineComponent({ type, onEngineClose }) {
               </View>
             )}
           </View>
-          <View className="flex gap-[40px] flex-row ml-5  items-center">
-            <Text className="text-[#CE2028] text-[12px] font-ObjektivMk1Bold">Select Variat</Text>
+          {engineData?.variants && engineData?.variants.length > 0 ? (
+            <View className="flex gap-[40px] flex-row ml-5  items-center">
+              <Text className="text-[#CE2028] text-[12px] font-ObjektivMk1Bold">Select Variat</Text>
 
-            {Varients.map((item, index) => {
-              return (
-                <View key={index}>
-                  <View className=" rounded-full   w-[40px] h-[40px] p-1 bg-white" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
-                    <View className="overflow-hidden w-full h-full   rounded-full" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 10, 5) }}>
-                      <Image
-                        source={item.img}
-                        className="h-full w-full"
-                        resizeMode="cover"
-                        style={{ width: '100%', height: '100%' }}
-                      />
+              {engineData?.variants.map((item, index) => {
+                return (
+                  <View key={index}>
+                    <View className=" rounded-full   w-[40px] h-[40px] p-1 bg-white" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
+                      <View className="overflow-hidden w-full h-full   rounded-full" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 10, 5) }}>
+                        <Image
+                          source={item.img}
+                          className="h-full w-full"
+                          resizeMode="cover"
+                          style={{ width: '100%', height: '100%' }}
+                        />
+                      </View>
                     </View>
+                    <Text className="text-[8px] text-center mt-2">
+                      {item.title}
+                    </Text>
                   </View>
-                  <Text className="text-[8px] text-center mt-2">
-                    {item.title}
-                  </Text>
-                </View>
-              );
-            })}
-          </View>
+                );
+              })}
+            </View>
+          ) : (
+            <View className="flex gap-[40px] flex-row ml-5  items-center">
+              <Text className="text-[#CE2028] text-[12px] font-ObjektivMk1Bold">Select Variat</Text>
+
+              {Varients.map((item, index) => {
+                return (
+                  <View key={index}>
+                    <View className=" rounded-full   w-[40px] h-[40px] p-1 bg-white" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
+                      <View className="overflow-hidden w-full h-full   rounded-full" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 10, 5) }}>
+                        <Image
+                          source={item.img}
+                          className="h-full w-full"
+                          resizeMode="cover"
+                          style={{ width: '100%', height: '100%' }}
+                        />
+                      </View>
+                    </View>
+                    <Text className="text-[8px] text-center mt-2">
+                      {item.title}
+                    </Text>
+                  </View>
+                );
+              })}
+            </View>
+          )}
+
         </View>
 
         <View className=" relative   h-[42%] " onLayout={onParentLayout2}>
@@ -515,123 +574,123 @@ export default function EngineComponent({ type, onEngineClose }) {
                   onPress={() => setActiveTab(index)}
                   className={`flex-1 px-4 py-[6px] text-[0.5rem] `}
                 >
-                         <ClippedView width={98} height={20} backgroundColor={activeTab === index ? "#D91027" : "#918F8F"} clipPathId="EnginePclip1" slug={type === "product" ? "variant8" : "variant5"}  />
+                  <ClippedView width={98} height={20} backgroundColor={activeTab === index ? "#D91027" : "#918F8F"} clipPathId="EnginePclip1" slug={type === "product" ? "variant8" : "variant5"} />
                   <Text className="text-[0.5rem] font-semibold  text-white text-center">{tab.title}</Text>
                 </TouchableOpacity>
               ))}
             </View>
 
             {/* Tabs Content */}
-            <View className="relative w-full " style={{height:scrollParentHeight2-20+8}}>
-          <Animated.ScrollView
-             showsVerticalScrollIndicator={false}
-              ref={contentRef}
-              onContentSizeChange={handleContentSizeChange2}
-              onScroll={scrollHandler2} scrollEventThrottle={16} showsHorizontalScrollIndicator={false}
-              className="  h-[100%] w-[89%] no-scrollbar mt-2"
-            >
-              {tabsData[activeTab]?.content?.map((item, idx) =>
-                typeof item === "string" ? (
-                  <Text key={idx} className="mb-2">
-                    {item}
-                  </Text>
-                ) : (
-                  <Animated.View
-                    key={idx}
-                    style={[idx !== tabsData.length && { borderBottomColor: "#00000014", borderBottomWidth: 1 },animatedStyle]}
-                    className={`flex  ${tabsData[activeTab].title === "Platforms"
+            <View className="relative w-full " style={{ height: scrollParentHeight2 - 20 + 8 }}>
+              <Animated.ScrollView
+                showsVerticalScrollIndicator={false}
+                ref={contentRef}
+                onContentSizeChange={handleContentSizeChange2}
+                onScroll={scrollHandler2} scrollEventThrottle={16} showsHorizontalScrollIndicator={false}
+                className="  h-[100%] w-[89%] no-scrollbar mt-2"
+              >
+                {tabsData[activeTab]?.content?.map((item, idx) =>
+                  typeof item === "string" ? (
+                    <Text key={idx} className="mb-2">
+                      {item}
+                    </Text>
+                  ) : (
+                    <Animated.View
+                      key={idx}
+                      style={[idx !== tabsData.length && { borderBottomColor: "#00000014", borderBottomWidth: 1 }, animatedStyle]}
+                      className={`flex  ${tabsData[activeTab].title === "Platforms"
                         ? "flex-row pl-[10px]"
                         : " flex-row "
-                      }  gap-[20px] py-4`}
-                  >
-                    <View className="flex-1 bg-white">
-                    <View className="bg-white  rounded-full   w-[60px] h-[60px] p-1" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
-                      <View className="w-full h-full overflow-hidden  rounded-full ">
-                        <Image
-                          source={item.fanImage}
-                          className="w-full h-full"
+                        }  gap-[20px] py-4`}
+                    >
+                      <View className="flex-1 bg-white">
+                        <View className="bg-white  rounded-full   w-[60px] h-[60px] p-1" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
+                          <View className="w-full h-full overflow-hidden  rounded-full ">
+                            <Image
+                              source={item.fanImage}
+                              className="w-full h-full"
 
-                          resizeMode="cover"
-                        />
+                              resizeMode="cover"
+                            />
+                          </View>
+                        </View>
                       </View>
-                    </View>
-                    </View>
-                    {tabsData[activeTab].title !== "Platforms" ? (
-                      <View className="flex-[2] bg-white">
-                        <Text className="font-objektiv text-[1rem]">
-                          {item.heading}
-                        </Text>
-                        <View>
-      {item.details.map((detail, index) => (
-        <View key={index} className="flex flex-row items-center gap-1">
-          <Text className="text-[0.6rem]">•</Text>
-          <Text className="text-[0.6rem] font-objektiv">{detail}</Text>
-        </View>
-      ))}
-    </View>
-                      </View>
-                    ) : (
-                      null
-                    )}
+                      {tabsData[activeTab].title !== "Platforms" ? (
+                        <View className="flex-[2] bg-white">
+                          <Text className="font-objektiv text-[1rem]">
+                            {item.heading}
+                          </Text>
+                          <View>
+                            {item.details.map((detail, index) => (
+                              <View key={index} className="flex flex-row items-center gap-1">
+                                <Text className="text-[0.6rem]">•</Text>
+                                <Text className="text-[0.6rem] font-objektiv">{detail}</Text>
+                              </View>
+                            ))}
+                          </View>
+                        </View>
+                      ) : (
+                        null
+                      )}
 
-                    <View className="flex-1 bg-white">
-                      <Text className="text-[#CE2028] text-[1.3rem] font-ObjektivMk1Bold">
-                        {item.bypassRatio}
-                      </Text>
-                      <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-objektiv">
-                        {item.enginetext}
-                      </Text>
-                    </View>
-                    {tabsData[activeTab].title !== "Platforms" ? (
-                      <View className="bg-white flex-1">
-                        <Text className="text-[#CE2028] font-[800] text-[1.3rem] font-objektiv">
-                          {item.fanDiameter}
+                      <View className="flex-1 bg-white">
+                        <Text className="text-[#CE2028] text-[1.3rem] font-ObjektivMk1Bold">
+                          {item.bypassRatio}
                         </Text>
                         <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-objektiv">
-                          Fan diameter
+                          {item.enginetext}
                         </Text>
                       </View>
-                    ) : (
-                      null
-                    )}
-                    {tabsData[activeTab]?.title === "Platforms" ? (
-                      <View className="flex-[3]">
-                       <Animated.View className="" style={{ height: expandedIndex === idx ? animatedHeight : 40, overflow: 'hidden' }}>
-                       <Text className="text-[0.8rem] font-objektiv">
-                          {expandedIndex === idx
-                            ? item.description
-                            : `${item.description.slice(0, 50)}...`}{" "}
-                          <Text
-                            className="text-[#CE2028] text-[0.7rem] font-frutigerBold cursor-pointer block"
-                            onPress={() => toggleDescription(idx)}
-                          >
-                            {expandedIndex === idx
-                              ? "Tap to collapse"
-                              : "Tap for more"}
+                      {tabsData[activeTab].title !== "Platforms" ? (
+                        <View className="bg-white flex-1">
+                          <Text className="text-[#CE2028] font-[800] text-[1.3rem] font-objektiv">
+                            {item.fanDiameter}
                           </Text>
-                        </Text>
-                       </Animated.View>
-                      </View>
-                    ) : (
-                      null
-                    )}
+                          <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-objektiv">
+                            Fan diameter
+                          </Text>
+                        </View>
+                      ) : (
+                        null
+                      )}
+                      {tabsData[activeTab]?.title === "Platforms" ? (
+                        <View className="flex-[3]">
+                          <Animated.View className="" style={{ height: expandedIndex === idx ? animatedHeight : 40, overflow: 'hidden' }}>
+                            <Text className="text-[0.8rem] font-objektiv">
+                              {expandedIndex === idx
+                                ? item.description
+                                : `${item.description.slice(0, 50)}...`}{" "}
+                              <Text
+                                className="text-[#CE2028] text-[0.7rem] font-frutigerBold cursor-pointer block"
+                                onPress={() => toggleDescription(idx)}
+                              >
+                                {expandedIndex === idx
+                                  ? "Tap to collapse"
+                                  : "Tap for more"}
+                              </Text>
+                            </Text>
+                          </Animated.View>
+                        </View>
+                      ) : (
+                        null
+                      )}
+                    </Animated.View>
+                  )
+                )}
+                {/* Custom Scrollbar Red Dot */}
+              </Animated.ScrollView>
+              {isOverflowing && (
+                <View className="bg-[#D9D9D9] w-[3px] right-[20px] top-[0px] h-[80%]  absolute">
+                  <Animated.View
+                    ref={redDotRef}
+                    style={[redAnimatedStyle2]}
+                    className="w-5 h-5 bg-[#D9D9D9] rounded-full absolute left-1/2 transform -translate-x-1/2 flex flex-row justify-center items-center"
+                  >
+                    <View className="bg-red-600 rounded-full w-2.5 h-2.5" />
                   </Animated.View>
-                )
+                </View>
               )}
-              {/* Custom Scrollbar Red Dot */}
-            </Animated.ScrollView>
-            {isOverflowing && (
-              <View className="bg-[#D9D9D9] w-[3px] right-[20px] top-[0px] h-[80%]  absolute">
-                <Animated.View
-                  ref={redDotRef}
-                  style={[redAnimatedStyle2]}
-                  className="w-5 h-5 bg-[#D9D9D9] rounded-full absolute left-1/2 transform -translate-x-1/2 flex flex-row justify-center items-center"
-                >
-                  <View className="bg-red-600 rounded-full w-2.5 h-2.5" />
-                </Animated.View>
-              </View>
-            )}
-          </View>
+            </View>
           </View>
         </View>
       </View>

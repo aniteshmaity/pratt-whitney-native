@@ -143,6 +143,7 @@ export default function Products() {
   const [currentIndex, setCurrentIndex] = useState(0); // Initial current index
   const [middleIndex, setMiddleIndex] = useState(1); // Initial middle index (3rd card)
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
+  const [selectedEngineDetails, setSelectedEngineDetails] = useState(null);
   const [isFlag, setIsFlag] = useState(false);
   const [cardSize, setCardSize] = useState({ width: 0, height: 0 });
   // const [containerHeight, setContainerHeight] = useState(0);
@@ -239,9 +240,10 @@ export default function Products() {
   //   translateY.value = withTiming(50, { duration: 800 });
   // };
   const enginetranslateY = useSharedValue(500); 
-  const handleExploreClick = () => {
+  const handleExploreClick = (engineDetails) => {
     console.log("clicked -details");
     setIsDetailsVisible(true);
+    setSelectedEngineDetails(engineDetails);
     enginetranslateY.value= 0;
   };
   const handleEngineClose = () => {
@@ -455,7 +457,7 @@ const onMomentumScrollEnd = (event) => {
             height: "100%",
           },engineAnimatedStyle]}
         >
-          <ProductEngineDetails handleEngineClose={handleEngineClose} />
+          <ProductEngineDetails engineData={selectedEngineDetails} handleEngineClose={handleEngineClose} />
         </Animated.View>)}
     </SafeAreaView>
     

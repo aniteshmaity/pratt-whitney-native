@@ -7,7 +7,7 @@ import EngineComponent from "./EngineComponent";
 import ClippedView from "./ClippedView";
 import CustomCloseButton from "./buttons/CustomCloseButton";
 
-export default function ProductEngineDetails({handleEngineClose}) {
+export default function ProductEngineDetails({handleEngineClose,engineData}) {
     const [size, setSize] = useState({ width: 0, height: 0 });
   const handleClose = () => {
     console.log("ok");
@@ -40,7 +40,7 @@ export default function ProductEngineDetails({handleEngineClose}) {
             <View className="relative ">
        
 
-              <EngineComponent type="product" onEngineClose={handleEngineClose} />
+              <EngineComponent type="product" engineData={engineData} onEngineClose={handleEngineClose} />
             </View>
           </View>
         </ImageBackground>
