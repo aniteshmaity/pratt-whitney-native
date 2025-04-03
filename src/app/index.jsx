@@ -69,12 +69,7 @@ export default function App() {
       }
     });
   }, []);
-  const showOtherElements = () => {
-    // translateY.value = withDelay(900, withTiming(0, { duration: 500 }));
-    // LogoScale.value = withDelay(500, withTiming(1, { duration: 500 }));
-    // ImageTranslate.value = withDelay(500, withSpring(0));
-    // ImageScale.value = withDelay(500, withSpring(1));
-  };
+ 
 
   const img1Style = useAnimatedStyle(() => ({
     transform: [{ rotate: `${img1Rotate.value}deg` }],
