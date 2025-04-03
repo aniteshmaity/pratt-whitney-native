@@ -1,14 +1,16 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import models3D from '../../constants/models3D'
 
 
 export function Test3d(props) {
   const { nodes, materials } = useGLTF(models3D.gtftest);
-  
-  
+  const { setLoading, ...restProps } = props; 
+  useEffect(() => {
+    if (setLoading) setLoading(false); // Hide loading when model is ready
+  }, [setLoading]);
   return (
-    <group {...props} dispose={null}>
+    <group {...restProps} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.974}>
         <mesh
           castShadow
