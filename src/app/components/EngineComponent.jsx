@@ -38,9 +38,8 @@ function Model({ url }) {
   return <primitive object={scene} scale={1} />;
 }
 
-export default function EngineComponent({ type, onEngineClose, engineData }) {
+export default function EngineComponent({ type, onEngineClose, engineData,setShow3DModel,setLoading }) {
   // console.log("enginedata---", engineData);
-  const [OrbitControls, events] = useControls()
   const [activeTab, setActiveTab] = useState(0);
   const contentRef = useRef(null);
   const gtfImageRef = useRef(null);
@@ -55,8 +54,7 @@ export default function EngineComponent({ type, onEngineClose, engineData }) {
   const [scrollParentHeight1, setScrollParentHeight1] = useState(0);
   const [scrollParentHeight2, setScrollParentHeight2] = useState(0);
   const [contentHeight, setContentHeight] = useState(0);
-  const [show3DModel, setShow3DModel] = useState(false);
-  console.log("showmodel---------------",show3DModel);
+ 
   // const [tabsData, setTabsData] = useState(engineData?.defaultTabsData);
   const videoRef = useRef(null);
   const rotation = useSharedValue(0);
@@ -68,8 +66,8 @@ export default function EngineComponent({ type, onEngineClose, engineData }) {
   const scrollY1 = useSharedValue(0);
   const scrollY2 = useSharedValue(0);
   const animatedHeight = useSharedValue(40);
-  console.log("scrollparent-1".scrollParentHeight1);
-  console.log("scrollparent-2".scrollParentHeight1);
+  // console.log("scrollparent-1".scrollParentHeight1);
+  // console.log("scrollparent-2".scrollParentHeight1);
   const toggleDescription = (index) => {
     if (expandedIndex === index) {
       // Collapse
@@ -319,15 +317,6 @@ export default function EngineComponent({ type, onEngineClose, engineData }) {
         setSize({ width, height });
       }}
     >
-      {show3DModel && (<View className="bg-black flex-1 w-full h-full absolute z-[50000]">
-        <View className="flex-1">
-          <Canvas>
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[5, 5, 5]} intensity={1} />
-            <Test3d position={[0, 0, 0]} />
-          </Canvas>
-        </View>
-      </View>)}
 
       <View className="w-full h-full flex-1 ">
         <ClippedView width={size.width / 2} height={size.height} backgroundColor="#D91027" clipPathId="Engineclip0" slug="variant2" />
@@ -406,14 +395,30 @@ export default function EngineComponent({ type, onEngineClose, engineData }) {
               </>
           ) : null} */}
           {type === "product" ? (
+
+            
+           <>
+           <View className="top-0 absolute w-[150px] h-[150px] left-1/2 -translate-x-1/2 -translate-y-1/2 z-[15]" >
+                <Animated.Image
+                  ref={rotateImgRef}
+                  source={yearImages.rotateImg}
+                  style={[{ width: "100%", height: "100%" }, rotateAnimatedStyle]}
+                  resizeMode="cover"
+                  className=" object-cover"
+                />
+              </View>
+            <View style={{ flex: 1 }} pointerEvents="box-none">
             <TouchableOpacity
               className="absolute bg-[#404040] border-[#D91027] border-[8px] w-[130px] h-[130px] rounded-full transform -translate-y-1/2 left-1/2 -translate-x-1/2 z-[999] flex justify-center items-center"
-              onPress={() => setShow3DModel(true)}
+              onPress={() => {setShow3DModel(true)
+                setLoading(true);
+              }}
             >
               <Text className="w-[65%] text-[17px] text-[#ffff] font-[600] text-center">
                 Explore 3D
               </Text>
             </TouchableOpacity>
+            </View></>
           ) : null}
 
           <View
