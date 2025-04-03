@@ -21,6 +21,7 @@ export default function PWSplashScreen()
   const devOpacity = useSharedValue(1);
   const devTranslateY = useSharedValue(50);
 
+  
 
   useEffect(() => {
     img1Rotate.value = withTiming(360, { duration: 5000 }); // Rotate full 360
