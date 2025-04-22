@@ -11,6 +11,7 @@ const scaleFactor = 1;
 
 
 const data = [
+  null,
   { id: 1, image: yearImages.layer1, description: "Card 1 Description" },
   { id: 2, image: yearImages.layer1, description: "Card 2 Description" },
   { id: 3, image: yearImages.layer3, description: "Card 3 Description" },
@@ -18,29 +19,29 @@ const data = [
   { id: 5, image: yearImages.layer2, description: "Card 5 Description" },
   { id: 6, image: yearImages.layer3, description: "Card 6 Description" },
   { id: 7, image: yearImages.layer3, description: "Card 7 Description" },
+  null,
+  null,
+  null
 ];
 // Duplicate the data to create a looping effect
-const loopingData = [...data, ...data, ...data]
 
-const CarouselItem = ({ item, index, currentIndex,itemWidth,scrollX }) => {
-  // console.log("currentindex",currentIndex);
-  // const animatedStyle = useAnimatedStyle(() => {
-  //   const scale = index === currentIndex ? scaleFactor : 0.5; // Scale the current item
-  //   return {
-  //     transform: [{ scale: withSpring(scale) }],
-  //   };
-  // });
+
+const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, slideImages ,onImageClick,loopingData}) => {
+  if (!item) {
+    return <View style={{ width: itemWidth }} />; // Empty space
+  }
+     const realIndex = loopingData.filter((e) => e !== null).indexOf(item);
   const animatedStyle = useAnimatedStyle(() => {
     const scale = interpolate(
       scrollX.value,
       [
-        (index - 2) * itemWidth, // Two items before center
-        (index - 1) * itemWidth, // One item before center
-        index * itemWidth, // Current item (center)
-        (index + 1) * itemWidth, // One item after center
-        (index + 2) * itemWidth, // Two items after center
+        (realIndex - 1) * itemWidth, // One item before center
+        realIndex * itemWidth, // Current item (center)
+        (realIndex + 1) * itemWidth, // One item after center
+        (realIndex + 2) * itemWidth, // Two items after center
+        (realIndex + 3) * itemWidth, // Two items after center
       ],
-      [0.5, 0.5, 1, 0.5, 0.5], // Scaling effect
+      [0.5, 1, 0.5, 0.5,0.5], // Scaling effect
       'clamp'
     );
 
@@ -49,48 +50,51 @@ const CarouselItem = ({ item, index, currentIndex,itemWidth,scrollX }) => {
 
   return (
     <Animated.View style={[{ width: itemWidth }, animatedStyle]}>
-  
-  <Image
-                  source={item.image}
-                  alt={`Card ${item.uniqueId}`}
-                  className=" w-full"
-                  resizeMode="cover"
-                  style={{width:'100%', height:80}}
-                />
-                <Text className=" w-full  bg-opacity-50 text-white text-center text-[0.6rem] p-1">
-                  {item.description}
-                </Text>
 
-    </Animated.View>
+      <TouchableOpacity
+        onPress={() => {
+          console.log("onpress clickre----");
+          if (slideImages) {
+            onImageClick(index, slideImages);
+          } else {
+            onImageClick(index, data);
+          }
+        }}>
+        <Image
+
+          source={slideImages ? item.img : item.image}
+          alt={`Card ${item.uniqueId}`}
+          className=" w-full"
+          resizeMode="cover"
+          style={{ width: '100%', height: 80 }}
+        />
+      </TouchableOpacity>
+      <Text className=" w-full  bg-opacity-50 text-white text-center text-[0.6rem] p-1">
+        {item.description || "Lorem Ipsum Dolar"}
+      </Text>
+
+    </Animated.View>   
   );
 };
-const GalleryCarousel = ({ parentWidth }) => {
+const GalleryCarousel = ({ parentWidth, slideImages, onImageClick }) => {
   const scrollX = useSharedValue(0);
   const itemWidth = parentWidth / 5; // Width of each item
 
   const flatListRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(data.length); // Start in the middle of duplicated data
+  const [currentIndex, setCurrentIndex] = useState(0); // Start in the middle of duplicated data
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
-      scrollX.value = event.contentOffset.x; // Update shared value
+      scrollX.value = event.contentOffset.x;
     },
     onMomentumScrollEnd: (event) => {
       const offset = event.contentOffset.x;
-      const totalWidth = data.length * itemWidth;
-
-      // Reset to the middle of duplicated data when reaching the end
-      if (offset >= totalWidth * 2) {
-        flatListRef.current?.scrollToIndex({ index: data.length, animated: false });
-      } else if (offset <= 0) {
-        flatListRef.current?.scrollToIndex({ index: data.length, animated: false });
-      }
-
-      // Update currentIndex
       const index = Math.round(offset / itemWidth);
       setCurrentIndex(index);
     },
   });
+  const slideAllImage = [null,...slideImages,null,null,null]
+  const loopingData = slideImages ? slideAllImage : data
 
   // const handlePrev = () => {
   //   if (currentIndex <= 0) return; // Prevent negative index
@@ -98,7 +102,7 @@ const GalleryCarousel = ({ parentWidth }) => {
   //   const newIndex = currentIndex - 1;
   //   if (newIndex <= 0) return; // Prevent negative index
   //   setCurrentIndex(newIndex);
-   
+
   //   flatListRef.current?.scrollToIndex({ index: newIndex - 1, animated: true });
   // };
 
@@ -113,33 +117,32 @@ const GalleryCarousel = ({ parentWidth }) => {
 
   return (
     <View
-      className=" relative"  
+      className=" relative"
     >
-     
-           <Animated.FlatList
+
+      <Animated.FlatList
         ref={flatListRef}
         data={loopingData}
         horizontal
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
-          <CarouselItem item={item} index={index} itemWidth={itemWidth} currentIndex={currentIndex} scrollX={scrollX} />
+          <CarouselItem item={item} index={index} itemWidth={itemWidth} currentIndex={currentIndex} scrollX={scrollX} slideImages={slideImages} onImageClick={onImageClick} loopingData={loopingData} />
         )}
         onScroll={scrollHandler}
-        snapToInterval={itemWidth} // Snap to the width of each item
-        decelerationRate="fast" // Smooth scrolling
-        contentContainerStyle={{ paddingHorizontal: (parentWidth - itemWidth) / 4 }} 
-        initialScrollIndex={data.length} // Start in the middle of duplicated data
+        snapToInterval={itemWidth}
+        decelerationRate="fast"
+        // contentContainerStyle={{ paddingHorizontal: (parentWidth - itemWidth) / 4 }}
+        initialScrollIndex={1} // Start on first real item
         getItemLayout={(data, index) => ({
           length: itemWidth,
           offset: itemWidth * index,
           index,
         })}
-       
       />
-          
-          {/* Navigation Buttons */}
-          {/* <View className="absolute top-1/2 -translate-y-1/2 left-3">
+
+      {/* Navigation Buttons */}
+      {/* <View className="absolute top-1/2 -translate-y-1/2 left-3">
     
                <PrevNextButton
                     isColor={currentIndex === 0 ? "grey" : "red"} 
@@ -161,7 +164,7 @@ const GalleryCarousel = ({ parentWidth }) => {
                           />
             
           </View> */}
-      
+
     </View>
   );
 };

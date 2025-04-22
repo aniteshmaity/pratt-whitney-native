@@ -33,6 +33,7 @@ import v2500_3 from '../../assets/images/project/machine-1.png';
 import Fan1 from '../../assets/images/project/fan-1.png';
 import redDotDouble from '../../assets/images/hundredYears/red-double-dot.png';
 import redDotone from '../../assets/images/hundredYears/red-one-dot.png';
+import redStrap from '../../assets/images/hundredYears/red-border-2.png';
 import I_1925_1 from '../../assets/images/hundredYears/gallery/1925_1.png';
 import I_1925_2 from '../../assets/images/hundredYears/gallery/1925_2.png';
 import I_1925_3 from '../../assets/images/hundredYears/gallery/1925_3.png';
@@ -54,6 +55,7 @@ import I_1929_3 from '../../assets/images/hundredYears/gallery/1929_UATC 3.webp'
 
 
 
+
 export default { hundredLogo, closeIcon, pwLogo, whiteArrow,firstImg,secondImg,thirdImg,leftArrow,rightArrow,moveCity,bracket,aero1,aero2 ,aero3,aero4,logo100,machine1,machine2,layer1,layer2,layer3,pwLogoWhite,exploreBgImage,galleryText,gtf,tringleArrow,blueEngine,rotateImg,gtfImg,v2500_1,v2500_2,v2500_3,Fan1,redDotDouble,redDotone,
-    I_1925_1,I_1925_2,I_1925_3,wasp_1925_1,wasp_1925_2,wasp_1925_3,I_1927_1,I_1927_2,I_1927_3,I_1927_4,I_1928_1,I_1928_2,I_1928_3,I_1928_4,I_1929_1,I_1929_2,I_1929_3
+    I_1925_1,I_1925_2,I_1925_3,wasp_1925_1,wasp_1925_2,wasp_1925_3,I_1927_1,I_1927_2,I_1927_3,I_1927_4,I_1928_1,I_1928_2,I_1928_3,I_1928_4,I_1929_1,I_1929_2,I_1929_3,redStrap
 };

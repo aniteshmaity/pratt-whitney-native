@@ -67,6 +67,7 @@ const yearSlidedata = [
       // ],
       innerSlidesData: [
         {
+          id:1,
           year: "1925",
           description: [
             {text:"Rentshcler envisions a lighter, powerful and reliable air-cooled engine for aircraft",bold: false},
@@ -92,6 +93,7 @@ const yearSlidedata = [
           ],
         },
         {
+          id:2,
           year: "1925",
           description: [
             {text:"Wasp’s performance and reliability revolutionized American aviation",bold: false},
@@ -113,6 +115,7 @@ const yearSlidedata = [
           ],
         },
         {
+          id:3,
           year: "1927",
           description: [
             {text:"The Hornet was a single-row, 9-cylinder air-cooled radial design ",bold: false},
@@ -133,6 +136,7 @@ const yearSlidedata = [
           ],
         },
         {
+          id:4,
           year: "1928",
           description: [
             {text:"Established as a service center it took over the production of Wasp engines",bold: false},
@@ -154,6 +158,7 @@ const yearSlidedata = [
           ],
         },
         {
+          id:5,
           year: "1929",
           description: [
             {text:"A combination of airframe and aircraft engine and airline business ",bold: false},
@@ -482,6 +487,278 @@ const yearSlidedata = [
       timeline: [
         { year: "1980s", text: "The new era" },
         { year: "1990s", text: "Advancing innovation" },
+      ],
+    },
+    {
+      
+      year: "1990",
+      title: "Lorem ipsum ",
+      subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      description:
+        "The TF33 is the United States Air Force designation for the Pratt & Whitney JT3 commercial engine,First flown 60 years ago, and with more than 1,000 engines still in..",
+      image: yearImages.machine1,
+      // thumbnail:machine1,
+      buttonLink: "/yearEngineDetails",
+     slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+      innerSlidesData: [
+        {
+          id:1,
+          year: "1991",
+             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.  Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante.",
+          title: "Lorem ipsum ",
+          subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          // image: machine1,
+          // thumbnail:machine1,
+         slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+        },
+        {
+          id:2,
+          year: "1992",
+             description: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.  Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante.",
+          title: "Lorem ipsum ",
+          subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          image: yearImages.machine1,
+          // thumbnail:machine1,
+         slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+        },
+        {
+          id:3,
+          year: "1993",
+             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.  Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante.",
+          title: "Lorem ipsum ",
+          subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          image: yearImages.machine1,
+          // thumbnail:machine1,
+         slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+        },
+      ],
+      timeline: [
+        { year: "1990s", text: "The new era" },
+        { year: "2000s", text: "Advancing innovation" },
+      ],
+    },
+    {
+      
+      year: "2000",
+      title: "Lorem ipsum ",
+      subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      description:
+        "The TF33 is the United States Air Force designation for the Pratt & Whitney JT3 commercial engine,First flown 60 years ago, and with more than 1,000 engines still in..",
+      image: yearImages.machine1,
+      // thumbnail:machine1,
+      buttonLink: "/yearEngineDetails",
+     slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+      innerSlidesData: [
+        {
+          id:1,
+          year: "2001",
+             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.  Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante.",
+          title: "Lorem ipsum ",
+          subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          // image: machine1,
+          // thumbnail:machine1,
+         slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+        },
+        {
+          id:2,
+          year: "2002",
+             description: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.  Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante.",
+          title: "Lorem ipsum ",
+          subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          image: yearImages.machine1,
+          // thumbnail:machine1,
+         slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+        },
+        {
+          id:3,
+          year: "2003",
+             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.  Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante.",
+          title: "Lorem ipsum ",
+          subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          image: yearImages.machine1,
+          // thumbnail:machine1,
+         slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+        },
+      ],
+      timeline: [
+        { year: "2000s", text: "The new era" },
+        { year: "2010s", text: "Advancing innovation" },
+      ],
+    },
+    {
+      
+      year: "2010",
+      title: "Lorem ipsum ",
+      subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      description:
+        "The TF33 is the United States Air Force designation for the Pratt & Whitney JT3 commercial engine,First flown 60 years ago, and with more than 1,000 engines still in..",
+      image: yearImages.machine1,
+      // thumbnail:machine1,
+      buttonLink: "/yearEngineDetails",
+     slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+      innerSlidesData: [
+        {
+          id:1,
+          year: "2011",
+             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.  Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante.",
+          title: "Lorem ipsum ",
+          subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          // image: machine1,
+          // thumbnail:machine1,
+         slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+        },
+        {
+          id:2,
+          year: "2012",
+             description: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.  Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante.",
+          title: "Lorem ipsum ",
+          subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          image: yearImages.machine1,
+          // thumbnail:machine1,
+         slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+        },
+        {
+          id:3,
+          year: "2013",
+             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.  Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante.",
+          title: "Lorem ipsum ",
+          subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          image: yearImages.machine1,
+          // thumbnail:machine1,
+         slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+        },
+      ],
+      timeline: [
+        { year: "2010s", text: "The new era" },
+        { year: "2020s", text: "Advancing innovation" },
+      ],
+    },
+    {
+      
+      year: "2020",
+      title: "Lorem ipsum ",
+      subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      description:
+        "The TF33 is the United States Air Force designation for the Pratt & Whitney JT3 commercial engine,First flown 60 years ago, and with more than 1,000 engines still in..",
+      image: yearImages.machine1,
+      // thumbnail:machine1,
+      buttonLink: "/yearEngineDetails",
+     slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+      innerSlidesData: [
+        {
+          id:1,
+          year: "2021",
+             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.  Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante.",
+          title: "Lorem ipsum ",
+          subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          // image: machine1,
+          // thumbnail:machine1,
+         slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+        },
+        {
+          id:2,
+          year: "2022",
+             description: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.  Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante.",
+          title: "Lorem ipsum ",
+          subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          image: yearImages.machine1,
+          // thumbnail:machine1,
+         slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+        },
+        {
+          id:3,
+          year: "2023",
+             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.  Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante.",
+          title: "Lorem ipsum ",
+          subtitle: "Lorem ipsum dolor sit amet sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          image: yearImages.machine1,
+          // thumbnail:machine1,
+         slideImages: [
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.layer1 },
+        { img: yearImages.machine1 },
+      ],
+        },
+      ],
+      timeline: [
+        { year: "2020s", text: "The new era" },
+        { year: "2030s", text: "Advancing innovation" },
       ],
     },
   ];

@@ -16,14 +16,18 @@ import MyTextBtn from './buttons/MyTextBtn';
 import CustomCloseButton from './buttons/CustomCloseButton';
 import ClippedView from './ClippedView';
 import yearImages from '../constants/yearImages';
-export default function YearTimelineCarousel({Year, animateAirplanes,handleChangeYearFlag,setImagePosition,animatedX}) {
+export default function YearTimelineCarousel({Year, animateAirplanes,handleChangeYearFlag,setImagePosition,animatedX,onImageClick,handleDataFromChild}) {
   const clipWidth = "100%";
   const clipHeight = "350"
   // console.log("activeyeaer",Year);
    const router = useRouter();
-  const goToYearExplore = () => {
+  const goToYearExplore = (year,id) => {
     // Navigate to another screen or action
-    router.push('/hundred-years/yearEngineDetails')
+
+    router.push({
+      pathname: '/hundred-years/yearEngineDetails',
+      params: {  year: year,targetId: id }
+    });
   };
 
   // Function to trigger animation on button click
@@ -289,6 +293,9 @@ const handleBackYears = (curr) => {
   animateAirplanes(currentSlide + 1 , "prev");
 
 }
+// useEffect(() => {
+//   handleDataFromChild(currentSlide)
+// },[handleDataFromChild]);
 
   const mainSlideStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
@@ -321,7 +328,7 @@ const handleBackYears = (curr) => {
                  />
    
            </View> */}
-             <View className="absolute left-4 top-1/2 -translate-y-1/2 z-50" >
+             <View className="absolute left-4 top-[40%] -translate-y-1/2 z-50" >
               <PrevNextButton
                      isColor="grey" 
                    isIcon='prev'
@@ -332,7 +339,7 @@ const handleBackYears = (curr) => {
            
               
                  
-              <View className="absolute right-4 top-1/2 -translate-y-1/2 z-50 ">
+              <View className="absolute right-4 top-[40%] -translate-y-1/2 z-50 ">
               <PrevNextButton
                       isColor="red"
                       isIcon='next'
@@ -344,7 +351,7 @@ const handleBackYears = (curr) => {
     {/* Swiper Slider */}
  {/* Apply Tailwind styles to the container */}
 
-      <Swiper   index={currentSlide} onIndexChanged={(index) =>{ setCurrentSlide(index)}}    showsPagination={false} loop={false} ref={swiperRef} className="!overflow-y-visible">
+      <Swiper   index={currentSlide} onSnapToItem={(index) =>  console.log("Current slide index:", index)}    showsPagination={false} loop={false} ref={swiperRef} className="!overflow-y-visible">
       {yearSlideData.map((slide, index) => {
         // Determine the description based on the condition
   const description = innerSlideStatus
@@ -363,7 +370,7 @@ const handleBackYears = (curr) => {
           {/* style={{   ...boxShadow("#00000040", 0, 25, 0.25, 50, 10)}}   */}
               
            
-            <View className="w-[16px] h-[180px] absolute bg-[#E11C37] top-0 -left-[16px]" />
+            <View className="w-[16px] h-[170px] absolute bg-[#E11C37] top-0 -left-[16px]" />
             <View className="main_box  h-[350px] ">
             <ClippedView width={430} height={350} backgroundColor="white" clipPathId="slidecard1" slug="variant11" />
          
@@ -400,6 +407,7 @@ const handleBackYears = (curr) => {
                 </View>
                 <View className=" pt-3">
                     <InnerCarousel
+                     onImageClick={onImageClick}
                       images={
                         slide?.innerSlidesData[currentInnerSlide]?.slideImages ?? []
                       }
@@ -458,13 +466,13 @@ const handleBackYears = (curr) => {
                 </View>
 
                 <View className="flex flex-row z-50 mt-3">
-                  <MyTextBtn onPress={goToYearExplore}  className={"w-[96px] h-[26px]"}
+                  {/* <MyTextBtn onPress={goToYearExplore}  className={"w-[96px] h-[26px]"}
                                         title={"Gallery"}
                                         bg="black"
-                                        textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "} />
+                                        textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "} /> */}
 
                
-                  <MyTextBtn onPress={goToYearExplore}  className={"w-[96px] h-[26px]  ml-4"}
+                  <MyTextBtn onPress={()=> goToYearExplore(slide.year,slide?.innerSlidesData[currentInnerSlide].id)}  className={"w-[96px] h-[26px] "}
                                         title={"Explore"}
                                         textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "} />
 
@@ -484,7 +492,8 @@ const handleBackYears = (curr) => {
       animationTrigger={animationTrigger}
       direction={direction}
 currentInnerSlide={currentInnerSlide ?? 0} 
-bgColor={index % 2 === 0 ? "white" : "#fafafa"}
+bgColor={"white" }
+// bgColor={index % 2 === 0 ? "white" : "#fafafa"}
     //   redDot={redDot}
     //   activeRedDot={activeRedDot}
     />
@@ -502,14 +511,15 @@ bgColor={index % 2 === 0 ? "white" : "#fafafa"}
       animationTrigger={animationTrigger}
       currentInnerSlide={currentInnerSlide ?? 0} 
       direction={direction}
-      bgColor={index % 2 === 0 ? "#fafafa" : "white"}
+      bgColor={"white" }
+      // bgColor={index % 2 === 0 ? "#fafafa" : "white"}
     //   redDot={redDot}
     //   activeRedDot={activeRedDot}
     />
   ))}
            
             </View>
-          </View>
+          </View>  
 
           {/* Timeline Content */}
           <View className="h-[3px] w-full absolute bg-[#00000014] top-1/2 -translate-y-1/2   -z-10">

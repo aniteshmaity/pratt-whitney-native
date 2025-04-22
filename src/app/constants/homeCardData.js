@@ -1,6 +1,7 @@
 import homeImages from "./homeImages";
 
 const homeCardData = [
+ null,
     {
       title: {
         startName: "Pratt & Whitney",
@@ -10,20 +11,20 @@ const homeCardData = [
       description:
         "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
       imageUrl:
-      homeImages.new1,
+      homeImages.yearcard,
       link: "/hundred-years",
       triggerCloseAnimation: true,
     },
     {
       title: {
         startName: "GTF",
-        endName: "Experiece 3d",
+        endName: "Experience 3d",
       },
 
       description:
         "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
       imageUrl:
-      homeImages.new1,
+      homeImages.yearcard,
       link: "/innovations",
     },
     {
@@ -35,7 +36,7 @@ const homeCardData = [
       description:
         "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
       imageUrl:
-      homeImages.new1,
+      homeImages.productCard,
       link: "/products",
     },
     {
@@ -50,18 +51,31 @@ const homeCardData = [
       homeImages.new1,
       link: "/innovations",
     },
+    // {
+    //   title: {
+    //     startName: "RTX",
+    //     endName: "In India",
+    //   },
+
+    //   description:
+    //     "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
+    //   imageUrl:
+    //   homeImages.new1,
+    //   link: "mapPage",
+    // },
     {
       title: {
-        startName: "RTX",
+        startName: "Pratt & Whitney",
         endName: "In India",
       },
 
       description:
         "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
       imageUrl:
-      homeImages.new1,
+      homeImages.mapCard,
       link: "mapPage",
     },
+    null
     
   ];
   export default homeCardData;

@@ -61,7 +61,10 @@ const StartScreen = () => {
          <CustomTextButton
                    className={"w-[286px] h-[46px] mt-4 absolute"}
                    onPress={() => {
-                     router.push("/home");
+                    router.push({
+                      pathname: '/home',
+                      params: { targetIndex: 4 }
+                    });
                    }}
                    num={0}
                    title={"Tap to Start"}
