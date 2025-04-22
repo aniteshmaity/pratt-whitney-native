@@ -14,7 +14,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/home/adaptive-icon-1.jpeg",
+        "foregroundImage": "./src/assets/images/home/app-logo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.aniruntime.prattwhitneyapp"

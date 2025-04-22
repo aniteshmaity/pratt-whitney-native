@@ -6,11 +6,12 @@ import yearImages from "../constants/yearImages";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, useAnimatedScrollHandler, interpolate, runOnJS, withRepeat, Easing } from 'react-native-reanimated';
 import homeImages from '../constants/homeImages';
 import homeCardData from '../constants/homeCardData';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import MyTextBtn from "../components/buttons/MyTextBtn";
 import boxShadow from '../constants/boxShadow';
 import RedDotSvg from '../components/RedDotSvg';
 import ClippedView from '../components/ClippedView';
+import CustomTextButton from '../components/buttons/CustomTextButton';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const CARD_WIDTH = screenWidth / 3; // Width of each card
@@ -19,36 +20,40 @@ const customheight = (screenHeight/2 - 175) - 80
 console.log("cusheight",customheight);
 const VISIBLE_CARDS = 5; // Number of visible cards
 const LOOP_DATA = homeCardData;
-const loopData = [...LOOP_DATA, ...LOOP_DATA, ...LOOP_DATA]; 
+const loopData = LOOP_DATA; 
 const Card = ({ item, index, scrollX,centeredIndex  }) => {
-  // console.log("item,i",item);
- const router = useRouter();
 
+ const router = useRouter();
+if (item === null) {
+    return <View style={{ width: CARD_WIDTH }} />;
+  }
+    const realIndex = homeCardData.filter((e) => e !== null).indexOf(item);
+    console.log("realindex",realIndex);
   const inputRange = [
-    (index - 2) * CARD_WIDTH, // Two cards before
-    (index - 1) * CARD_WIDTH, // One card before
-    index * CARD_WIDTH, // Current card
-    (index + 1) * CARD_WIDTH, // One card after
-    (index + 2) * CARD_WIDTH, // Two cards after
+
+    (realIndex - 1) * CARD_WIDTH, // One card before
+    realIndex * CARD_WIDTH, // Current card
+    (realIndex + 1) * CARD_WIDTH, // One card after
+
   ];
 
   const animatedStyle = useAnimatedStyle(() => {
     const scale = interpolate(
       scrollX.value,
       inputRange,
-      [0.4,0.4, 1, 0.4,0.4], // Scale middle card to 1, others to 0.2
+      [0.4, 1, 0.4], // Scale middle card to 1, others to 0.2
       'clamp'
     );
     const translateY = interpolate(
       scrollX.value,
       inputRange,
-      [-50, -50, 0, -50, -50], // Move scaled-down cards up by -50px
+      [ -50, 0, -50], // Move scaled-down cards up by -50px
       'clamp'
     );
     const opacity = interpolate(
       scrollX.value,
       inputRange,
-      [0.6, 0.6, 1, 0.6, 0.6], // Middle card full opacity (1), others at 0.3
+      [ 0.6, 1, 0.6], // Middle card full opacity (1), others at 0.3
       'clamp'
     );
     return {
@@ -88,14 +93,28 @@ const Card = ({ item, index, scrollX,centeredIndex  }) => {
             <Text className=" text-[0.85rem] font-objektiv pb-5">{item.description}</Text>
   
               
-                               <MyTextBtn  
+                               {/* <MyTextBtn  
                                         className={"w-[156px] h-[30px]"}
                                         onPress={() => {
                                           router.push(`${item.link}`);
                                         }}
                                         title={"View Timeline"}
                                         textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "}
+                                      /> */}
+                                      {realIndex === centeredIndex && (
+                                        <CustomTextButton
+                                        className={"w-[156px] h-[30px]  "}
+                                        onPress={() => {
+                                          router.push(`${item.link}`);
+                                        }}
+                                   
+                                        title={`${realIndex == 0 ? "View Timeline" : "View"}`}
+                                        textClass={" font-[700] text-[0.75rem] font-objektiv tracking-widest "}
+                                        boxLeftClass={"w-[15px] h-[15px] -left-[8px]  -top-[8px] bg-white"}
+                                        boxRightClass={"w-[15px] h-[15px] -right-[7.5px] -bottom-[7.5px] bg-white"}
                                       />
+                                      )} 
+                                       
             
           </View>
    
@@ -115,8 +134,11 @@ export default function Home() {
   const translateY = useSharedValue(screenHeight / 3); // Start from the center of the screen (Y-axis)
   const scrollX = useSharedValue(0); // Track scroll position
   const flatListRef = useRef(null);
-  const [centeredIndex, setCenteredIndex] = useState(LOOP_DATA.length);  
+  const [centeredIndex, setCenteredIndex] = useState(0);  
   const router = useRouter();
+
+  const { targetIndex } = useLocalSearchParams();
+  console.log("ttargetindex",targetIndex);
   const handleClose = () => {
 
     router.push("/startScreen");
@@ -127,6 +149,18 @@ export default function Home() {
     translateX.value = withTiming(0, { duration: 1000 }); // 1000ms = 1s
     translateY.value = withTiming(0, { duration: 1000 }); // 1000ms = 1s
   }, []);
+
+  // useEffect(() => {
+  //   if (targetIndex && flatListRef.current) {
+  //     // Small delay ensures FlatList is mounted
+  //     setTimeout(() => {
+  //       flatListRef.current.scrollToIndex({
+  //         index:   parseInt(targetIndex ?? 0),
+  //         animated: true,
+  //       });
+  //     }, 300);
+  //   }
+  // }, [targetIndex ]);
 
   const imageAnimatedStyle = useAnimatedStyle(() => {
     return {
@@ -152,7 +186,7 @@ export default function Home() {
       duration: 3000, // 3 seconds for smooth transition
       easing: Easing.inOut(Easing.ease),
     }),
-    -1, // Infinite repeat
+
     true // Reverse direction
   );
 
@@ -193,34 +227,24 @@ export default function Home() {
     <Animated.FlatList
         ref={flatListRef}
         data={loopData}
-        keyExtractor={(item, index) => `${item.id}-${index}`} // Unique key for duplicated items
+        keyExtractor={(item, index) => index.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
         snapToInterval={CARD_WIDTH } // Snap to card width 
         decelerationRate="fast"
         onScroll={scrollHandler}
-        contentContainerStyle={{ paddingHorizontal: (screenWidth - CARD_WIDTH) / 2 }}// Center the first card
+        // contentContainerStyle={{ paddingHorizontal: (screenWidth - CARD_WIDTH) / 2 }}// Center the first card
       
         renderItem={({ item, index }) => (
           <Card item={item} index={index} scrollX={scrollX} centeredIndex={centeredIndex} />
         )}
-        initialScrollIndex={LOOP_DATA.length} // Start in the middle for looping effect
+        scrollEventThrottle={16}
         getItemLayout={(data, index) => ({
           length: CARD_WIDTH ,
           offset: (CARD_WIDTH ) * index,
           index,
         })}
-        onMomentumScrollEnd={(event) => {
-          const offset = event.nativeEvent.contentOffset.x;
-          const totalWidth = LOOP_DATA.length * (CARD_WIDTH);
-          if (offset >= totalWidth * 2) {
-            // If scrolled to the end of the duplicated data, reset to the middle
-            flatListRef.current?.scrollToIndex({ index: LOOP_DATA.length, animated: false });
-          } else if (offset <= 0) {
-            // If scrolled to the start of the duplicated data, reset to the middle
-            flatListRef.current?.scrollToIndex({ index: LOOP_DATA.length, animated: false });
-          }
-        }}
+  
       />
     </View>
     </View>

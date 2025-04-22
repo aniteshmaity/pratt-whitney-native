@@ -38,7 +38,7 @@ function Model({ url }) {
   return <primitive object={scene} scale={1} />;
 }
 
-export default function EngineComponent({ type, onEngineClose, engineData,setShow3DModel,setLoading }) {
+export default function EngineComponent({ type, onEngineClose, engineData,setShow3DModel,setLoading,onImageClick,yearEngineData }) {
   // console.log("enginedata---", engineData);
   const [activeTab, setActiveTab] = useState(0);
   const contentRef = useRef(null);
@@ -442,7 +442,7 @@ export default function EngineComponent({ type, onEngineClose, engineData,setSho
                 const { width } = event.nativeEvent.layout;
                 setParentWidth(width);
               }}>
-                {parentWidth > 0 && <GalleryCarousel parentWidth={parentWidth} />}
+                {parentWidth > 0 && <GalleryCarousel parentWidth={parentWidth} onImageClick={onImageClick} slideImages={yearEngineData?.slideImages} />}
               </View>
             </View>
           </View>
@@ -470,7 +470,7 @@ export default function EngineComponent({ type, onEngineClose, engineData,setSho
               <ClippedView width={400} height={87} backgroundColor="#393637" clipPathId="clip2" />
               <Text className="text-[2.2rem]  leading-tight text-white font-ObjektivMk2Black">
 
-                {type === "product" ? engineData?.title : "TF33 Engine"}
+                {type === "product" ? engineData?.title : yearEngineData?.title}
               </Text>
               <Text className="text-[#CE2028] text-[0.8rem] font-ObjektivMk1Bold pt-1">
                 {engineData?.subTitle || "A Legend Engine For a legedary Bombar"}

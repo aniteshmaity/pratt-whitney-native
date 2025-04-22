@@ -55,7 +55,7 @@ export default function App() {
         // After rotation ends, move both images at the same time
         devTranslateX.value = withTiming(0, { duration: 1000 })
         devOpacity.value = withTiming(1, { duration: 1000 });
-        img2TranslateX.value = withTiming(30, { duration: 1000 }, (finish) => {
+        img2TranslateX.value = withTiming(20, { duration: 1000 }, (finish) => {
           if (finish) {
             contTranslateY.value = withTiming(-100, { duration: 1000 });
             translateY.value = withTiming(0, { duration: 500 });
@@ -111,7 +111,7 @@ export default function App() {
               style={animatedLogo}
             />
           */}
-        <Animated.View className="w-[320px] h-[100px]  relative " style={[contentStyle]}>
+        <Animated.View className="w-[380px] h-[100px]  relative " style={[contentStyle]}>
           <Animated.View className="w-[80px] h-[80px] absolute " style={[devStyle]}>
             <Animated.Image source={homeImages.circleLogo} className="w-[100%] h-[100%] " resizeMode="cover" style={[img1Style]} />
           </Animated.View>
@@ -145,6 +145,7 @@ export default function App() {
             num={0}
             title={"Tap to Start"}
             textClass={"text-xl tracking-widest "}
+           
           />
         </Animated.View>
 

@@ -170,7 +170,11 @@ export default function Products() {
     };
   });
   const handleClose = () => {
- router.push("home")
+    
+    router.push({
+      pathname: '/home',
+      params: { targetIndex: 2 }
+    });
   };
   const validEngines = productEngines.filter((item) => item !== null);
   const translateYValues = validEngines.map((_, index) =>

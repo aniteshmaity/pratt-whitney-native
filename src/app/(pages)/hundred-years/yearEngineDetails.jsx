@@ -6,12 +6,35 @@ import CloseButton from "../../components/CloseButton ";
 import EngineComponent from "../../components/EngineComponent";
 import ClippedView from "../../components/ClippedView";
 import Svg, { Path } from "react-native-svg";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import CustomCloseButton from "../../components/buttons/CustomCloseButton";
+import yearSlidedata from "../../constants/yearSlideData";
 
 export default function yearEngineDetails() {
+  const { year,  targetId } = useLocalSearchParams();
+  const numericId = Number(targetId); 
+  console.log("year",year);
+  console.log("yearid",targetId);
+  const matchedYearObject = yearSlidedata.find(e => e.year === year);
+  // console.log("datamatched-",matchedYearObject);
+  const data = matchedYearObject
+    ? matchedYearObject.innerSlidesData.find(slide => slide.id === numericId)
+    : null;
+  console.log("data-",data.slideImages);
   const router = useRouter();
     const [size, setSize] = useState({ width: 0, height: 0 });
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [dialogImages, setDialogImages] = useState([]);
+    const [startIndex, setStartIndex] = useState(0);
+
+    const handleImageClick = (index,img) => {
+      console.log("images------",img);
+      setDialogImages(img);
+      setStartIndex(index);
+      setIsDialogOpen(true);
+      console.log("handleclick");
+    };
+
   const handleClose = () => {
     console.log("ok");
     router.push('/hundred-years/yearCarousal')
@@ -81,10 +104,18 @@ export default function yearEngineDetails() {
                
               </View>
 
-              <EngineComponent type="100year" />
+              <EngineComponent type="100year" onImageClick={handleImageClick} yearEngineData={data} />
             </View>
           </View>
         </ImageBackground>
+
+        {isDialogOpen && (
+        <CustomDialo
+        images={dialogImages}
+        startIndex={startIndex}
+          onClose={() => setIsDialogOpen(false)}
+        />
+      )}
       </View>
     </SafeAreaView>
   );

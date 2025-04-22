@@ -16,20 +16,26 @@ import YearTimelineCarousel from "../../components/YearTimelineCarousel";
 import ClippedView from "../../components/ClippedView";
 import CustomCloseButton from "../../components/buttons/CustomCloseButton";
 import MyTextBtn from "../../components/buttons/MyTextBtn";
-const { width } = Dimensions.get('window');
+import CustomTextButton from "../../components/buttons/CustomTextButton";
+import CustomDialog from "../../components/CustomDialog";
+const { width,height } = Dimensions.get('window');
 const ITEM_WIDTH = width / 5; // Calculate width for 5 visible cards
+const adjustedHeight = height - 80;
 
 const years = [
   null,
   null,
-  { year: "1920s", name: "1920", description: "Pioneering the future of flight" },
-  { year: "1930s", name: "1930", description: "Advancing aviation" },
-  { year: "1940s", name: "1940", description: "Defending freedom" },
-  { year: "1950s", name: "1950", description: "Ushering in the jet age" },
-  { year: "1960s", name: "1960", description: "Higher, faster, further" },
-  { year: "1970s", name: "1970", description: "Powerful, agile, dependable" },
-  { year: "1980s", name: "1980", description: "Innovating advancements" },
+  { year: "1920s", name: "1920", description: "Pioneering the Future of Flight" },
+  { year: "1930s", name: "1930", description: "Advancing Aviation" },
+  { year: "1940s", name: "1940", description: "Defending Freedom" },
+  { year: "1950s", name: "1950", description: "Ushering in the Jet Age" },
+  { year: "1960s", name: "1960", description: "Higher, Faster, Further" },
+  { year: "1970s", name: "1970", description: "Powerful, Agile, Dependable" },
+  { year: "1980s", name: "1980", description: "Innovating Advancements" },
   { year: "1990s", name: "1990", description: "Lorem Ipsum" },
+  { year: "2000s", name: "2000", description: "Lorem Ipsum" },
+  { year: "2010s", name: "2010", description: "Lorem Ipsum" },
+  { year: "2020s", name: "2020", description: "Lorem Ipsum" },
   null,
   null
 ];
@@ -93,7 +99,7 @@ const handleExplore = () => {
       className={`item-${index} ${ middleIndex === index ? 'active' : ''} ${middleIndex > index  ? 'left' : 'right'}`}
     >
       <View  style={{  ...boxShadow("#6b6464", 3, 7, 0.2, 10, 10), width: ITEM_WIDTH, height:ITEM_WIDTH }} className="rounded-full bg-white overflow-hidden   z-40 p-[15px] transition-transform duration-300 ease-in-out relative">
-      { middleIndex === index && (<View className="absolute bg-[#E11C37] -left-[26px]  top-[4px] -z-10"      style={{ width: ITEM_WIDTH/3, height:ITEM_WIDTH/2 }} />)}
+      { middleIndex === index && (<Image source={yearImages.redStrap} className="absolute -left-[0px]  top-[10px] -z-10 w-[80px] h-[90px]"   />)}
 <View style={{ ...boxShadow("#b9b7b7", 1, 0, 0.3, 11, 8)}} className={`flex  justify-center items-center rounded-full w-full h-full  bg-white `}>
                     <Text className="text-[2.6rem] text-[#D91027] font-objectiveBlk">
                     {item.year}
@@ -114,9 +120,11 @@ const handleExplore = () => {
            <Image source={yearImages.tringleArrow} className="w-[10px] h-[10px]" resizeMode="contain" />
          </TouchableOpacity> */}
        <View className=" m-auto">
-       <MyTextBtn onPress={handleExplore}  className={"w-[98px] h-[26px]  mt-8 ml-4"}
+       <CustomTextButton onPress={handleExplore}  className={"w-[98px] h-[26px]  mt-8 ml-4"}
                                         title={"Explore"}
-                                        textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "} />
+                                        textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "}
+                                        boxLeftClass={"w-[13px] h-[13px] -left-[6.5px]  -top-[6.5px] bg-[#f5f5f5]"}
+              boxRightClass={"w-[13px] h-[13px] -right-[6.5px] -bottom-[6.5px] bg-[#f5f5f5]"} />
        </View>
       
        </Animated.View>
@@ -132,9 +140,10 @@ const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);  // Initial current index
   const [middleIndex, setMiddleIndex] = useState(2);   // Initial middle index (3rd card)
   const [prevActiveIndex, setPrevActiveIndex] = useState([]);
-  
+  const [childSlideId, setChildSlideId] = useState(0);
   const [yearDetails, setYearDetails] = useState("");
     const [imagePosition, setImagePosition] = useState(0);
+    const [dialogImages, setDialogImages] = useState([]);
     const [direction, setDirection] = useState("next"); 
   const flatListRef = useRef(null);
   const airplaneRefs = useRef([]);
@@ -145,6 +154,16 @@ console.log("imageposition",imagePosition);
 console.log("direction",direction);
 // At the top of your component
 const [savedPosition, setSavedPosition] = useState(null);
+const [isDialogOpen, setIsDialogOpen] = useState(false);
+const [startIndex, setStartIndex] = useState(0);
+
+const handleImageClick = (index,img) => {
+  console.log("images------",img);
+  setDialogImages(img);
+  setStartIndex(index);
+  setIsDialogOpen(true);
+  console.log("handleclick");
+};
 const isRestoringPosition = useRef(false); 
 // Before switching to YearTimelineCarousel
 const handleStateUp = () => {
@@ -153,7 +172,9 @@ const handleStateUp = () => {
     middleIndex,
     scrollPosition: scrollX.value
   });
-  setYearDetails("view");
+  setTimeout(() => {
+    setYearDetails("view");
+  }, 100);
 };
 
 
@@ -265,6 +286,8 @@ console.log("year-lenght ",years.length);
     yearImages.aero3,
     yearImages.aero1,
     yearImages.aero2,
+    yearImages.aero2,
+
   ];
 
   // console.log("names",years[middleIndex]);
@@ -306,7 +329,10 @@ const animatedStyles = (idx) => {
     opacity:   opacities[idx].value,
   }));
 };
-
+const handleDataFromChild = (data) => {
+  console.log("dataa-",data);
+  setChildSlideId(data); // This gets triggered from child
+};
 
 useEffect(() => {
   if(direction ==="prev"){
@@ -353,7 +379,7 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
           <Image
             source={yearImages.logo100}
          
-            className={`h-[76px] w-[320px] ${yearDetails ==="view" ? "absolute top-[30px]" : 'mt-[30px]'}`}
+            className={`h-[76px] w-[320px] ${yearDetails ==="view" ? "absolute top-[30px] z-40" : 'mt-[30px]'}`}
             resizeMode="cover"
           />
         </View>
@@ -427,8 +453,8 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
             </View>
           </View>
        ) : (
-        <View className="h-[calc(100vh-80px)] flex items-center bg-[#f5f5f5]">
-        <YearTimelineCarousel Year={years[middleIndex]?.name} animateAirplanes={animateAirplanes} setImagePosition={setImagePosition} animatedX={animatedX} handleChangeYearFlag={handleChangeYearFlag} />
+        <View className="flex items-center bg-[#f5f5f5]" style={{height:adjustedHeight}}>
+        <YearTimelineCarousel Year={years[middleIndex]?.name} animateAirplanes={animateAirplanes} setImagePosition={setImagePosition} animatedX={animatedX} handleChangeYearFlag={handleChangeYearFlag} onImageClick={handleImageClick} handleDataFromChild={handleDataFromChild} />
     </View>
       )}
 
@@ -441,7 +467,7 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
     alt="terrain"
     resizeMode="cover"
   />
-  <View className="absolute flex-row w-[93%] left-[50%] bottom-[90px] gap-[80px]" style={{ transform: [{ translateX: -0.5 * 93 + "%" }] }}>
+  <View className="absolute flex-row w-[93%] left-[50%] bottom-[90px] gap-[50px]" style={{ transform: [{ translateX: -0.5 * 93 + "%" }] }}>
     {airplaneImages.map((airplane, index) => {
       const animatedStyle = animatedStyles(index);
       return (
@@ -450,7 +476,7 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
           ref={(el) => (airplaneRefs.current[index] = el)}
           source={airplane}
           className="w-[80px]"
-          style={[animatedStyle, { width: 70, height: 25 }]}
+          style={[animatedStyle, { width: 60, height: 25 }]}
           resizeMode="contain"
         />
       );
@@ -465,6 +491,14 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
 </View>
 </View>
       </View>
+
+      {isDialogOpen && (
+        <CustomDialog
+        images={dialogImages}
+        startIndex={startIndex}
+          onClose={() => setIsDialogOpen(false)}
+        />
+      )}
      
     </SafeAreaView>
   );
