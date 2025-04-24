@@ -9,7 +9,7 @@ console.log("widhth20",width);
 console.log("height20",height);
 const CustomDialog = ({ images, startIndex, onClose }) => {
     const swiperRef = useRef(null);
-    // console.log("images-322",images);
+    console.log("images-322",images);
   const [currentIndex, setCurrentIndex] = useState(startIndex);
 
   const handlePrev = ()=> {
@@ -31,15 +31,19 @@ const CustomDialog = ({ images, startIndex, onClose }) => {
     <Modal visible={true} transparent={true}  onRequestClose={onClose}>
       <View className=" bg-black/60 justify-center   items-center z-10" style={{ width: width , height: height  }}>
 
-        <View className="bg-white  rounded-xl  relative z-50" style={{ width: width*0.6 , height: height*0.5  }}>
+        <View className="bg-white  rounded-xl  z-50" style={{ width: width*0.6 , height: height*0.6,position:"relative"  }}>
+        
+ <TouchableOpacity
+  onPress={onClose}
+  style={{ transform: [{ translateX: -12 }] }} 
+  className="absolute top-6 right-0 bg-white w-8 h-8 rounded-md items-center justify-center z-50"
+>
+  <Text className="text-black text-xl leading-none">✕</Text>
+</TouchableOpacity>
+   
 
           {/* Close Button */}
-          <TouchableOpacity
-      onPress={onClose}
-      className="absolute top-6 right-0 bg-white w-8 h-8 rounded items-center justify-center z-50 px-2 py-1"
-    >
-      <Text className="text-black text-lg">✕</Text>
-    </TouchableOpacity>
+         
 
           {/* Swiper */}
           <Swiper
@@ -71,6 +75,9 @@ const CustomDialog = ({ images, startIndex, onClose }) => {
             <TouchableOpacity
               onPress={handlePrev}
               disabled={currentIndex === 0}
+              style={{
+                opacity: currentIndex === 0 ? 0.4 : 1,
+              }}
               className={`p-2 rounded-full ${
                 currentIndex === 0
                   ? 'bg-gray-300'
@@ -83,6 +90,9 @@ const CustomDialog = ({ images, startIndex, onClose }) => {
             <TouchableOpacity
               onPress={handleNext}
               disabled={currentIndex === images.length - 1}
+              style={{
+                opacity: currentIndex === images.length - 1 ? 0.4 : 1,
+              }}
               className={`p-2 rounded-full ${
                 currentIndex === images.length - 1
                   ? 'bg-gray-300'

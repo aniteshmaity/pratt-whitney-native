@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import yearImages from "../../constants/yearImages";
 import CloseButton from "../../components/CloseButton ";
 import PrevNextButton from "../../components/buttons/PrevNextButton"
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import Carousel from "react-native-reanimated-carousel";
 import boxShadow from "../../constants/boxShadow";
 
@@ -47,7 +47,7 @@ const Card = ({ index, middleIndex ,item, currentIndex,handleStateUp,scrollX}) =
 const translateY = useSharedValue(10); // Shared value for slide effect
 const handleExplore = () => {
   console.log("click");
-  handleStateUp();
+   handleStateUp();
 }
 
 
@@ -137,6 +137,7 @@ const handleExplore = () => {
 };
 const yearCarousal = () => {
 const router = useRouter();
+const { yearParam} = useLocalSearchParams();
   const [currentIndex, setCurrentIndex] = useState(0);  // Initial current index
   const [middleIndex, setMiddleIndex] = useState(2);   // Initial middle index (3rd card)
   const [prevActiveIndex, setPrevActiveIndex] = useState([]);
@@ -157,6 +158,12 @@ const [savedPosition, setSavedPosition] = useState(null);
 const [isDialogOpen, setIsDialogOpen] = useState(false);
 const [startIndex, setStartIndex] = useState(0);
 
+useEffect(()=> {if(yearParam){
+  handleStateUp();
+}
+
+},[yearParam])
+
 const handleImageClick = (index,img) => {
   console.log("images------",img);
   setDialogImages(img);
@@ -167,15 +174,17 @@ const handleImageClick = (index,img) => {
 const isRestoringPosition = useRef(false); 
 // Before switching to YearTimelineCarousel
 const handleStateUp = () => {
-  setSavedPosition({
-    currentIndex,
-    middleIndex,
-    scrollPosition: scrollX.value
-  });
-  setTimeout(() => {
+  // setSavedPosition({
+  //   currentIndex,
+  //   middleIndex,
+  //   scrollPosition: scrollX.value
+  // });
+ 
     setYearDetails("view");
-  }, 100);
+
 };
+
+
 
 
    const handleChangeYearFlag = (curr) => {
@@ -185,15 +194,20 @@ const handleStateUp = () => {
     setYearDetails(""); // Reset to carousel view
     
     // Ensure the carousel is properly centered on return
-    if (savedPosition) {
-      isRestoringPosition.current = true;
-      setTimeout(() => {
-        setCurrentIndex(savedPosition.currentIndex);
-        setMiddleIndex(savedPosition.middleIndex);
-        scrollX.value = savedPosition.scrollPosition;
-        scrollToIndex(savedPosition.currentIndex);
-      }, 100);
+    // if (savedPosition) {
+    //   isRestoringPosition.current = true;
+    //   setTimeout(() => {
+    //     setCurrentIndex(savedPosition.currentIndex);
+    //     setMiddleIndex(savedPosition.middleIndex);
+    //     scrollX.value = savedPosition.scrollPosition;
+    //     scrollToIndex(savedPosition.currentIndex);
+    //   }, 100);
+    // }
+    if(flatListRef.current){
+      flatListRef.current.scrollToIndex({ index: childSlideId, animated: true });
     }
+    animateAirplanes(childSlideId,"next");
+    
   };
  
   
@@ -274,6 +288,13 @@ const handleStateUp = () => {
     // Navigate to another screen or action
     router.push("/hundred-years");
   };
+  const handleTimeClose = () => {
+    handleChangeYearFlag();
+  
+    // handleSliderMove(childSlideId);
+    // animateAirplanes(childSlideId + 1, false);
+  
+  }
 
 console.log("year-lenght ",years.length);
   const airplaneImages = [
@@ -296,30 +317,26 @@ console.log("year-lenght ",years.length);
   
   // Animate the airplanes based on activeIndex and direction
   const animateAirplanes = (index,direction) => {
-    console.log("index-clicked", index);
+    console.log("index-clicked", `${index}-${direction}`);
     airplaneRefs.current.forEach((el, idx) => {
-      if (idx === index) {
-        if(direction ==="next"){
-          positions[idx].value = withTiming(0, { duration: 600 });
-          opacities[idx].value = withTiming(1, { duration: 600 });
-        }else{
-          positions[idx].value = withTiming(-130, { duration: 600 });
-          opacities[idx].value = withTiming(0, { duration: 600 });
-        }
-      } else if ( prevActiveIndex.includes(idx)) {
+      if (idx <= index) {
         positions[idx].value = withTiming(0, { duration: 600 });
         opacities[idx].value = withTiming(1, { duration: 600 });
       }
+      // Hide all airplanes after current index
+      else {
+        positions[idx].value = withTiming(-130, { duration: 600 });
+        opacities[idx].value = withTiming(0, { duration: 600 });
+      }  if (direction === "prev") {
+        // If going back from index 5 to 3, hide index 4 and 5
+        if (idx >= index) {
+          positions[idx].value = withTiming(-130, { duration: 600 });
+          opacities[idx].value = withTiming(0, { duration: 600 });
+        }
+      }
     });    
   };
-    // airplaneImages.forEach((_, idx) => {
-    //   // Reset positions and opacity before animating
-    //   opacityValues.value[idx] = withTiming(idx === currentIndex ? 1 : 0, { duration: 600 });
-    //   translateXValues.value[idx] = withTiming(
-    //     idx === currentIndex ? 0 : (idx === currentIndex + 1 ? -130 : 130), 
-    //     { duration: 600 }
-    //   );
-    // });
+
   
 
 // Create animated styles for each airplane
@@ -369,7 +386,7 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
           />
           <View className=" flex flex-row justify-center items-center gap-4 z-40">
            
-                <CustomCloseButton onPress={handleClose} />
+                <CustomCloseButton onPress={yearDetails === "" ? handleClose : handleTimeClose} />
 
 
           </View>
@@ -454,7 +471,7 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
           </View>
        ) : (
         <View className="flex items-center bg-[#f5f5f5]" style={{height:adjustedHeight}}>
-        <YearTimelineCarousel Year={years[middleIndex]?.name} animateAirplanes={animateAirplanes} setImagePosition={setImagePosition} animatedX={animatedX} handleChangeYearFlag={handleChangeYearFlag} onImageClick={handleImageClick} handleDataFromChild={handleDataFromChild} />
+        <YearTimelineCarousel Year={years[middleIndex]?.name} animateAirplanes={animateAirplanes} setImagePosition={setImagePosition} animatedX={animatedX} handleChangeYearFlag={handleChangeYearFlag} onImageClick={handleImageClick} handleDataFromChild={handleDataFromChild}yearParam={yearParam} />
     </View>
       )}
 

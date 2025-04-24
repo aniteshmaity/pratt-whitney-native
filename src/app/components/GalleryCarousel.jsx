@@ -12,13 +12,13 @@ const scaleFactor = 1;
 
 const data = [
   null,
-  { id: 1, image: yearImages.layer1, description: "Card 1 Description" },
-  { id: 2, image: yearImages.layer1, description: "Card 2 Description" },
-  { id: 3, image: yearImages.layer3, description: "Card 3 Description" },
-  { id: 4, image: yearImages.layer2, description: "Card 4 Description" },
-  { id: 5, image: yearImages.layer2, description: "Card 5 Description" },
-  { id: 6, image: yearImages.layer3, description: "Card 6 Description" },
-  { id: 7, image: yearImages.layer3, description: "Card 7 Description" },
+  { id: 1, img: yearImages.layer1, description: "Card 1 Description" },
+  { id: 2, img: yearImages.layer1, description: "Card 2 Description" },
+  { id: 3, img: yearImages.layer3, description: "Card 3 Description" },
+  { id: 4, img: yearImages.layer2, description: "Card 4 Description" },
+  { id: 5, img: yearImages.layer2, description: "Card 5 Description" },
+  { id: 6, img: yearImages.layer3, description: "Card 6 Description" },
+  { id: 7, img: yearImages.layer3, description: "Card 7 Description" },
   null,
   null,
   null
@@ -30,7 +30,8 @@ const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, slideImag
   if (!item) {
     return <View style={{ width: itemWidth }} />; // Empty space
   }
-     const realIndex = loopingData.filter((e) => e !== null).indexOf(item);
+  const filteredData = data.filter(item => item !== null);
+     const realIndex = data.filter((e) => e !== null).indexOf(item);
   const animatedStyle = useAnimatedStyle(() => {
     const scale = interpolate(
       scrollX.value,
@@ -46,7 +47,7 @@ const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, slideImag
     );
 
     return { transform: [{ scale }] };
-  });
+  });  
 
   return (
     <Animated.View style={[{ width: itemWidth }, animatedStyle]}>
@@ -54,15 +55,15 @@ const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, slideImag
       <TouchableOpacity
         onPress={() => {
           console.log("onpress clickre----");
-          if (slideImages) {
+          if (slideImages?.length) {
             onImageClick(index, slideImages);
           } else {
-            onImageClick(index, data);
+            onImageClick(index, filteredData);
           }
         }}>
         <Image
 
-          source={slideImages ? item.img : item.image}
+          source={slideImages?.length ? item.img : item.img}
           alt={`Card ${item.uniqueId}`}
           className=" w-full"
           resizeMode="cover"
@@ -77,6 +78,8 @@ const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, slideImag
   );
 };
 const GalleryCarousel = ({ parentWidth, slideImages, onImageClick }) => {
+
+  console.log("slideImages",slideImages);
   const scrollX = useSharedValue(0);
   const itemWidth = parentWidth / 5; // Width of each item
 
@@ -93,8 +96,9 @@ const GalleryCarousel = ({ parentWidth, slideImages, onImageClick }) => {
       setCurrentIndex(index);
     },
   });
-  const slideAllImage = [null,...slideImages,null,null,null]
-  const loopingData = slideImages ? slideAllImage : data
+  const slideAllImage = [null, ...(Array.isArray(slideImages) ? slideImages : []), null, null, null];
+
+  const loopingData = slideImages?.length ? slideAllImage : data
 
   // const handlePrev = () => {
   //   if (currentIndex <= 0) return; // Prevent negative index

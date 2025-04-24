@@ -340,7 +340,7 @@ const onMomentumScrollEnd = (event) => {
                  className="absolute w-[50%] h-[1px] top-[50%] left-[0%] "
                 /> */}
         {/* Sidebar Navigation */}
-        <View className="w-[58px] justify-start items-center mt-4">
+        {/* <View className="w-[58px] justify-start items-center mt-4">
         <ClippedView width={58} height={26} backgroundColor="#918F8F" clipPathId="backClip" slug="variant7" />
           <TouchableOpacity onPress={handleClose} className=" px-3 py-2 flex flex-row justify-center items-center gap-2">
             <Image source={yearImages.leftArrow} className="w-[7px] h-[7px]" resizeMode="contain" />
@@ -348,7 +348,7 @@ const onMomentumScrollEnd = (event) => {
               Back
             </Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
         <View className="bg-[#f5f5f5] ">
           <Animated.View className="absolute w-[1px] h-[100%] left-[50%] bg-[#00000014] " style={[ lineAnimatedStyle]} />
            

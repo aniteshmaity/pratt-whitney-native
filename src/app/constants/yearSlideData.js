@@ -181,6 +181,7 @@ const yearSlidedata = [
       ],
     },
     {
+      
       year: "1930",
       title: "Lorem Insum Dolar sit in the black",
       subtitle: " Legendary Engine for a Legendary Bomber",
@@ -195,6 +196,7 @@ const yearSlidedata = [
 
       innerSlidesData: [
         {
+          id:1,
           year: "1931",
           description:
             "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.The TF33 is the United States Air Force designation for the Pratt & Whitney JT3 commercial engine",
@@ -212,6 +214,7 @@ const yearSlidedata = [
           ],
         },
         {
+          id:2,
           year: "1932",
           description:
             "The TF33 is the United States Air Force designation for the Pratt & Whitney JT3 commercial engine,First flown 60 years ago, and with more than 1,000 engines still in..",
@@ -226,6 +229,7 @@ const yearSlidedata = [
           ],
         },
         {
+          id:3,
           year: "1933",
           description:
             "The TF33 is the United States Air Force designation for the Pratt & Whitney JT3 commercial engine,First flown 60 years ago, and with more than 1,000 engines still in..",
