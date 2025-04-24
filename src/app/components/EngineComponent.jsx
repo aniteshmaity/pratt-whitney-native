@@ -3,7 +3,7 @@ import React, { Suspense, useCallback, useEffect, useRef, useState } from "react
 import yearImages from "../constants/yearImages";
 import GalleryCarousel from "./GalleryCarousel";
 import tabsData from "../constants/tabsData";
-import Svg, { Defs, ClipPath, Polygon, Rect } from 'react-native-svg';
+import Svg, { Defs, ClipPath, Polygon, Rect, Path } from 'react-native-svg';
 
 
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing, interpolate, useScrollViewOffset, useAnimatedScrollHandler, withRepeat } from "react-native-reanimated";
@@ -38,7 +38,7 @@ function Model({ url }) {
   return <primitive object={scene} scale={1} />;
 }
 
-export default function EngineComponent({ type, onEngineClose, engineData,setShow3DModel,setLoading,onImageClick,yearEngineData }) {
+export default function EngineComponent({ type, onEngineClose, engineData, setShow3DModel, setLoading, onImageClick, yearEngineData }) {
   // console.log("enginedata---", engineData);
   const [activeTab, setActiveTab] = useState(0);
   const contentRef = useRef(null);
@@ -54,7 +54,7 @@ export default function EngineComponent({ type, onEngineClose, engineData,setSho
   const [scrollParentHeight1, setScrollParentHeight1] = useState(0);
   const [scrollParentHeight2, setScrollParentHeight2] = useState(0);
   const [contentHeight, setContentHeight] = useState(0);
- 
+
   // const [tabsData, setTabsData] = useState(engineData?.defaultTabsData);
   const videoRef = useRef(null);
   const rotation = useSharedValue(0);
@@ -320,7 +320,7 @@ export default function EngineComponent({ type, onEngineClose, engineData,setSho
 
       <View className="w-full h-full flex-1 ">
         <ClippedView width={size.width / 2} height={size.height} backgroundColor="#D91027" clipPathId="Engineclip0" slug="variant2" />
-        <View className={`relative z-[20] overflow-hidden w-full bg-[#D91027]`} style={{ height: type === "product" ? "50%" : "54%" }}>
+        <View className={`relative z-[20] overflow-hidden w-full bg-[#D91027]`} style={{ height: type === "product" ? "54%" : "54%" }}>
           {/* <Image
             source={type === "product" ? yearImages.gtfImg : yearImages.machine1}
 
@@ -329,44 +329,25 @@ export default function EngineComponent({ type, onEngineClose, engineData,setSho
           /> */}
 
           {/* <Video  source={{ uri: "http://commondatastorage.g  oogleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" }}  */}
-          {type === "product" ? (<VideoView ref={videoRef} style={{ width: "99.5%", height: "100%" }} className="  pr-1" player={productPlayer} allowsFullscreen
-            allowsPictureInPicture nativeControls={false}
-            resizeMode="cover" />) : (
-            // <Video  
-            //        style={{
-            //       position: 'absolute',
-            //       width: "99.5%",
-            //       height: "120%",
-            //       left: 0,
-            //       top: "-10%",
-            //       right: "3%"
-            //     }} 
-            //     source={require('../../assets/images/project/big_buck_bunny_360p_5mb.mp4')} 
-            //     isLooping  
-            //     shouldPlay={true}
-            //     isMuted={true}  
-            //     resizeMode={ResizeMode.COVER}   
-            //     allowsPictureInPicture 
-            //   />
-            <View className="w-[99.5%] h-full bg-slate-500 overflow-hidden">
-              <VideoView
-                style={{
+         <View className=" h-full bg-slate-500 overflow-hidden" style={{width:"99.7%"}}>
+            <Image source={yearImages.machine1} className="w-full h-full" resizeMode="cover"/>
+            {/* <VideoView
+              style={{
 
-                  flex: 1, // Fill the parent container
-                  width: '100%',
-                  height: '100%',
-                  aspectRatio: 16 / 9,
-                }}
-                player={nonProductPlayer}
-                allowsFullscreen
-                allowsPictureInPicture
-              />
-            </View>
-          )}
+                flex: 1, // Fill the parent container
+                width: '100%',
+                height: '100%',
+                aspectRatio: 16 / 9,
+              }}
+              player={nonProductPlayer}
+              allowsFullscreen
+              allowsPictureInPicture
+            /> */}
+          </View>
 
 
         </View>
-        <View className={`  relative px-[2.2px] pb-[2.2px]`} style={{ height: type === "product" ? "50%" : "46%" }}>
+        <View className={`  relative`} style={{ height: type === "product" ? "46%" : "46%",paddingLeft:"1.7" }}>
           {/* {type === "product" ? (
             <>
               <View className="top-0 absolute w-[150px] h-[150px] left-1/2 -translate-x-1/2 -translate-y-1/2 z-[15]" >
@@ -394,7 +375,7 @@ export default function EngineComponent({ type, onEngineClose, engineData,setSho
               </View>
               </>
           ) : null} */}
-          {type === "product" ? (
+          {/* {type === "product" ? (
 
             
            <>
@@ -419,47 +400,102 @@ export default function EngineComponent({ type, onEngineClose, engineData,setSho
               </Text>
             </TouchableOpacity>
             </View></>
-          ) : null}
+          ) : null} */}
 
           <View
-            className="red-border  h-full w-full flex flex-col justify-center z-10"
+            className=" h-full w-full flex flex-col  z-10"
           // style={{
           //   clipPath:
           //     "polygon(100% 0%, 100% 100%, 90% 100%, 20% 100%, 0% 56%, 0% 0%)",
           // }}
           >
-            <ClippedView width={Math.max(size.width / 2 - 4, 0)} height={type === "product" ? Math.max(size.height * 0.5 - 2, 0) : Math.max(size.height * 0.46 - 2, 0)} backgroundColor="#393636" clipPathId={type === "product" ? "Engineclip2" : "Engineclip3"} slug={type === "product" ? "variant10" : "variant3"} />
+            <ClippedView width={Math.max(size.width / 2 - 3 , 0)} height={type === "product" ? Math.max(size.height * 0.46 - 2, 0) : Math.max(size.height * 0.46 - 1, 0)} backgroundColor="#393636" clipPathId={type === "product" ? "Engineclip3" : "Engineclip3"} slug={type === "product" ? "variant3" : "variant3"} />
             <View>
-              <View className="w-[90%] m-auto">
-                <Image
+              <View className="w-[90%] mt-[60px] pl-[30px]">
+                {/* <Image
                   source={yearImages.galleryText}
                   className="w-[30%] h-[28px]"
                   style={{ width: 131, height: 28 }}
                   resizeMode="cover"
-                />
+                /> */}
+     <View style={{width:110,height:42}} className="relative ">
+      <Text className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-white z-40">Gallery</Text>
+     
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    width="110"
+    height="42"
+    viewBox="0 0 110 42"
+     preserveAspectRatio="none"
+  >
+    <Path
+      fill="#242021"
+      stroke="#D91027"
+      d="M.5 11.457 11.457.5H109v30.043L98.043 41.5H.5z"
+    ></Path>
+  </Svg>
+  <Svg
+style={{ position: 'absolute', top: 20,right:-86 }}
+    xmlns="http://www.w3.org/2000/svg"
+    width="88"
+    height="19"
+    fill="none"
+    viewBox="0 0 88 19"
+  >
+    <Path stroke="#D91027" d="M.5 1.25h75.75L87.5 18.5"></Path>
+    <Path
+      fill="#D91026"
+      d="M48.5 1.25h27.75L83 11l-3-.75-4.5-6.75H50.75z"
+    ></Path>
+  </Svg>
+     </View>
               </View>
               <View className="slider-section w-[90%] m-auto mt-8" onLayout={(event) => {
                 const { width } = event.nativeEvent.layout;
                 setParentWidth(width);
               }}>
-                {parentWidth > 0 && <GalleryCarousel parentWidth={parentWidth} onImageClick={onImageClick} slideImages={yearEngineData?.slideImages} />}
+                {parentWidth > 0 && <GalleryCarousel parentWidth={parentWidth} onImageClick={onImageClick} slideImages={yearEngineData?.slideImages || null} />}
               </View>
             </View>
           </View>
-        </View>
+        </View> 
       </View>
 
       <View className=" overflow-y-hidden relative flex-1 h-full"
       >
         <View className=" h-[54%] bg-slate-400 flex  justify-around">
-          {type === "product" && (<View className="absolute top-0 right-0 z-50">
+          {/* {type === "product" && (<View className="absolute top-0 right-0 z-50">
             <CustomCloseButton onPress={onEngineClose} type={2} bgOpacity="false" />
-          </View>)}
+          </View>)} */}
 
           <ClippedView width={Math.max(size.width / 2 - 1, 0)} height={size.height} backgroundColor="white" clipPathId="Engineclip2" slug="variant4" />
 
 
-          <View
+<View className="relative transform -translate-x-[30px]" style={{ width: 533, height: 142,  transform: [{ translateX: -10 }], }}>
+<Svg
+    xmlns="http://www.w3.org/200Svg"
+     width="533"
+    height="142"
+    fill="none"
+    viewBox="0 0 493 142"
+preserveAspectRatio="none"
+  >
+    <Path 
+      fill="#393637"
+      stroke="#CE1126"
+      strokeWidth="2"
+      d="M491.5 1v74.608L431.062 141H1V1z"
+    ></Path>
+  </Svg>
+  <View className="absolute pl-[20px] top-1/2 -translate-y-1/2   ">
+        <Text className={`${type === "100year" ? "text-[20px]" : "text-[2.2rem]"}   leading-tight text-white font-ObjektivMk2Black`}> {type === "product" ? engineData?.title : yearEngineData?.title}</Text>
+        <Text className="text-[#CE2028] text-[0.8rem] font-ObjektivMk1Bold ">
+                {engineData?.subTitle || "A Legend Engine For a legedary Bombar"}
+              </Text>
+      </View>
+</View>
+          {/* <View
             className=" pr-1 py-1"
           >
             <ClippedView width={404} height={95} backgroundColor="#d91027" clipPathId="clip1" />
@@ -476,7 +512,7 @@ export default function EngineComponent({ type, onEngineClose, engineData,setSho
                 {engineData?.subTitle || "A Legend Engine For a legedary Bombar"}
               </Text>
             </View>
-          </View>
+          </View> */}
           <View className="flex flex-row gap-[40px]  ml-5  pb-2 w-[90%] relative h-[90px] overflow-auto" onLayout={onParentLayout1}>
             <View className=" rounded-full   w-[94px] h-[94px] p-2 bg-white" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
               <View className="overflow-hidden w-full h-full   rounded-full " style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 10, 5) }}>
@@ -513,7 +549,7 @@ export default function EngineComponent({ type, onEngineClose, engineData,setSho
           </View>
           {engineData?.variants && engineData?.variants.length > 0 ? (
             <View className="flex gap-[40px] flex-row ml-5  items-center">
-              <Text className="text-[#CE2028] text-[12px] font-ObjektivMk1Bold">Select Variat</Text>
+              <Text className="text-[#CE2028] text-[12px] font-ObjektivMk1Bold">Select Variant</Text>
 
               {engineData?.variants.map((item, index) => {
                 return (
@@ -537,7 +573,7 @@ export default function EngineComponent({ type, onEngineClose, engineData,setSho
             </View>
           ) : (
             <View className="flex gap-[40px] flex-row ml-5  items-center">
-              <Text className="text-[#CE2028] text-[12px] font-ObjektivMk1Bold">Select Variat</Text>
+              <Text className="text-[#CE2028] text-[12px] font-ObjektivMk1Bold">Select Variant</Text>
 
               {Varients.map((item, index) => {
                 return (
@@ -564,7 +600,8 @@ export default function EngineComponent({ type, onEngineClose, engineData,setSho
         </View>
 
         <View className=" relative   h-[42%] " onLayout={onParentLayout2}>
-          {type === "100year" ? (<View className="w-full h-[24px]  absolute top-[1px] " style={{ ...boxShadow("#514b4b33", -1, 4, 0.6, 5, 1) }} />) : null}
+          {type === "100year" ? (
+            <View className="w-full h-[24px]  absolute top-[1px] " style={{ ...boxShadow("#514b4b33", -1, 4, 0.6, 5, 1) }} />) :    <View className="w-full h-[24px]  absolute top-[1px] " style={{ ...boxShadow("#514b4b33", -1, 4, 0.6, 5, 1) }} />}
           <View className="ml-5 relative overflow-hidden w-[86%] h-full">
             {/* Tabs Navigation */}
             <View
@@ -579,7 +616,7 @@ export default function EngineComponent({ type, onEngineClose, engineData,setSho
                   onPress={() => setActiveTab(index)}
                   className={`flex-1 px-4 py-[6px] text-[0.5rem] `}
                 >
-                  <ClippedView width={98} height={20} backgroundColor={activeTab === index ? "#D91027" : "#918F8F"} clipPathId="EnginePclip1" slug={type === "product" ? "variant8" : "variant5"} />
+                  <ClippedView width={98} height={20} backgroundColor={activeTab === index ? "#D91027" : "#918F8F"} clipPathId="EnginePclip1" slug={ "variant8"} />
                   <Text className="text-[0.5rem] font-semibold  text-white text-center">{tab.title}</Text>
                 </TouchableOpacity>
               ))}

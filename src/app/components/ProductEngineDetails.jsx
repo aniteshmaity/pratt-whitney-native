@@ -11,6 +11,7 @@ import { Test3d } from "./3dModels/Test3d";
 import useControls from "r3f-native-orbitcontrols";
 import { Canvas } from "@react-three/fiber";
 import Trigger from "./3dModels/Trigger";
+import CustomDialog from "./CustomDialog";
 LogBox.ignoreLogs(["Cannot read property 'trim' of undefined"]);
 export default function ProductEngineDetails({handleEngineClose,engineData}) {
     const [size, setSize] = useState({ width: 0, height: 0 });
@@ -20,11 +21,22 @@ export default function ProductEngineDetails({handleEngineClose,engineData}) {
   const handleClose = () => {
     console.log("ok");
   };
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [dialogImages, setDialogImages] = useState([]);
+    console.log("dialogimages",dialogImages);
+    const [startIndex, setStartIndex] = useState(0);
+  const handleImageClick = (index,img) => {
+    console.log("images------",img);
+    setDialogImages(img);
+    setStartIndex(index);
+    setIsDialogOpen(true);
+    console.log("handleclick");
+  };
   return (
     <SafeAreaView className="bg-white">
       {show3DModel ? (<View className="bg-black flex-1 w-full h-screen absolute z-[50]">
               <View className="absolute top-3 right-3 z-50">
-              <CustomCloseButton onPress={()=> setShow3DModel(false)}   />
+              {/* <CustomCloseButton onPress={handleEngineClose}   /> */}
               </View>
               {loading && (    
           <Loader />
@@ -61,16 +73,24 @@ export default function ProductEngineDetails({handleEngineClose,engineData}) {
                   <Text className="text-[#E11C37] pr-2">INDIA</Text>
                   <Text className="text-black">INTERACTIVE</Text>
                 </View>
-                <CustomCloseButton onPress={handleClose} />
+                <CustomCloseButton onPress={handleEngineClose} />
               </View>
             </View>
             <View className="relative ">
        
 
-              <EngineComponent type="product" engineData={engineData} onEngineClose={handleEngineClose} setShow3DModel={setShow3DModel} setLoading={setLoading} />
+              <EngineComponent type="product" engineData={engineData} onEngineClose={handleEngineClose} onImageClick={handleImageClick} setShow3DModel={setShow3DModel} setLoading={setLoading} />
             </View>
           </View>
         </ImageBackground>
+
+         {isDialogOpen && (
+                <CustomDialog
+                images={dialogImages}
+                startIndex={startIndex}
+                  onClose={() => setIsDialogOpen(false)}
+                />
+              )}
       </View>)}
     </SafeAreaView>
   );

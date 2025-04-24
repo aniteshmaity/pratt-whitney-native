@@ -9,6 +9,7 @@ import Svg, { Path } from "react-native-svg";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import CustomCloseButton from "../../components/buttons/CustomCloseButton";
 import yearSlidedata from "../../constants/yearSlideData";
+import CustomDialog from "../../components/CustomDialog";
 
 export default function yearEngineDetails() {
   const { year,  targetId } = useLocalSearchParams();
@@ -37,7 +38,12 @@ export default function yearEngineDetails() {
 
   const handleClose = () => {
     console.log("ok");
-    router.push('/hundred-years/yearCarousal')
+
+    
+    router.push({
+      pathname: '/hundred-years/yearCarousal',
+      params: { yearParam: year }
+    });
   };
   const onPressHome = () => {
     router.push("home")
@@ -110,7 +116,7 @@ export default function yearEngineDetails() {
         </ImageBackground>
 
         {isDialogOpen && (
-        <CustomDialo
+        <CustomDialog
         images={dialogImages}
         startIndex={startIndex}
           onClose={() => setIsDialogOpen(false)}

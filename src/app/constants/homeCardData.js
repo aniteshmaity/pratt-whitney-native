@@ -25,7 +25,7 @@ const homeCardData = [
         "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
       imageUrl:
       homeImages.yearcard,
-      link: "/innovations",
+      link: "/experience3d/GTF3d",
     },
     {
       title: {
