@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity,Dimensions,StyleSheet, Button,FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity,Dimensions,StyleSheet, Button,FlatList, ActivityIndicator } from "react-native";
 import React, {useState, useRef, useCallback, useEffect  } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -41,12 +41,12 @@ const years = [
 ];
 
 
-const Card = ({ index, middleIndex ,item, currentIndex,handleStateUp,scrollX}) => {
+const Card = ({ index, middleIndex ,item, currentIndex,handleStateUp,scrollX,flatListRef}) => {
     const router = useRouter();
   const fadeAnim = useSharedValue(0); // Shared value for opacity
 const translateY = useSharedValue(10); // Shared value for slide effect
 const handleExplore = () => {
-  console.log("click");
+  console.log("clickedd-----------");
    handleStateUp();
 }
 
@@ -98,7 +98,7 @@ const handleExplore = () => {
       style={[{ width: ITEM_WIDTH, height:ITEM_WIDTH }, animatedStyle]}
       className={`item-${index} ${ middleIndex === index ? 'active' : ''} ${middleIndex > index  ? 'left' : 'right'}`}
     >
-      <View  style={{  ...boxShadow("#6b6464", 3, 7, 0.2, 10, 10), width: ITEM_WIDTH, height:ITEM_WIDTH }} className="rounded-full bg-white overflow-hidden   z-40 p-[15px] transition-transform duration-300 ease-in-out relative">
+      <TouchableOpacity onPress={() => (index === middleIndex ? handleExplore() :  null)} style={{  ...boxShadow("#6b6464", 3, 7, 0.2, 10, 10), width: ITEM_WIDTH, height:ITEM_WIDTH }} className="rounded-full bg-white overflow-hidden   z-40 p-[15px] transition-transform duration-300 ease-in-out relative">
       { middleIndex === index && (<Image source={yearImages.redStrap} className="absolute -left-[0px]  top-[10px] -z-10 w-[80px] h-[90px]"   />)}
 <View style={{ ...boxShadow("#b9b7b7", 1, 0, 0.3, 11, 8)}} className={`flex  justify-center items-center rounded-full w-full h-full  bg-white `}>
                     <Text className="text-[2.6rem] text-[#D91027] font-objectiveBlk">
@@ -108,7 +108,7 @@ const handleExplore = () => {
                     {item.description}
                   </Text>
                   </View>
-      </View>
+      </TouchableOpacity>
       {middleIndex === index && (
          <Animated.View className="text-center mt-6" style={[textanimatedStyle]}>
          <Text className="text-[0.7rem] leading-tight font-[700] text-center font-frutigerBold">
@@ -144,6 +144,8 @@ const { yearParam} = useLocalSearchParams();
   const [childSlideId, setChildSlideId] = useState(0);
   const [yearDetails, setYearDetails] = useState("");
     const [imagePosition, setImagePosition] = useState(0);
+    const [showTimeline, setShowTimeline] = useState(false);
+
     const [dialogImages, setDialogImages] = useState([]);
     const [direction, setDirection] = useState("next"); 
   const flatListRef = useRef(null);
@@ -153,6 +155,8 @@ const { yearParam} = useLocalSearchParams();
 console.log("currentindex",currentIndex);
 console.log("imageposition",imagePosition);
 console.log("direction",direction);
+console.log("yearDetails----",yearDetails);
+console.log("yearParam----",yearParam);
 // At the top of your component
 const [savedPosition, setSavedPosition] = useState(null);
 const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -174,14 +178,15 @@ const handleImageClick = (index,img) => {
 const isRestoringPosition = useRef(false); 
 // Before switching to YearTimelineCarousel
 const handleStateUp = () => {
-  // setSavedPosition({
-  //   currentIndex,
-  //   middleIndex,
-  //   scrollPosition: scrollX.value
-  // });
+  console.log("clickeddhandle-----------");
+
  
     setYearDetails("view");
+    setShowTimeline(false);      // immediately hide heavy component
 
+    setTimeout(() => {
+      setShowTimeline(true);     // show it after delay
+    }, 500);
 };
 
 
@@ -192,7 +197,7 @@ const handleStateUp = () => {
     if (curr === null) return;
     
     setYearDetails(""); // Reset to carousel view
-    
+    // scrollToIndex(childSlideId)
     // Ensure the carousel is properly centered on return
     // if (savedPosition) {
     //   isRestoringPosition.current = true;
@@ -203,9 +208,9 @@ const handleStateUp = () => {
     //     scrollToIndex(savedPosition.currentIndex);
     //   }, 100);
     // }
-    if(flatListRef.current){
-      flatListRef.current.scrollToIndex({ index: childSlideId, animated: true });
-    }
+    // if(flatListRef.current){
+    //   scrollToIndex(childSlideId)
+    // }
     animateAirplanes(childSlideId,"next");
     
   };
@@ -219,20 +224,7 @@ const handleStateUp = () => {
   // }, [yearDetails]);
   
   // Modify scrollToIndex function for better accuracy
-  const scrollToIndex = (index) => {
-    console.log("index--", index);
-    if (flatListRef.current) {
-      flatListRef.current.scrollToIndex({ 
-        animated: true, 
-        index,
 
-      });
-      
-      // Update states to maintain consistency
-      setCurrentIndex(index);
-      setMiddleIndex(index + 2);
-    }
-  };
   const scrollHandler = useAnimatedScrollHandler((event) => {
     scrollX.value = event.contentOffset.x;
     const newIndex = Math.round(event.contentOffset.x / ITEM_WIDTH)+ 2;
@@ -371,7 +363,36 @@ useEffect(() => {
 const moveImgAnimatedStyle = useAnimatedStyle(() => ({
   transform: [{ translateX: animatedX.value }],
 }));
+const scrollToIndex = (index) => {
+  console.log("index--", index);
+  console.warn("flatListRef.current",flatListRef.current);
+  if (
+    flatListRef.current &&
+    index !== undefined &&
+  index >= 0 
+  ) {
+    flatListRef.current.scrollToIndex({
+      index,
+      animated: true,
+    });
 
+    // Manually update states
+    setCurrentIndex(index);
+    setMiddleIndex(index + 2);
+  } else {
+    console.warn("Invalid index passed to scrollToIndex:", index);
+  }
+};
+useEffect(() => {
+  if (flatListRef.current && childSlideId) {
+    setTimeout(() => {
+      flatListRef.current.scrollToIndex({
+        index: childSlideId,
+        animated: true,
+      });
+    }, 100);
+  }
+}, [childSlideId, years]);
 
   return (
     <SafeAreaView className="bg-white">
@@ -402,7 +423,8 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
         </View>
 
         {yearDetails === "" ? (
-          <View className="flex justify-center items-center h-[calc(100vh-316px)] bg-[#f5f5f5]">
+          <View className="flex justify-center items-center relative bg-[#f5f5f5]" style={{height:adjustedHeight - 106}}>
+             <View className="absolute top-[30%] h-[2px] w-full bg-[#c1c0c066] "  />
             <View className="flex  justify-center items-center h-full w-full">
               <View className="slider-container-100years  flex  h-[80%] w-full relative  z-[999999]">
        
@@ -419,7 +441,7 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
         }}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
-          <Card index={index} item={item} middleIndex={middleIndex} currentIndex={currentIndex} scrollX={scrollX} handleStateUp = {handleStateUp}  />
+          <Card index={index} item={item} middleIndex={middleIndex} currentIndex={currentIndex} scrollX={scrollX} handleStateUp = {handleStateUp} flatListRef={flatListRef}  />
         )}
         snapToInterval={ITEM_WIDTH}
         decelerationRate="fast"
@@ -469,11 +491,19 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
               </View>
             </View>
           </View>
-       ) : (
-        <View className="flex items-center bg-[#f5f5f5]" style={{height:adjustedHeight}}>
+       ) :  (<>
+ {!showTimeline && (
+      <View className="absolute top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center  bg-[#f5f5f5] ">
+        <ActivityIndicator size="large" color="#ff0000" />
+      </View>
+      
+    )}
+ <View className="flex items-center bg-[#f5f5f5]" style={{height:adjustedHeight,    opacity: showTimeline ? 1 : 0,    position: 'relative',
+        zIndex: showTimeline ? 0 : -1,}}  >
+          {/* <Text className="text-red-500">Hello by this is come first:------------</Text> */}
         <YearTimelineCarousel Year={years[middleIndex]?.name} animateAirplanes={animateAirplanes} setImagePosition={setImagePosition} animatedX={animatedX} handleChangeYearFlag={handleChangeYearFlag} onImageClick={handleImageClick} handleDataFromChild={handleDataFromChild}yearParam={yearParam} />
     </View>
-      )}
+       </>) }
 
         {/* Footer */}
       <View className="w-screen absolute bottom-0 left-0">
