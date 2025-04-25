@@ -91,7 +91,6 @@ if (item === null) {
       )}
             <Image source={item.imageUrl }
              style={{ width: CARD_WIDTH, height: 175 }}
-             placeholder={{ blurhash }}
              onLoad={() => setIsLoading(false)}
         className=' w-full h-full'  transition={1000}  contentFit="cover" />
           </View>
