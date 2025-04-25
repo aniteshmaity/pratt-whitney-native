@@ -1,4 +1,4 @@
-import {Dimensions, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ActivityIndicator, Dimensions, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import {SafeAreaView} from "react-native-safe-area-context";
 import CustomCloseButton from "../components/buttons/CustomCloseButton";
@@ -12,7 +12,7 @@ import boxShadow from '../constants/boxShadow';
 import RedDotSvg from '../components/RedDotSvg';
 import ClippedView from '../components/ClippedView';
 import CustomTextButton from '../components/buttons/CustomTextButton';
-
+import {Image} from "expo-image"
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const CARD_WIDTH = screenWidth / 3; // Width of each card
 console.log("scenwidht",screenWidth);
@@ -21,7 +21,11 @@ console.log("cusheight",customheight);
 const VISIBLE_CARDS = 5; // Number of visible cards
 const LOOP_DATA = homeCardData;
 const loopData = LOOP_DATA; 
+const blurhash =
+  '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
+
 const Card = ({ item, index, scrollX,centeredIndex  }) => {
+  const [isLoading, setIsLoading] = useState(true);
 
  const router = useRouter();
 if (item === null) {
@@ -77,11 +81,19 @@ if (item === null) {
       
           {/* Image section */}
           <View className=" w-full h-[175px] ">
-            <Image
+            {/* <Image
               className="w-[100%] h-full"
               source={item.imageUrl }
               resizeMode="cover"
-            />
+            /> */}
+            {isLoading && (
+        <ActivityIndicator size="small" color="#888" className="" />
+      )}
+            <Image source={item.imageUrl }
+             style={{ width: CARD_WIDTH, height: 175 }}
+             placeholder={{ blurhash }}
+             onLoad={() => setIsLoading(false)}
+        className=' w-full h-full'  transition={1000}  contentFit="cover" />
           </View>
 
           {/* Content section */}
@@ -139,6 +151,9 @@ export default function Home() {
 
   const { targetIndex } = useLocalSearchParams();
   console.log("ttargetindex",targetIndex);
+
+  const rawIndex = Number(targetIndex);
+  console.log("rawindex",rawIndex);
   const handleClose = () => {
 
     router.push("/startScreen");
@@ -175,6 +190,7 @@ export default function Home() {
     onScroll: (event) => {
       scrollX.value = event.contentOffset.x;
       const index = Math.round(event.contentOffset.x / CARD_WIDTH);
+      console.log("indexdex----",index);
       runOnJS(setCenteredIndex)(index);
     },
   });
@@ -194,6 +210,15 @@ export default function Home() {
   const animatedTerrainStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
   }));
+  useEffect(()=> {
+if(flatListRef.current && rawIndex){
+  flatListRef.current.scrollToIndex({ 
+    index: rawIndex,
+    animated: true 
+
+  });
+}
+  },[rawIndex])
  
 
   return (

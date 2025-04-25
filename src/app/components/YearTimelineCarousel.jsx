@@ -54,7 +54,7 @@ const [navigationDirection,setNavigationDirection] = useState("next");
 
   useEffect(() => {
     handleDataFromChild(currentSlide)
-  },[handleDataFromChild]);
+  },[handleDataFromChild,currentSlide]);
 
   // Function to trigger animation on button click
   // console.log("year-----", Year);
@@ -281,7 +281,7 @@ const [navigationDirection,setNavigationDirection] = useState("next");
       setNextContentClones(initialNextClones);
     }
 
-  }, [slideDataIndex, navigationDirection]);
+  }, []);
 
   useEffect(() => {
     const initialIndex = yearSlideData.findIndex((slide) => slide.year === Year);
