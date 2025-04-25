@@ -1,4 +1,4 @@
-import { View, Text, Image, Button, TouchableOpacity, ScrollView, Linking, Dimensions } from 'react-native'
+import { View, Text, Image, Button, TouchableOpacity, ScrollView, Linking, Dimensions, ActivityIndicator } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import CloseButton from './CloseButton ';
 
@@ -34,6 +34,7 @@ const [nextContentClones, setNextContentClones] = useState([]);
 const [currentInnerSlide, setCurrentInnerSlide] = useState(0);
 const [innerSlideStatus, setInnerSlideStatus] = useState(false);
 const [slideDataIndex, setSlideDataIndex] = useState(getInitialSlideIndex);
+   const [showLoader, setShowLoader] = useState(true);
 const [activeId, setActiveId] = useState(null);
 const [activeNextId, setActiveNextId] = useState(null);
 const [animationTrigger, setAnimationTrigger] = useState(0);
@@ -55,6 +56,12 @@ const [navigationDirection,setNavigationDirection] = useState("next");
   useEffect(() => {
     handleDataFromChild(currentSlide)
   },[handleDataFromChild,currentSlide]);
+
+  useEffect(() => {
+ setTimeout(()=> {
+setShowLoader(false);
+ },500)
+  },[]);
 
   // Function to trigger animation on button click
   // console.log("year-----", Year);
@@ -319,27 +326,15 @@ const [navigationDirection,setNavigationDirection] = useState("next");
   },[yearParam])
 
   return (
+
+  <>
+ {showLoader && (
+      <View className="absolute top-0 left-0 right-0 bottom-0 z-50 bg-white justify-center items-center">
+        <ActivityIndicator size="large" color="#ff0000" />
+      </View>
+    )}
     <View className="relative w-full h-full">
-      {/* Custom Buttons */}
-
-
-      {/* <View>
-           <PrevNextButton
-           isColor="grey"
-           isIcon='prev'
-           isPolygon="first"
-           onPress={ nextContentClones?.length > 0 ? handleInnerPrev : handlePrevClick }
-                 />
-   
-           </View>
-           <View>
-           <PrevNextButton
-                   isColor="red"
-                   isIcon='next'
-                   onPress={ prevContentClones?.length > 0 ? handleInnerNext : handleNextClick}
-                 />
-   
-           </View> */}
+     
       <View className="absolute left-4 top-[40%] -translate-y-1/2 z-50" >
         <PrevNextButton
           isColor="grey"
@@ -395,7 +390,7 @@ const [navigationDirection,setNavigationDirection] = useState("next");
 
 
 
-    </View>
+    </View></>
 
   )
 }
@@ -668,7 +663,11 @@ const YearCard = ({ item, index,mainSlideStyle,currentInnerSlide,currentSlide,in
 
   // console.log("slide", yearSlideData);
   return (
-    <View
+
+    <>
+   
+
+          <View
       key={index}
 
       className=" flex-1  w-full h-full "
@@ -851,6 +850,8 @@ const YearCard = ({ item, index,mainSlideStyle,currentInnerSlide,currentSlide,in
       </View>
 
     </View>
+    </>
+    
   )
 }
 

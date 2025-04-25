@@ -491,19 +491,21 @@ useEffect(() => {
               </View>
             </View>
           </View>
-       ) :  (<>
- {!showTimeline && (
-      <View className="absolute top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center  bg-[#f5f5f5] ">
+       ) :  
+ !showTimeline ? (
+  <View className="flex justify-center items-center h-screen bg-[#f5f5f5]">
         <ActivityIndicator size="large" color="#ff0000" />
       </View>
       
-    )}
- <View className="flex items-center bg-[#f5f5f5]" style={{height:adjustedHeight,    opacity: showTimeline ? 1 : 0,    position: 'relative',
+    ) : (
+      <View className="flex items-center bg-[#f5f5f5]" style={{height:adjustedHeight,    opacity: showTimeline ? 1 : 0,    position: 'relative',
         zIndex: showTimeline ? 0 : -1,}}  >
           {/* <Text className="text-red-500">Hello by this is come first:------------</Text> */}
         <YearTimelineCarousel Year={years[middleIndex]?.name} animateAirplanes={animateAirplanes} setImagePosition={setImagePosition} animatedX={animatedX} handleChangeYearFlag={handleChangeYearFlag} onImageClick={handleImageClick} handleDataFromChild={handleDataFromChild}yearParam={yearParam} />
     </View>
-       </>) }
+    )
+
+       }
 
         {/* Footer */}
       <View className="w-screen absolute bottom-0 left-0">
