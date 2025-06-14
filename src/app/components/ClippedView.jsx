@@ -15,7 +15,7 @@ const ClippedView = ({ width, height, backgroundColor, clipPathId, children, slu
       case "variant4": // New Polygon based on given points
         return `${width},0 ${width},0 ${width},${height * 0.8} ${width * 0.8},${height} 0,${height} 0,${height} 0,0`;
       case "variant5": // New Polygon based on given points
-        return `${width * 0.02},0 ${width * 0.98},0 ${width},${height * 0.3} ${width},${height} 0,${height} 0,${height * 0.35}`;
+   return `${width * 0.02},0 ${width},0 ${width},${height * 0.7} ${width * 0.98},${height} 0,${height} 0,${height * 0.35}`;
       case "variant6": // New Polygon based on given points
         return `${width * 0.09},0 ${width},0 ${width},${height} 0,${height} 0,${height} 0,${height * 0.3}`;
       case "variant7": // New Polygon based on given points

@@ -31,6 +31,7 @@ import { useRouter } from "expo-router";
 import RedDotSvg from "../../components/RedDotSvg";
 import { LinearGradient } from "expo-linear-gradient";
 import { productEngines } from "../../constants/productEngineData";
+import VideoComponent from "../../components/VideoComponent";
 const { height } = Dimensions.get("window");
 const ITEM_HIGHT = (height - 80) / 3 ;
 const ContainerHeight = height - 80
@@ -57,7 +58,7 @@ const EngineItem = ({
   setCurrentIndex,
   scrollY
 }) => {
-  console.log("middleindex--", middleIndex);
+  // console.log("middleindex--", middleIndex);
   // console.log("curr", currentIndex);
   // console.log("index",index);
   // const scale = useSharedValue(0.5);
@@ -427,21 +428,20 @@ const onMomentumScrollEnd = (event) => {
   > */}
                   <ClippedView width={cardSize.width} height={cardSize.height} backgroundColor="white" clipPathId="Cardclip" slug="variant9" />
                  {/* </View>  */}
-                <Image
+                {/* <Image
                   style={{ height: 240, width: "100%" }}
                   className="w-full"
                   resizeMode="cover"
-                  source={yearImages.blueEngine}
+                  source={yearImages.video}
                   alt=""
-                />
+                /> */}
+                <VideoComponent videoUrl={item.video} isPlay={false} videoClass={{ width: '100%', height: 240 }} />
                 <View className="w-full py-5 px-6">
                   <Text className="text-[2.2rem]   pb-2 font-ObjektivMk1Bold">
                     {item?.engine}
                   </Text>
                   <Text className="text-[0.95rem] pb-5 font-objektiv">
-                    Experience a history of development engines from the first
-                    radial cooled engine in 1925 to the hybrid electric
-                    technologies of today.
+                    {item?.description}
                   </Text>
          
            <ProductCard handleExploreClick={handleExploreClick} engines={productEngines[middleIndex]?.engines || []} />

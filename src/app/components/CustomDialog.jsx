@@ -3,10 +3,13 @@ import { Modal, View, Image, TouchableOpacity, Text, Dimensions } from 'react-na
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/Feather';
+import VideoComponent from './VideoComponent';
+
+// import Pdf from 'react-native-pdf';
 
 const { width, height } = Dimensions.get('window');
-console.log("widhth20",width);
-console.log("height20",height);
+// console.log("widhth20",width);
+// console.log("height20",height);
 const CustomDialog = ({ images, startIndex, onClose }) => {
     const swiperRef = useRef(null);
     console.log("images-322",images);
@@ -55,17 +58,34 @@ const CustomDialog = ({ images, startIndex, onClose }) => {
             showsButtons={false}
  
           >
-            {images.map((img, index) => (
+            {images.map((item, index) => (
               <View
                 key={index}
                 className="flex-1 items-center justify-center"
               >
-                <Image
-                  source={ img.img }
+               {item.img &&
+                 (
+                  <Image
+                  source={ item.img }
                   resizeMode="contain"
                 //   style={{ width: width * 0.85, height: height * 0.6 }}
                   className="rounded w-full h-full"
                 />
+                 )
+               }
+                {item.video && (
+                      <VideoComponent
+                        videoUrl={item.video}
+                        isPlay={false}
+                        videoClass={{ width: '100%', height: '100%' }}
+                      />
+                    )}
+                    {/* {item.pdf && (
+                      <Pdf
+                        source={item.pdf}
+                        style={{ width: '100%', height: '100%' }}
+                      />
+                    )} */}
               </View>
             ))}
           </Swiper>
