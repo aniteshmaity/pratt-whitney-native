@@ -1,6 +1,9 @@
 import yearImages from "./yearImages";
 
 
+
+
+
 const tabsData = [
     {
       title: "Platforms",

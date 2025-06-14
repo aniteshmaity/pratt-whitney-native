@@ -1,54 +1,56 @@
 import homeImages from "./homeImages";
 
+
+
 const homeCardData = [
  null,
     {
       title: {
-        startName: "Pratt & Whitney",
-        endName: "A 100 years",
+         startName: "100 Years of Powering",
+        endName: "the Future",
       },
 
       description:
-        "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
-      imageUrl:
-      homeImages.yearcard,
+       "Browse through Pratt & Whitney’s 100-year history of pushing the boundaries of aviation to shape the future of flight.",
+      videoUrl:
+      homeImages.year100Video,
       link: "/hundred-years",
       triggerCloseAnimation: true,
     },
     {
       title: {
-        startName: "GTF",
-        endName: "Experience 3d",
+       startName: "GTF",
+        endName: "Experience",
       },
 
       description:
-        "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
-      imageUrl:
-      homeImages.yearcard,
+       "Get up close and explore in 3D the Pratt & Whitney GTF™ engine — powering aviation’s most efficient single-aisle aircraft.",
+      videoUrl:
+      homeImages.gtfVideo,
       link: "/experience3d/GTF3d",
     },
     {
       title: {
-        startName: "Our",
-        endName: "Product",
+        startName: "Our Marquee",
+        endName: "Products",
       },
 
       description:
-        "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
-      imageUrl:
-      homeImages.productCard,
+       "Pratt & Whitney is a world leader in the design, manufacture, and service of aircraft engines and auxiliary power units.",
+      videoUrl:
+      homeImages.productVideo,
       link: "/products",
     },
     {
       title: {
-        startName: "GTF",
-        endName: "Aerospace  3d",
+        startName: "Connected",
+        endName: "Aerospace",
       },
 
       description:
-        "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
-      imageUrl:
-      homeImages.new1,
+        "Experience in 3D how RTX is innovating the future of flight with Pratt & Whitney and Collins Aerospace.",
+      videoUrl:
+      homeImages.aerospaceVideo,
       link: "/innovations",
     },
     // {
@@ -59,20 +61,20 @@ const homeCardData = [
 
     //   description:
     //     "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
-    //   imageUrl:
+    //   videoUrl:
     //   homeImages.new1,
     //   link: "mapPage",
     // },
     {
       title: {
         startName: "Pratt & Whitney",
-        endName: "In India",
+        endName: "in India",
       },
 
       description:
-        "Experience a history of development engines from the first radial cooled engine in 1925 to the hybrid electric technologies of today.",
-      imageUrl:
-      homeImages.mapCard,
+        "With 600 aircraft powered across commercial, military, and regional aviation, see how we are shaping the future of aviation in India.",
+      videoUrl:
+      homeImages.pw100Video,
       link: "mapPage",
     },
     null

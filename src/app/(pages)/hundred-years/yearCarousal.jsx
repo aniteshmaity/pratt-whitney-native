@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity,Dimensions,StyleSheet, Button,FlatList, ActivityIndicator } from "react-native";
+import { View, Text, Image, TouchableOpacity,Dimensions,StyleSheet, Button,FlatList, ActivityIndicator, InteractionManager } from "react-native";
 import React, {useState, useRef, useCallback, useEffect  } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -25,20 +25,76 @@ const adjustedHeight = height - 80;
 const years = [
   null,
   null,
-  { year: "1920s", name: "1920", description: "Pioneering the Future of Flight" },
-  { year: "1930s", name: "1930", description: "Advancing Aviation" },
-  { year: "1940s", name: "1940", description: "Defending Freedom" },
-  { year: "1950s", name: "1950", description: "Ushering in the Jet Age" },
-  { year: "1960s", name: "1960", description: "Higher, Faster, Further" },
-  { year: "1970s", name: "1970", description: "Powerful, Agile, Dependable" },
-  { year: "1980s", name: "1980", description: "Innovating Advancements" },
-  { year: "1990s", name: "1990", description: "Lorem Ipsum" },
-  { year: "2000s", name: "2000", description: "Lorem Ipsum" },
-  { year: "2010s", name: "2010", description: "Lorem Ipsum" },
-  { year: "2020s", name: "2020", description: "Lorem Ipsum" },
+  {
+      year: "1920s",
+      name: "1920",
+      subTitle: "Pioneering the Future of Flight",
+      description: "Pratt & Whitney Aircraft Company is founded by Frederick B. Rentschler, pioneer of the air-cooled radial engine design",
+    },
+    {
+      year: "1930s",
+      name: "1930",
+      subTitle: "Advancing Innovations",
+      description: "Pratt & Whitney continues advancing innovations with Wasp engine across commercial and military aviation",
+    },
+    {
+      year: "1940s",
+      name: "1940",
+      subTitle: "Powering the War Effort",
+      description: "Pratt & Whitney produced over 300,000 engines during wartime ",
+    },
+    {
+      year: "1950s",
+      name: "1950",
+      subTitle: "Ushering in the Jet Age",
+      description: "From fuel cells for Apollo 11, and most popular general aviation engine – to the world’s fastest military aircraft 1960s were a defining decade",
+    },
+    {
+      year: "1960s",
+      name: "1960",
+      subTitle: "Innovating Fast, and Reliable Propulsion",
+      description: "From fuel cells for Apollo 11, and most popular general aviation engine – to the world’s fastest military aircraft 1960s were a defining decade",
+    },
+    {
+      year: "1970s",
+      name: "1970",
+      subTitle: "Commercial Aviation Leadership",
+      description: "The 70s saw the iconic 747 take to the skies with the JT9D and the F100, one of the most versatile and dependable military engines, power the F-15s and F-16s  ",
+    },
+    {
+      year: "1980s",
+      name: "1980",
+      subTitle: "FADEC, V2500 nand PW100",
+      description: "During the 1980s, Pratt & Whitney further expanded its military and commercial offerings – and reinvented the regional aviation segment",
+    },
+    {
+      year: "1990s",
+      name: "1990",
+      subTitle: "PW4000 and PW500 become clean leaders",
+      description: "The 90s allowed PW to build not only the world’s first 5th Gen engine, but also  develop quieter engines that addressed growing concerns over aircraft noise pollution. ",
+    },
+    {
+      year: "2000s",
+      name: "2000",
+      subTitle: "Innovation and new frontiers",
+      description: "In the 2000s, Pratt & Whitney adapted with further innovation and next-generation thinking that helped the industry begin a new ascent toward even greater accessibility and sustainability efforts",
+    },
+    {
+      year: "2010s",
+      name: "2010",
+      subTitle: "Decade of expansion",
+      description: "Pratt & Whitney Aircraft Company is founded by Frederick B. Rentschler, pioneer of the air-cooled radial engine design",
+    },
+    {
+      year: "2020s",
+      name: "2020",
+      subTitle: "Focus on the future",
+      description: "The 2020s have emphasized the importance of future sustainability, and ongoing research has been devoted to hybrid-electric, alternative fuel and adaptive engine technologies.",
+    },
   null,
   null
 ];
+
 
 
 const Card = ({ index, middleIndex ,item, currentIndex,handleStateUp,scrollX,flatListRef}) => {
@@ -53,12 +109,12 @@ const handleExplore = () => {
 
  // Animation logic for fade and slide
  const textanimatedStyle = useAnimatedStyle(() => {
-  fadeAnim.value = middleIndex === index ? withTiming(1, { duration: 500 }) : withTiming(0, { duration: 300 });
-  translateY.value = middleIndex === index ? withTiming(0, { duration: 500 }) : withTiming(10, { duration: 300 });
+  fadeAnim.value = middleIndex === index ? withTiming(1, { duration: 300 }) : withTiming(0, { duration: 300 });
+  translateY.value = middleIndex === index ? withTiming(0, { duration: 300 }) : withTiming(10, { duration: 300 });
 
   return {
     opacity: fadeAnim.value,
-    transform: [{ translateY: translateY.value }],
+    transform: [{ translateY: translateY.value }],  
   };
 });
   // console.log("itemss", item);
@@ -105,14 +161,14 @@ const handleExplore = () => {
                     {item.year}
                   </Text>
                   <Text className="text-[1.2rem] p-2  text-center font-ObjektivMk1Bold">
-                    {item.description}
+                    {item.subTitle}
                   </Text>
                   </View>
       </TouchableOpacity>
       {middleIndex === index && (
          <Animated.View className="text-center mt-6" style={[textanimatedStyle]}>
          <Text className="text-[0.7rem] leading-tight font-[700] text-center font-frutigerBold">
-           With the war over, a new golden age of progress begins. Prat & Whitney’s JT3D powers USA’s first commercial Jetliner, The Boeing 707.
+               {item.description}
          </Text>
          {/* <TouchableOpacity onPress={handleExplore} className="mt-6 mx-auto clipped-button-2 px-6 py-2   w-[98px] flex flex-row gap-2 justify-center items-center">
          <ClippedView width={98} height={25} backgroundColor="#D91027" clipPathId="EngineYclip1" slug="variant8"  />
@@ -157,6 +213,7 @@ console.log("imageposition",imagePosition);
 console.log("direction",direction);
 console.log("yearDetails----",yearDetails);
 console.log("yearParam----",yearParam);
+console.log("middleIndex",middleIndex);
 // At the top of your component
 const [savedPosition, setSavedPosition] = useState(null);
 const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -168,13 +225,13 @@ useEffect(()=> {if(yearParam){
 
 },[yearParam])
 
-const handleImageClick = (index,img) => {
+const handleImageClick = useCallback((index,img) => {
   console.log("images------",img);
   setDialogImages(img);
   setStartIndex(index);
   setIsDialogOpen(true);
   console.log("handleclick");
-};
+}, []);
 const isRestoringPosition = useRef(false); 
 // Before switching to YearTimelineCarousel
 const handleStateUp = () => {
@@ -232,7 +289,7 @@ const handleStateUp = () => {
  // Only update indices if we're not restoring position
  if (!isRestoringPosition.current) {
   const newIndex = Math.round(event.contentOffset.x / ITEM_WIDTH);
-  console.log("newindex",newIndex);
+  // console.log("newindex",newIndex);
   runOnJS(setDirection)(newIndex > currentIndex ? "next" : "prev" );
   runOnJS(setCurrentIndex)(newIndex);
 
@@ -338,9 +395,10 @@ const animatedStyles = (idx) => {
     opacity:   opacities[idx].value,
   }));
 };
+
 const handleDataFromChild = (data) => {
   console.log("dataa-",data);
-  setChildSlideId(data); // This gets triggered from child
+  setChildSlideId(data); 
 };
 
 useEffect(() => {
@@ -384,15 +442,20 @@ const scrollToIndex = (index) => {
   }
 };
 useEffect(() => {
-  if (flatListRef.current && childSlideId) {
-    setTimeout(() => {
+  const task = InteractionManager.runAfterInteractions(() => {
+    if (flatListRef.current && childSlideId != null) {
+      console.log("Scrolling now because flatListRef is ready");
       flatListRef.current.scrollToIndex({
         index: childSlideId,
         animated: true,
       });
-    }, 100);
-  }
-}, [childSlideId, years]);
+    } else {
+      console.log("flatListRef.current is null, waiting for mount...");
+    }
+  });
+
+  return () => task.cancel();
+}, [childSlideId, years, yearDetails]); 
 
   return (
     <SafeAreaView className="bg-white">
@@ -501,7 +564,7 @@ useEffect(() => {
       <View className="flex items-center bg-[#f5f5f5]" style={{height:adjustedHeight,    opacity: showTimeline ? 1 : 0,    position: 'relative',
         zIndex: showTimeline ? 0 : -1,}}  >
           {/* <Text className="text-red-500">Hello by this is come first:------------</Text> */}
-        <YearTimelineCarousel Year={years[middleIndex]?.name} animateAirplanes={animateAirplanes} setImagePosition={setImagePosition} animatedX={animatedX} handleChangeYearFlag={handleChangeYearFlag} onImageClick={handleImageClick} handleDataFromChild={handleDataFromChild}yearParam={yearParam} />
+        <YearTimelineCarousel Year={years[middleIndex]?.name} animateAirplanes={animateAirplanes} setImagePosition={setImagePosition} animatedX={animatedX} handleChangeYearFlag={handleChangeYearFlag} onImageClick={handleImageClick} handleDataFromChild={handleDataFromChild} yearParam={yearParam} />
     </View>
     )
 
@@ -555,7 +618,7 @@ useEffect(() => {
 
 export default yearCarousal;
 
-// import React, { useState, useRef, useCallback } from 'react';
+
 // import { FlatList, View, Text, TouchableOpacity, Dimensions } from 'react-native';
 // import Animated, { withSpring, useAnimatedStyle, useSharedValue,withTiming } from 'react-native-reanimated';
 

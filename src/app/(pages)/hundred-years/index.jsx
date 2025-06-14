@@ -27,10 +27,11 @@ import CloseButton from "../../components/CloseButton ";
 import { Link } from "expo-router";
 import { useRouter } from 'expo-router';
 import CustomCloseButton from "../../components/buttons/CustomCloseButton";
-
+import { useVideoPlayer, VideoView } from 'expo-video';
 import MyTextBtn from "../../components/buttons/MyTextBtn";
 import PrevNextButton from "../../components/buttons/PrevNextButton";
 import CustomTextButton from "../../components/buttons/CustomTextButton";
+import homeImages from "../../constants/homeImages";
 const { width } = Dimensions.get('window');
 
 const HundredYears = () => {
@@ -41,6 +42,23 @@ const HundredYears = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
   const router = useRouter();
+
+
+const videoSource =
+homeImages.pw100HeroVideo
+
+  const player = useVideoPlayer(videoSource, player => {
+      player.loop = true;
+      player.muted = true;
+      player.play();
+  
+  
+    });
+
+
+
+
+
   const height = useSharedValue(0);
   // Shared values for position and opacity
   const firstX = useSharedValue(0); // Initial: 0%
@@ -297,18 +315,20 @@ const HundredYears = () => {
             </View>
             <View className="p-4 pt-10 text-black/80 font-normal w-[90%]">
               <Text className="leading-tight text-[1.1rem] font-frutigerReg">
-                For a century, Pratt & Whitney has played a pivotal role in transforming aviation by connecting people,
-                growing economies, and defending freedom. Our people are at the heart of driving that progress.
-                The unwavering passion of generations has delivered industry-changing advancements, unlocking limitless potential
-                {!isExpanded && "..."}
+                For 100 years, the people of Pratt & Whitney have pushed the boundaries of aviation to shape human
+flight. Pratt & Whitney’s history is a story of relentless grit and unwavering dedication, from developing
+era-defining engines in the early 20th century to unleashing new technologies that power the skies today.
+With more than 90,000 engines in service around the globe, we remain committed to connecting people,
+growing economies and defending freedom. 
+                {/* {!isExpanded && "..."}
 
                 <Text onPress={toggleReadMore} className="text-[#D91027] font-[900] text-[1.1rem] leading-tight">
                   {isExpanded ? "" : " Read More"}
-                </Text>
+                </Text> */}
 
               </Text>
 
-              <Animated.View style={readMoreAnimatedStyle}>
+              {/* <Animated.View style={readMoreAnimatedStyle}>
                 {isExpanded && (
                   <Text className="leading-tight text-[1.1rem] font-frutigerReg">
                     For a century, Pratt & Whitney has played a pivotal role in transforming aviation by connecting people,
@@ -321,10 +341,10 @@ const HundredYears = () => {
 
                   </Text>
                 )}
-              </Animated.View>
+              </Animated.View> */}
             </View>
-            <View className="p-4 ">
-              <Text className="text-black text-[1rem] font-ObjektivMk1Bold">We are Pratt & Whitney. We are Dependable Engines.</Text>
+            <View className="p-4">
+              <Text className="text-black text-[1rem] font-ObjektivMk1Bold">  A century of innovation continues</Text>
             </View>
 
             {/* <TouchableOpacity
@@ -341,7 +361,7 @@ const HundredYears = () => {
               textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "}
             /> */}
             <CustomTextButton
-              className={"w-[186px] h-[36px] mt-8 "}
+              className={"w-[186px] h-[36px] mt-8 ml-4"}
               onPress={goToYearCourasal}
 
               title={"Begin Interactive"}
@@ -355,226 +375,8 @@ const HundredYears = () => {
 
 
         {/* Video and Content Sections */}
-        <View className="relative flex-1 w-full bg-green-600 h-full ">
-          {[0, 1, 2].map((index) => {
-            const animatedStyle = animatedStyles(index);
-            const animatedStyle2 = animatedStyles2(index);
-            //  const animatedStyle = useAnimatedStyle(() => ({
-
-            //   opacity: animationStates.opacity.value[index],
-            //   transform: [{ translateY: animationStates.translateY.value[index] }],
-            // }));
-            // const animatedStyle2 = useAnimatedStyle(() => ({
-
-            //   opacity: animationStates2.opacity.value[index],
-            //   bottom: animationStates2.bottom.value[index],
-            // }));
-
-
-            const className = index === 0 ? "first" : index === 1 ? "second" : "third";
-            const imageUrl =
-              index === 0 ? yearImages.firstImg : index === 1 ? yearImages.secondImg : yearImages.thirdImg;
-            const videoUrl = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-            // const videoUrl = ["http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"][index];
-            // const imageUrl = [FirstImg, SecondImg, ThirdImg][index];
-
-            // console.log('Video component:', videoUrl);
-            const paragraph = [
-              {
-                heading: "Passion",
-                paragraphs:
-                  "The passion of P&W people is what turns the possibilities of flight into reality for our customers. The success of the past 100 years would not have been possible without the generations of individuals who helped make Pratt & Whitney what it is today..",
-              },
-              {
-                heading: "Performance",
-                paragraphs:
-                  "Pratt & Whitney continues to transform the aerospace industry. Every step of the process is powered by our innovators, visionaries, and engineers with exacting precision to innovate a new and exciting future. We are powering the horizon of aerospace with the most.",
-              },
-              {
-                heading: "Possibilities",
-                paragraphs:
-                  "Pratt & Whitney is focused on powering the future and the limitless potential that lies ahead of us. We are at the forefront of revolutionary advancements in aircraft propulsion technology and advancing sustainable aviation by working smarter, cleaner, & greener. service, the best-positioned",
-              },
-            ];
-            const paragrapModalOpen = [
-              {
-                heading: "Passion",
-                paragraphs1:
-                  "The passion of P&W people is what turns the possibilities of flight into reality for our customers. The success of the past 100 years would not have been possible without the generations of individuals who helped make Pratt & Whitney what it is today..",
-                paragraphs2:
-                  "The passion of P&W people is what turns the possibilities of flight into reality for our customers. The success of the past 100 years would not have been possible without the generations of individuals who helped make Pratt & Whitney what it is today..",
-                paragraphs3:
-                  "The passion of P&W people is what turns the possibilities of flight into reality for our customers. The success of the past 100 years would not have been possible without the generations of individuals who helped make Pratt & Whitney what it is today..",
-              },
-              {
-                heading: "Performance",
-                paragraphs1:
-                  "Pratt & Whitney continues to transform the aerospace industry. Every step of the process is powered by our innovators, visionaries, and engineers with exacting precision to innovate a new and exciting future. We are powering the horizon of aerospace with the most",
-                paragraphs2:
-                  "Pratt & Whitney continues to transform the aerospace industry. Every step of the process is powered by our innovators, visionaries, and engineers with exacting precision to innovate a new and exciting future. We are powering the horizon of aerospace with the most",
-                paragraphs3:
-                  "Pratt & Whitney continues to transform the aerospace industry. Every step of the process is powered by our innovators, visionaries, and engineers with exacting precision to innovate a new and exciting future. We are powering the horizon of aerospace with the most",
-              },
-              {
-                heading: "Possibilities",
-                paragraphs1:
-                  "Pratt & Whitney is focused on powering the future and the limitless potential that lies ahead of us. We are at the forefront of revolutionary advancements in aircraft propulsion technology and advancing sustainable aviation by working smarter, cleaner, & greener. service, the best-positioned",
-                paragraphs2:
-                  "Pratt & Whitney is focused on powering the future and the limitless potential that lies ahead of us. We are at the forefront of revolutionary advancements in aircraft propulsion technology and advancing sustainable aviation by working smarter, cleaner, & greener. service, the best-positioned",
-                paragraphs3:
-                  "Pratt & Whitney is focused on powering the future and the limitless potential that lies ahead of us. We are at the forefront of revolutionary advancements in aircraft propulsion technology and advancing sustainable aviation by working smarter, cleaner, & greener. service, the best-positioned",
-                paragraphs4:
-                  "Pratt & Whitney is focused on powering the future and the limitless potential that lies ahead of us. We are at the forefront of revolutionary advancements in aircraft propulsion technology and advancing sustainable aviation by working smarter, cleaner, & greener. service, the best-positioned",
-              },
-            ];
-            const paragraphShows = paragraph[index];
-            const paragraphShowsModalOpen = paragrapModalOpen[index];
-
-            return (
-              <Animated.View key={index} ref={(el) => (divRefs.current[index] = el)} className={`${className}  absolute flex items-center justify-center h-full w-full`} style={[
-                className === "first"
-                  ? firstStyle
-                  : className === "second"
-                    ? secondStyle
-                    : thirdStyle,
-              ]}>
-                <View className="absolute inset-0 z-[100]">
-                  <Animated.View className={`para para${index} z-[100] absolute w-[153px]   opacity-100 bottom-32 text-white left-3 `} style={[animatedStyle]}>
-                    <Text className=" text-white text-[1.3rem]  pb-3 font-ObjektivMk1Bold">
-                      {paragraphShows.heading}
-                    </Text>
-                    <Text className="font-frutigerReg text-[0.8rem] text-white leading-[21px]  min-h-[200px]">
-                      {`${paragraphShows.paragraphs.slice(0, 220)}...`}
-                    </Text>
-                    {/* <TouchableOpacity
-                    onPress={() => handleMoreClick(index)}
-                    className="bg-[#D91027] cursor-pointer w-[88px] h-[18px] mt-3 flex justify-center items-center font-[700] text-[15px] text-white gap-5"
-                  >
-                    <Text className="text-white font-[700] text-[0.65rem]">More</Text>
-                  </TouchableOpacity> */}
-                    <MyTextBtn title="More"
-                      onPress={() => handleMoreClick(index)}
-                      className="w-[66px] h-[18px] mt-4"
-                      textClass="font-[700] text-[0.65rem] tracking-widest" />
-                  </Animated.View>
-                  <Animated.View
-                    className={`para-2 para-2-${index} absolute w-[433px] opacity-0 bottom-32 text-white left-3 ${activeIndex === index ? 'z-[200]' : 'z-[10]'}`}
-                    style={[animatedStyle2]}
-                  >
-                    <Text className="text-white text-[1.3rem] font-[800] pb-3 font-objective">
-                      {paragraphShowsModalOpen.heading}
-                    </Text>
-                    <Text className="text-[0.8rem] font-normal text-white leading-[21px] pb-3 font-frutigerReg">
-                      {paragraphShowsModalOpen.paragraphs1}
-                    </Text>
-                    <Text className="font-frutigerReg text-[0.8rem] font-normal text-white leading-[21px] pb-3">
-                      {paragraphShowsModalOpen.paragraphs2}
-                    </Text>
-                    <Text className="font-frutigerReg text-[0.8rem] font-normal text-white leading-[21px]">
-                      {paragraphShowsModalOpen.paragraphs3}
-                    </Text>
-                    <Text className="font-frutigerReg text-[0.8rem] font-normal text-white leading-[21px]">
-                      {paragraphShowsModalOpen?.paragraphs4}
-                    </Text>
-                    <View className="relative flex flex-row items-center gap-2 mt-4 z-[100]">
-
-                      {/* <Text
-                      onPress={() => handleMoreClick(index - 1)}
-                      style={{
-                        clipPath:
-                          "polygon(0 0, 100% 0, 100% 100%, 18% 100%, 0 78%)",
-                      }}
-                      className={`cursor-pointer w-[20px] h-[20px]  ${index === 1 || index === 2 ? "bg-[#D91027]" : "bg-[#988A8A]"} flex justify-center items-center`}
-                    >
-                      <Image source={yearImages.leftArrow} className=""   resizeMode="contain" />
-                    
-                    </Text> */}
-                      <PrevNextButton
-                        isColor={index === 0 ? "grey" : "red"}
-                        isIcon='prev'
-                        isPolygon="first"
-
-                        onPress={() => {
-                          handelSlideChnage(index, 'prev')
-                        }
-                        }
-                      />
-                      {/* <Text
-                      onPress={() => handleMoreClick(index + 1)}
-                      style={{
-                        clipPath:
-                          "polygon(100% 0, 100% 81%, 78% 100%, 0 100%, 0 0%)",
-                      }}
-                      className={`cursor-pointer w-[20px] h-[20px]  ${index === 1 || index === 0 ? "bg-[#D91027]" : "bg-[#988A8A]"} flex justify-center items-center`}
-                    >
-                          <Image source={yearImages.rightArrow} className=""   resizeMode="contain" />
-                    </Text> */}
-                      <PrevNextButton
-                        isColor={index === 2 ? "grey" : "red"}
-                        isIcon='next'
-                        onPress={() => {
-
-                          handelSlideChnage(index, 'next')
-                        }}
-                      />
-                    </View>
-                  </Animated.View>
-                </View>
-                <View className="top-4 right-[120px] z-[100] absolute">
-                  <CustomCloseButton onPress={() => handleContentClose(index)} />
-                </View>
-
-
-
-                {/* <View
-                style={{
-                  clipPath:
-                    "polygon(100% 0, 100% 21%, 100% 66%, 79% 100%, 25% 100%, 0 100%, 0 0)",
-                }}
-                onClick={handleClose}
-                className="absolute top-4 right-[120px] z-[100] w-[44px] bg-[#918F8F] cursor-pointer h-[32px] flex justify-center items-center"
-              >
-                <View className="w-3 h-3 absolute -bottom-1.5 -right-1.5 bg-transparent" />
-                <Image source={yearImages.closeIcon}  />
-              </View> */}
-                <View className="absolute inset-0 bg-[#00000079]  z-[1] h-full w-full" />
-                {activeIndex === index ? (
-                  //         <Video
-                  //         source={videoUrl}
-                  //           className={`absolute inset-0 object-cover w-full h-full`}
-                  //           resizeMode="contain"
-                  //           paused={true} // Auto-play the video
-                  // repeat={true} // Loop the video
-                  //           muted
-                  //         />
-                  //   <Video
-                  //   ref={videoRef} 
-                  //   source={{ uri: videoUrl }}
-                  //   className="absolute w-full h-full"
-                  //   style={{ width: "100%", height: "100%" }}
-                  //   onError={(err) => console.log(err)}
-                  //   resizeMode='cover'
-                  //   muted={true}
-                  //   repeat={true} 
-                  // />
-                  <Image
-                    source={imageUrl}
-                    resizeMode="cover"
-                    className={`absolute  h-full w-full`}
-                    style={{ width: "100%", height: "100%" }}
-                  />
-                ) : (
-
-                  <Image
-                    source={imageUrl}
-                    resizeMode="cover"
-                    style={{ width: "100%", height: "100%" }}
-                    className={`absolute  h-full w-full`}
-                  />
-                )}
-              </Animated.View>
-            );
-          })}
+        <View className="relative flex-1 w-full  h-full ">
+      <VideoView style={{ width: '100%', height: '100%' }}  player={player} nativeControls={false} contentFit="contain" />
         </View>
       </View>
     </SafeAreaView>

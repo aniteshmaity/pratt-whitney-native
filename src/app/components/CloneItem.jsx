@@ -187,7 +187,7 @@ const animatedStyle = useAnimatedStyle(() => {
                 height: activeId === clone.id ? 100 : 36, // Change height dynamically
               }}
               // className={`${activeId === clone.id ? "w-[200px]" : "w-[100px]"} image `}
-              source={clone?.thumbnail}
+              source={clone?.image}
               resizeMode="cover"
               alt="Slide Image"
             />
