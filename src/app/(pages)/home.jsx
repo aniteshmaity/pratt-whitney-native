@@ -1,4 +1,4 @@
-import {ActivityIndicator, Dimensions, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ActivityIndicator, Dimensions, StyleSheet, Text, TouchableOpacity, View,Image} from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import {SafeAreaView} from "react-native-safe-area-context";
 import CustomCloseButton from "../components/buttons/CustomCloseButton";
@@ -12,7 +12,9 @@ import boxShadow from '../constants/boxShadow';
 import RedDotSvg from '../components/RedDotSvg';
 import ClippedView from '../components/ClippedView';
 import CustomTextButton from '../components/buttons/CustomTextButton';
-import {Image} from "expo-image"
+import { Image as ExpoImage } from 'expo-image';
+import { useVideoPlayer, VideoView } from 'expo-video';
+import { useEvent } from 'expo';
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const CARD_WIDTH = screenWidth / 3; // Width of each card
 console.log("scenwidht",screenWidth);
@@ -65,6 +67,18 @@ if (item === null) {
       opacity
     };
   });
+  const videoSource =
+item.videoUrl
+
+  const player = useVideoPlayer(videoSource, player => {
+      player.loop = true;
+      player.muted = true;
+      player.play();
+  
+  
+    });
+
+
 
 
 
@@ -86,13 +100,17 @@ if (item === null) {
               source={item.imageUrl }
               resizeMode="cover"
             /> */}
-            {isLoading && (
-        <ActivityIndicator size="small" color="#888" className="" />
-      )}
-            <Image source={item.imageUrl }
+            {/* {isLoading && (
+        <ActivityIndicator size="small" color="#888" className="absolute w-full h-full z-40 flex-row justify-center items-center" />
+      )} */}
+            {/* <ExpoImage source={item.videoUrl }
              style={{ width: CARD_WIDTH, height: 175 }}
              onLoad={() => setIsLoading(false)}
-        className=' w-full h-full'  transition={1000}  contentFit="cover" />
+        className=' w-full h-full'  transition={1000}  contentFit="cover" /> */}
+        <VideoView style={{ width: '100%', height: 175 }}  player={player} nativeControls={false} contentFit="cover" />
+      <View>
+      
+      </View>
           </View>
 
           {/* Content section */}
@@ -104,14 +122,6 @@ if (item === null) {
             <Text className=" text-[0.85rem] font-objektiv pb-5">{item.description}</Text>
   
               
-                               {/* <MyTextBtn  
-                                        className={"w-[156px] h-[30px]"}
-                                        onPress={() => {
-                                          router.push(`${item.link}`);
-                                        }}
-                                        title={"View Timeline"}
-                                        textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "}
-                                      /> */}
                                       {realIndex === centeredIndex && (
                                         <CustomTextButton
                                         className={"w-[156px] h-[30px]  "}
@@ -129,7 +139,7 @@ if (item === null) {
             
           </View>
    
-          {centeredIndex !== index && (
+          {centeredIndex !== realIndex && (
         <View className="absolute bottom-[0] left-1/2 -translate-x-1/2 translate-y-[70px]">
           <RedDotSvg width={33} height={34} />
         </View>

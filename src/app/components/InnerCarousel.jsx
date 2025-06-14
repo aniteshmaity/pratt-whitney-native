@@ -24,16 +24,16 @@ export default function InnerCarousel({ images,onImageClick }) {
 
         <ScrollView horizontal
         showsHorizontalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
-        {images?.map((item, index) => (
+        {images.slice(1)?.map((item, index) => (
           <TouchableOpacity
             key={index}
-            onPress={() => onImageClick(index, images)}
-            style={{ marginRight: 6 }}
+            onPress={() => onImageClick(index, images.slice(1))}
+            style={{ marginRight: 7 }}
           >
              <Image
           source={item?.img}
           style={{
-            width: 42,
+            width: 52,
             height: 42,
             opacity: Math.max(0.1, 1 - index * 0.1),
           }}

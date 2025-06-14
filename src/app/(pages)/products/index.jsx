@@ -57,8 +57,8 @@ const EngineItem = ({
   setCurrentIndex,
   scrollY
 }) => {
-  console.log("middleindex", middleIndex);
-  console.log("curr", currentIndex);
+  console.log("middleindex--", middleIndex);
+  // console.log("curr", currentIndex);
   // console.log("index",index);
   // const scale = useSharedValue(0.5);
   if (item === null) {
@@ -96,6 +96,7 @@ const EngineItem = ({
   return (
     <TouchableOpacity onPress={() => onItemPress(index)}>
     <Animated.View
+    
       style={[
         { width: ITEM_HIGHT, height: ITEM_HIGHT },
         animatedStyle,
@@ -107,11 +108,16 @@ const EngineItem = ({
           className="rounded-full bg-white  overflow-hidden  z-40 p-[18px]  relative"
         >
           {middleIndex === index && (
-            <View className="absolute bg-[#E11C37] right-0 w-[120px] h-[120px] top-[50%]   -translate-y-1/2 -z-10" />
+            <View className="absolute  w-[150px] h-[130px]  -right-[30%]  bottom-[30%]  z-30">
+             <ClippedView width={150} height={130} backgroundColor="#E11C37" clipPathId="strap-1" slug="strap1" />
+    </View>
           )}
+          {/* <View className="absolute top-0 right-0">
+          <ClippedView width={430} height={350} backgroundColor="#E11C37" clipPathId="strap-1" slug="strap1" />
+          </View> */}
           <View
           style={{...boxShadow("#b9b7b730", 1, 0, 0.2, 11, 8)}}
-            className={`flex  justify-center items-center rounded-full w-full h-full  bg-white ${
+            className={`flex  justify-center items-center rounded-full w-full h-full  bg-white z-40  ${
               middleIndex === index
                 ? "opacity-100"
                 : "bg-white text-black opacity-80"
@@ -333,8 +339,9 @@ const onMomentumScrollEnd = (event) => {
 
       {/* Main Content */}
       <View className="flex flex-row  gap-5 px-12 bg-[#f5f5f5]" style={{height:ContainerHeight}}>
+      <View className="absolute w-[40%] h-[1px] left-0 top-1/2 bg-[#00000014] " />
       {/* <LinearGradient
-                  colors={["#00000014", "#E11C37"]}
+                  colors={["#00000014", "#E11C37"]} 
                   start={{ x: 0, y: 0 }}
                   end={{ x: 2, y: 0 }}
                  className="absolute w-[50%] h-[1px] top-[50%] left-[0%] "
@@ -349,10 +356,10 @@ const onMomentumScrollEnd = (event) => {
             </Text>
           </TouchableOpacity>
         </View> */}
-        <View className="bg-[#f5f5f5] ">
+        <View className=" ">
           <Animated.View className="absolute w-[1px] h-[100%] left-[50%] bg-[#00000014] " style={[ lineAnimatedStyle]} />
            
-          <View className="absolute w-[1px] h-[100%] left-[50%] bg-[#00000014] rotate-90" />
+       
           <Animated.FlatList
             ref={flatListRef}
             data={productEngines}
