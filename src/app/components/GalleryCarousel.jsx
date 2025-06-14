@@ -3,6 +3,9 @@ import { View, Text, Image, TouchableOpacity, FlatList, Dimensions } from "react
 import Animated, { useSharedValue, useAnimatedScrollHandler, useAnimatedStyle, interpolate, withSpring, runOnJS } from "react-native-reanimated";
 import yearImages from "../constants/yearImages";
 import PrevNextButton from "./buttons/PrevNextButton";
+import VideoComponent from "./VideoComponent";
+
+// import Pdf from "react-native-pdf";
 
 
 const { width: windowWidth } = Dimensions.get('window');
@@ -21,17 +24,20 @@ const data = [
   { id: 7, img: yearImages.layer3, description: "Card 7 Description" },
   null,
   null,
+  null,
+  null,
   null
 ];
 // Duplicate the data to create a looping effect
 
 
-const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, slideImages ,onImageClick,loopingData}) => {
+const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, galleryData, onImageClick, loopingData }) => {
+  // console.log("galleryData",galleryData);
   if (!item) {
     return <View style={{ width: itemWidth }} />; // Empty space
   }
-  const filteredData = data.filter(item => item !== null);
-     const realIndex = data.filter((e) => e !== null).indexOf(item);
+  const filteredData = galleryData.filter(item => item !== null);
+  const realIndex = galleryData.filter((e) => e !== null).indexOf(item);
   const animatedStyle = useAnimatedStyle(() => {
     const scale = interpolate(
       scrollX.value,
@@ -42,12 +48,12 @@ const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, slideImag
         (realIndex + 2) * itemWidth, // Two items after center
         (realIndex + 3) * itemWidth, // Two items after center
       ],
-      [0.5, 1, 0.5, 0.5,0.5], // Scaling effect
+      [0.5, 1, 0.5, 0.5, 0.5], // Scaling effect
       'clamp'
     );
 
     return { transform: [{ scale }] };
-  });  
+  });
 
   return (
     <Animated.View style={[{ width: itemWidth }, animatedStyle]}>
@@ -55,31 +61,47 @@ const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, slideImag
       <TouchableOpacity
         onPress={() => {
           console.log("onpress clickre----");
-          if (slideImages?.length) {
-            onImageClick(index, slideImages);
+          if (galleryData?.length) {
+            onImageClick(index, filteredData);
           } else {
             onImageClick(index, filteredData);
           }
         }}>
-        <Image
+        {
+          item.img && (
+            <Image
 
-          source={slideImages?.length ? item.img : item.img}
-          alt={`Card ${item.uniqueId}`}
-          className=" w-full"
-          resizeMode="cover"
-          style={{ width: '100%', height: 80 }}
-        />
+              source={ item.img}
+              alt={`Card ${item.index}`}
+              className=" w-full"
+              resizeMode="cover"
+              style={{ width: '100%', height: 80 }}
+            />
+          )
+        }
+
+        {item.video && (
+          <VideoComponent
+            videoUrl={item.video}
+            videoClass={{ width: '100%', height: 80 }}
+            isPlay={false}
+          />
+        )}
+        {/* {item.pdf && (
+          <Pdf
+            source={item.pdf}
+            style={{ width: '100%', height: 80 }}
+          />
+        )} */}
       </TouchableOpacity>
-      <Text className=" w-full  bg-opacity-50 text-white text-center text-[0.6rem] p-1">
-        {item.description || "Lorem Ipsum Dolar"}
-      </Text>
 
-    </Animated.View>   
+
+    </Animated.View>
   );
 };
 const GalleryCarousel = ({ parentWidth, slideImages, onImageClick }) => {
 
-  console.log("slideImages",slideImages);
+  // console.log("slideImages", slideImages);
   const scrollX = useSharedValue(0);
   const itemWidth = parentWidth / 5; // Width of each item
 
@@ -100,6 +122,12 @@ const GalleryCarousel = ({ parentWidth, slideImages, onImageClick }) => {
 
   const loopingData = slideImages?.length ? slideAllImage : data
 
+  const galleryData = [
+    null,
+    ...slideImages,
+    null,
+  
+  ];
   // const handlePrev = () => {
   //   if (currentIndex <= 0) return; // Prevent negative index
 
@@ -131,7 +159,7 @@ const GalleryCarousel = ({ parentWidth, slideImages, onImageClick }) => {
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
-          <CarouselItem item={item} index={index} itemWidth={itemWidth} currentIndex={currentIndex} scrollX={scrollX} slideImages={slideImages} onImageClick={onImageClick} loopingData={loopingData} />
+          <CarouselItem item={item} index={index} itemWidth={itemWidth} currentIndex={currentIndex} scrollX={scrollX} galleryData={galleryData} onImageClick={onImageClick} loopingData={loopingData} />
         )}
         onScroll={scrollHandler}
         snapToInterval={itemWidth}

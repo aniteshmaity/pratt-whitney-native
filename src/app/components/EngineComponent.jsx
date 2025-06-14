@@ -2,7 +2,7 @@ import { View, Text, Image, Button, TouchableOpacity, ScrollView, Pressable, Dim
 import React, { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import yearImages from "../constants/yearImages";
 import GalleryCarousel from "./GalleryCarousel";
-import tabsData from "../constants/tabsData";
+// import tabsData from "../constants/tabsData";
 import Svg, { Defs, ClipPath, Polygon, Rect, Path } from 'react-native-svg';
 
 
@@ -47,6 +47,7 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
   const redDotRef = useRef(null);
   const scrollableRef = useRef(null);
   const redDot2Ref = useRef(null);
+const [tabsSize, setTabsSize] = useState({ width: 0, height: 0 });
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [size, setSize] = useState({ width: 0, height: 0 });
@@ -55,7 +56,7 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
   const [scrollParentHeight2, setScrollParentHeight2] = useState(0);
   const [contentHeight, setContentHeight] = useState(0);
 
-  // const [tabsData, setTabsData] = useState(engineData?.defaultTabsData);
+  const [tabsData, setTabsData] = useState(engineData?.defaultTabsData);
   const videoRef = useRef(null);
   const rotation = useSharedValue(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -229,6 +230,7 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
   };
 
   // ✅ Get parent height for second ScrollView
+  
   const onParentLayout2 = (event) => {
     const { height } = event.nativeEvent.layout;
     setScrollParentHeight2(height);
@@ -273,7 +275,10 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
     };
   });
 
-
+  const onTabsLayout = (event) => {
+    const { height, width } = event.nativeEvent.layout;
+  setTabsSize({ width, height });
+  };
 
   useEffect(() => {
 
@@ -330,7 +335,7 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
 
           {/* <Video  source={{ uri: "http://commondatastorage.g  oogleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" }}  */}
          <View className=" h-full bg-slate-500 overflow-hidden" style={{width:"99.7%"}}>
-            <Image source={yearImages.machine1} className="w-full h-full" resizeMode="cover"/>
+            <Image source={engineData?.logo || yearImages.machine1} className="w-full h-full" resizeMode="cover"/>
             {/* <VideoView
               style={{
 
@@ -455,7 +460,7 @@ style={{ position: 'absolute', top: 20,right:-86 }}
                 const { width } = event.nativeEvent.layout;
                 setParentWidth(width);
               }}>
-                {parentWidth > 0 && <GalleryCarousel parentWidth={parentWidth} onImageClick={onImageClick} slideImages={yearEngineData?.slideImages || null} />}
+                {parentWidth > 0 && <GalleryCarousel parentWidth={parentWidth} onImageClick={onImageClick} slideImages={engineData?.gallery || null} />}
               </View>
             </View>
           </View>
@@ -517,7 +522,7 @@ preserveAspectRatio="none"
             <View className=" rounded-full   w-[94px] h-[94px] p-2 bg-white" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
               <View className="overflow-hidden w-full h-full   rounded-full " style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 10, 5) }}>
                 <Image
-                  source={yearImages.gtf}
+                  source={engineData.logo || yearImages.gtf}
                   className="h-full w-full "
                   resizeMode="cover"
                 // style={{ width:80, height:80}}
@@ -605,19 +610,17 @@ preserveAspectRatio="none"
           <View className="ml-5 relative overflow-hidden w-[86%] h-full">
             {/* Tabs Navigation */}
             <View
-              className="flex flex-row justify-between  w-[86%]"
-
+              className="flex flex-row justify-between  w-[86%]" onLayout={onTabsLayout}
             >
-
-              {/* <ClippedView width={381} height={24} backgroundColor="#918F8F" clipPathId="Engineclip3" slug="variant5" /> */}
+              <ClippedView width={tabsSize.width} height={tabsSize.height} backgroundColor="#918F8F" clipPathId="Engineclip3" slug="variant5" />
               {tabsData?.map((tab, index) => (
                 <TouchableOpacity
                   key={index}
                   onPress={() => setActiveTab(index)}
-                  className={`flex-1 px-4 py-[6px] text-[0.5rem] `}
+                  className={`flex-1  py-[6px] text-[0.5rem] `}
                 >
-                  <ClippedView width={98} height={20} backgroundColor={activeTab === index ? "#D91027" : "#918F8F"} clipPathId="EnginePclip1" slug={ "variant8"} />
-                  <Text className="text-[0.5rem] font-semibold  text-white text-center">{tab.title}</Text>
+                  <ClippedView width={tabsSize.width / tabsData.length} height={tabsSize.height} backgroundColor={activeTab === index ? "#D91027" : "#918F8F"} clipPathId="EnginePclip1" slug={ "variant8"} />
+                  <Text className="text-[0.5rem] font-semibold  text-white  text-center">{tab.title}</Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -641,15 +644,15 @@ preserveAspectRatio="none"
                       key={idx}
                       style={[idx !== tabsData.length && { borderBottomColor: "#00000014", borderBottomWidth: 1 }, animatedStyle]}
                       className={`flex  ${tabsData[activeTab].title === "Platforms"
-                        ? "flex-row pl-[10px]"
-                        : " flex-row "
+                        ? "flex-row items-center pl-[10px]"
+                        : " flex-row items-center pl-[10px]"
                         }  gap-[20px] py-4`}
                     >
-                      <View className="flex-1 bg-white">
+                      <View className={`${tabsData[activeTab].title == "Specifications" || tabsData[activeTab].title == "Customers" ? "flex" : "flex-1"}  bg-white`}>
                         <View className="bg-white  rounded-full   w-[60px] h-[60px] p-1" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
                           <View className="w-full h-full overflow-hidden  rounded-full ">
                             <Image
-                              source={item.fanImage}
+                              source={item.image}
                               className="w-full h-full"
 
                               resizeMode="cover"
@@ -657,7 +660,7 @@ preserveAspectRatio="none"
                           </View>
                         </View>
                       </View>
-                      {tabsData[activeTab].title !== "Platforms" ? (
+                      {/* {tabsData[activeTab].title !== "Platforms" ? (
                         <View className="flex-[2] bg-white">
                           <Text className="font-objektiv text-[1rem]">
                             {item.heading}
@@ -673,29 +676,37 @@ preserveAspectRatio="none"
                         </View>
                       ) : (
                         null
-                      )}
-
-                      <View className="flex-1 bg-white">
-                        <Text className="text-[#CE2028] text-[1.3rem] font-ObjektivMk1Bold">
-                          {item.bypassRatio}
-                        </Text>
-                        <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-objektiv">
+                      )} */}
+                       {tabsData[activeTab].title == "Platforms" || tabsData[activeTab].title == "Highlights" ? (
+                        <View className="bg-white flex-1">
+                         <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-objektiv">
                           {item.enginetext}
                         </Text>
-                      </View>
-                      {tabsData[activeTab].title !== "Platforms" ? (
-                        <View className="bg-white flex-1">
-                          <Text className="text-[#CE2028] font-[800] text-[1.3rem] font-objektiv">
-                            {item.fanDiameter}
-                          </Text>
-                          <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-objektiv">
-                            Fan diameter
-                          </Text>
                         </View>
                       ) : (
                         null
                       )}
-                      {tabsData[activeTab]?.title === "Platforms" ? (
+
+                    
+                      {tabsData[activeTab].title == "Specifications" ? (
+                        <View className="bg-white flex-1">
+                         <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-objektiv">
+                          {item.description}
+                        </Text>
+                        </View>
+                      ) : (
+                        null
+                      )}
+                      {tabsData[activeTab].title == "Customers" ? (
+                        <View className="bg-white flex-1">
+                         <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-objektiv">
+                          {item.name}
+                        </Text>
+                        </View>
+                      ) : (
+                        null
+                      )}
+                      {tabsData[activeTab]?.title === "Platforms" || tabsData[activeTab]?.title === "Highlights"  ? (
                         <View className="flex-[3]">
                           <Animated.View className="" style={{ height: expandedIndex === idx ? animatedHeight : 40, overflow: 'hidden' }}>
                             <Text className="text-[0.8rem] font-objektiv">
