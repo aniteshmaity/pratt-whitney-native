@@ -17,7 +17,7 @@ const CloneItem = ({ clone, index, activeId, isPrev, slide, redDot, activeRedDot
   const getInitialValues = (isPrev,direction) => {
    if(direction === "next") {
    return {
-    opacity: isPrev ? clone.opacity : 1,
+    opacity: isPrev ? clone.opacity : clone.opacity,
     scale: isPrev ? clone.scale : 1,
     translateX: clone.x,
     translateY:  clone.y,

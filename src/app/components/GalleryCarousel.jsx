@@ -37,6 +37,7 @@ const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, galleryDa
     return <View style={{ width: itemWidth }} />; // Empty space
   }
   const filteredData = galleryData.filter(item => item !== null);
+  console.log("filteredData",filteredData);
   const realIndex = galleryData.filter((e) => e !== null).indexOf(item);
   const animatedStyle = useAnimatedStyle(() => {
     const scale = interpolate(
@@ -62,9 +63,9 @@ const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, galleryDa
         onPress={() => {
           console.log("onpress clickre----");
           if (galleryData?.length) {
-            onImageClick(index, filteredData);
+            onImageClick(realIndex, filteredData);
           } else {
-            onImageClick(index, filteredData);
+            onImageClick(realIndex, filteredData);
           }
         }}>
         {
@@ -89,7 +90,7 @@ const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, galleryDa
         )}
         {/* {item.pdf && (
           <Pdf
-            source={item.pdf}
+            source={{uri: item.pdf}}
             style={{ width: '100%', height: 80 }}
           />
         )} */}

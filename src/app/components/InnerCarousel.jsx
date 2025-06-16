@@ -4,6 +4,8 @@ import { View, Image, FlatList, StyleSheet, Dimensions, ScrollView, TouchableOpa
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
 import PrevNextButton from './buttons/PrevNextButton';
 import { LinearGradient } from "expo-linear-gradient"
+import VideoComponent from './VideoComponent';
+import yearImages from '../constants/yearImages';
 
 const { width } = Dimensions.get("window");
 const ITEM_WIDTH = width / 6;
@@ -30,7 +32,8 @@ export default function InnerCarousel({ images,onImageClick }) {
             onPress={() => onImageClick(index, images.slice(1))}
             style={{ marginRight: 7 }}
           >
-             <Image
+             {item.img && (
+              <Image
           source={item?.img}
           style={{
             width: 52,
@@ -39,6 +42,18 @@ export default function InnerCarousel({ images,onImageClick }) {
           }}
           resizeMode="cover"
         />
+             )}
+             {item.video && (
+               <Image
+          source={yearImages.VideoPlaceholder}
+          style={{
+            width: 52,
+            height: 42,
+
+          }}
+          resizeMode="cover"
+        />
+             )}
           </TouchableOpacity>
         ))}
       

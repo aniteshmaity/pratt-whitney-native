@@ -18,6 +18,7 @@ import CustomCloseButton from "../../components/buttons/CustomCloseButton";
 import MyTextBtn from "../../components/buttons/MyTextBtn";
 import CustomTextButton from "../../components/buttons/CustomTextButton";
 import CustomDialog from "../../components/CustomDialog";
+import TimelineSkeleton from "../../components/TimelineSkeleton";
 const { width,height } = Dimensions.get('window');
 const ITEM_WIDTH = width / 5; // Calculate width for 5 visible cards
 const adjustedHeight = height - 80;
@@ -243,7 +244,7 @@ const handleStateUp = () => {
 
     setTimeout(() => {
       setShowTimeline(true);     // show it after delay
-    }, 500);
+    }, 900);
 };
 
 
@@ -557,7 +558,7 @@ useEffect(() => {
        ) :  
  !showTimeline ? (
   <View className="flex justify-center items-center h-screen bg-[#f5f5f5]">
-        <ActivityIndicator size="large" color="#ff0000" />
+  <TimelineSkeleton />
       </View>
       
     ) : (
