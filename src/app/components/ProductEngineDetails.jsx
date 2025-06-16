@@ -23,7 +23,7 @@ export default function ProductEngineDetails({handleEngineClose,engineData}) {
   };
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [dialogImages, setDialogImages] = useState([]);
-    console.log("dialogimages",dialogImages);
+    // console.log("dialogimages",dialogImages);
     const [startIndex, setStartIndex] = useState(0);
   const handleImageClick = (index,img) => {
     console.log("images------",img);

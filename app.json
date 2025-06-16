@@ -48,6 +48,7 @@
           "supportsPictureInPicture": true
         }
       ]
+     
     ],
     "experiments": {
       "typedRoutes": true

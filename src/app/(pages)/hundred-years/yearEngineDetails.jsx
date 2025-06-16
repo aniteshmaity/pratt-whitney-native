@@ -12,7 +12,7 @@ import yearSlidedata from "../../constants/yearSlideData";
 import CustomDialog from "../../components/CustomDialog";
 
 export default function yearEngineDetails() {
-  const { year,  targetId } = useLocalSearchParams();
+  const { year, targetId } = useLocalSearchParams();
   const numericId = Number(targetId); 
   console.log("year",year);
   console.log("yearid",targetId);
@@ -109,8 +109,8 @@ export default function yearEngineDetails() {
 </TouchableOpacity>
                
               </View>
-
-              <EngineComponent type="100year" onImageClick={handleImageClick} yearEngineData={data} />
+{/* 
+              <EngineComponent type="100year" onImageClick={handleImageClick} yearEngineData={data} /> */}
             </View>
           </View>
         </ImageBackground>

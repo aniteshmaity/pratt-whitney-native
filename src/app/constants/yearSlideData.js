@@ -1,4 +1,5 @@
 import yearImages from '../constants/yearImages';
+import { productEngines } from './productEngineData';
 
 const yearSlidedata = [
     {
@@ -85,6 +86,7 @@ const yearSlidedata = [
           subtitle: "Rentshcler envisions a lighter, powerful and reliable air-cooled engine for aircraft",
           image: yearImages.I_1925_1,
           thumbnail:yearImages.I_1925_2,
+            isExplore: false,
           slideImages: [
             { img: yearImages.I_1925_1 },
             { img: yearImages.I_1925_2 },
@@ -107,6 +109,7 @@ const yearSlidedata = [
           subtitle: "Wasp’s performance and reliability revolutionized American aviation.",
           image: yearImages.wasp_1925_1,
           thumbnail:yearImages.I_1925_2,
+            isExplore: false,
           slideImages: [
             { img: yearImages.wasp_1925_1 },
             { img: yearImages.wasp_1925_2 },
@@ -128,6 +131,8 @@ const yearSlidedata = [
           subtitle: "The Hornet was a single-row, 9-cylinder air-cooled radial design ",
           image: yearImages.I_1927_1,
           thumbnail:yearImages.I_1925_2,
+            isExplore: true,
+                 redirectLinkData:productEngines[7]?.engines[0]?.details,
           slideImages: [
             { img: yearImages.I_1927_1 },
             { img: yearImages.I_1927_2 },
@@ -150,6 +155,7 @@ const yearSlidedata = [
           subtitle: "Established as a service center it took over the production of Wasp engines",
           image: yearImages.I_1928_1,
           thumbnail:yearImages.I_1928_1,
+                   isExplore: false,
           slideImages: [
             { img: yearImages.I_1928_1 },
             { img: yearImages.I_1928_2 },
@@ -171,6 +177,7 @@ const yearSlidedata = [
           subtitle: "A combination of airframe and aircraft engine and airline business",
           image: yearImages.I_1929_1,
           thumbnail:yearImages.I_1929_1,
+                   isExplore: false,
           slideImages: [
             { img: yearImages.I_1929_1 },
             { img: yearImages.I_1929_2 },
@@ -210,6 +217,8 @@ const yearSlidedata = [
       cloneTitle: "Twin Wasp R-1830 Debuts",
       subtitle: " Becomes the most-produced aircraft engine in history",
           image: yearImages.I_1930_1,
+          isExplore: true,
+            redirectLinkData:productEngines[7]?.engines[4]?.details,
           slideImages: [
             { img: yearImages.I_1930_1 },
             { img: yearImages.I_1930_2 },
@@ -243,6 +252,8 @@ const yearSlidedata = [
           cloneTitle: "R-2800 Double Wasp Powers WWII Planes",
           subtitle: "Drives victory in the skies.",
           image: yearImages.I_1942_1,
+            isExplore: true,
+                redirectLinkData:productEngines[7]?.engines[4]?.details,
           slideImages: [
             { img: yearImages.I_1942_1 },
             { img: yearImages.I_1942_2 },
@@ -259,6 +270,7 @@ const yearSlidedata = [
           cloneTitle: "300K engines produced during wartime",
           subtitle: "300,000 engines produced during wartime ",
           image: yearImages.I_1945_1,
+            isExplore: false,
           slideImages: [
             { img: yearImages.I_1945_1 },
             { img: yearImages.I_1945_2 },
@@ -297,6 +309,7 @@ const yearSlidedata = [
           cloneTitle: "J57 Becomes First Mass-Produced Jet Engine",
           subtitle: "Powers B-52 Stratofortress and F-100 Super Sabre",
           image: yearImages.I_1952_1,
+           isExplore: false,
           slideImages: [
             { img: yearImages.I_1952_1 },
             { img: yearImages.I_1952_2 },
@@ -318,6 +331,8 @@ const yearSlidedata = [
           cloneTitle: "JT3 Powers the Boeing 707",
           subtitle: "Enables the Jet Age.",
           image: yearImages.I_1958_1,
+           isExplore: true,
+              redirectLinkData:productEngines[7]?.engines[1]?.details,
           slideImages: [
             { img: yearImages.I_1958_1 },
             { img: yearImages.I_1958_2 },
@@ -358,6 +373,8 @@ const yearSlidedata = [
           cloneTitle: "PT6 Turboprop Engine Launch",
           subtitle: "Revolutionizes general aviation.",
           image: yearImages.machine1,
+           isExplore: true,
+            redirectLinkData:productEngines[2]?.engines[3]?.details,
            slideImages: [
         { img: yearImages.I_1963_1 },
         { img: yearImages.I_1963_2 },
@@ -380,6 +397,7 @@ const yearSlidedata = [
           cloneTitle: "J58 Powers SR-71 Blackbird",
           subtitle: "World’s fastest air-breathing engine",
           image: yearImages.I_1964_J1,
+           isExplore: false,
            slideImages: [
         { img: yearImages.I_1964_J1 },
         { img: yearImages.I_1964_J2 },
@@ -400,6 +418,8 @@ const yearSlidedata = [
           cloneTitle: "Air India enters jet-age with JT3D Engines",
           subtitle: "Air India gets Boeing 707s with JT3D Engines",
           image: yearImages.I_1963_64_J1,
+           isExplore: true,
+            redirectLinkData:productEngines[7]?.engines[1]?.details,
            slideImages: [
         { img: yearImages.I_1963_64_J1 },
         { img: yearImages.I_1963_64_J2 },
@@ -421,6 +441,8 @@ const yearSlidedata = [
           cloneTitle: "JT8D Revolutionizes Commercial Aviation",
           subtitle: "Most widely used turbofan of its time.",
           image: yearImages.machine2,
+           isExplore: true,
+              redirectLinkData:productEngines[7]?.engines[2]?.details,
            slideImages: [
         { img: yearImages.I_1964_JT1 },
         { img: yearImages.I_1964_JT2 },
@@ -439,6 +461,7 @@ const yearSlidedata = [
           cloneTitle: "JT15D – Pratt & Whitney  Canada’s first turbofan engine",
           subtitle: "A pioneer design in the category of small fan jets",
           image: yearImages.I_1966_1,
+           isExplore: false,
            slideImages: [
         { img: yearImages.I_1966_1 },
         { img: yearImages.I_1966_2 },
@@ -459,6 +482,7 @@ const yearSlidedata = [
           cloneTitle: "P&W Fuel cells take man to the moon",
           subtitle: "Fuel cells that power mankind’s giant leap ",
           image: yearImages.I_1969_1,
+           isExplore: false,
            slideImages: [
         { img: yearImages.I_1969_1 },
         { img: yearImages.I_1969_2 },
@@ -483,6 +507,7 @@ const yearSlidedata = [
           ],
       image: yearImages.machine2,
       buttonLink: "/yearEngineDetails",
+      
       slideImages: [
         { img: yearImages.layer1 },
         { img: yearImages.layer1 },
@@ -501,6 +526,8 @@ const yearSlidedata = [
           cloneTitle: "JT9D Powers the Boeing 747",
           subtitle: "First high-bypass turbofan for widebody jets.",
           image: yearImages.JT_1970_1,
+           isExplore: true,
+                 redirectLinkData:productEngines[7]?.engines[3]?.details,
           slideImages: [
         { img: yearImages.JT_1970_1 },
         { img: yearImages.JT_1970_2 },
@@ -519,6 +546,7 @@ const yearSlidedata = [
           cloneTitle: "Powering Air India’s ‘Queen Of The Skies’",
           subtitle: "Pratt & Whitney powers Air India’s ‘Queen of the Skies’ the Boeing 747 with JT9D",
           image: yearImages.AI_1971_1,
+           isExplore: false,
           slideImages: [
         { img: yearImages.AI_1971_1 },
         { img: yearImages.AI_1971_2 },
@@ -537,6 +565,8 @@ const yearSlidedata = [
           cloneTitle: "F100 Powers F-15s and F-16",
           subtitle: "First afterburning turbofan for fighters",
           image: yearImages.F_1972_1,
+           isExplore: true,
+             redirectLinkData:productEngines[1]?.engines[5]?.details,
           slideImages: [
         { img: yearImages.F_1972_1 },
         { img: yearImages.F_1972_2 },
@@ -582,6 +612,8 @@ const yearSlidedata = [
           cloneTitle: "PW100 Engine Family Deliveries Begin",
           subtitle: "Dominates regional turboprop segment.",
           image: yearImages.PW100_1984_1,
+           isExplore: true,
+                          redirectLinkData:productEngines[0]?.engines[0]?.details,
           slideImages: [
         { img: yearImages.PW100_1984_1 },
         { img: yearImages.PW100_1984_2 },
@@ -603,6 +635,8 @@ const yearSlidedata = [
           cloneTitle: "V2500 Lifts the A320ceo Skyward",
           subtitle: "Pratt & Whitney powers Air India’s ‘Queen of the Skies’ the Boeing 747 with JT9D",
           image: yearImages.V2500_1984_1,
+           isExplore: true,
+                 redirectLinkData:productEngines[4]?.engines[1]?.details,
           slideImages: [
             { img: yearImages.V2500_1984_1 },
             { img: yearImages.V2500_1984_2 },
@@ -625,6 +659,8 @@ const yearSlidedata = [
           cloneTitle: "PW2000 – First with FADEC",
           subtitle: "Digital control revolutionises commercial jet engines.",
           image: yearImages.PW2000_1984_1,
+           isExplore: true,
+            redirectLinkData:productEngines[4]?.engines[3]?.details,
           slideImages: [
             { img: yearImages.PW2000_1984_1 },
             { img: yearImages.PW2000_1984_2 },
@@ -643,6 +679,8 @@ const yearSlidedata = [
           cloneTitle: "PW300 Engine First Flight",
           subtitle: "Enhances mid-size business jets.",
           image: yearImages.PW300_1989_1,
+           isExplore: true,
+            redirectLinkData:productEngines[4]?.engines[3]?.details,
           slideImages: [
             { img: yearImages.PW300_1989_1 },
             { img: yearImages.PW300_1989_2 },
@@ -683,6 +721,8 @@ const yearSlidedata = [
           cloneTitle: "PW4000  powers B777s and A330s",
           subtitle: "First fifth-generation fighter engine",
           image: yearImages.P400_1990_1,
+           isExplore: true,
+             redirectLinkData:productEngines[4]?.engines[2]?.details,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.P400_1990_1 },
@@ -707,6 +747,8 @@ const yearSlidedata = [
           cloneTitle: "F119 Powers F-22 Raptor",
           subtitle: "First fifth-generation fighter engine",
           image: yearImages.F119_1990_1,
+            isExplore: true,
+             redirectLinkData:productEngines[1]?.engines[3]?.details,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.F119_1990_1 },
@@ -728,6 +770,8 @@ const yearSlidedata = [
           title: "PW500 is launched",
           subtitle: "Becomes a leader in the business jet market",
           image: yearImages.PW500_1990_1,
+            isExplore: true,
+                redirectLinkData:productEngines[5]?.engines[2]?.details,
           // thumbnail:machine1,
          slideImages: [
         { img: yearImages.PW500_1990_1 },
@@ -768,6 +812,8 @@ const yearSlidedata = [
           cloneTitle: "Launch of the PW600",
           subtitle: "Introduced for the very light & light jet market",
           image: yearImages.PW600_2000_1,
+            isExplore: true,
+               redirectLinkData:productEngines[5]?.engines[1]?.details,
           // thumbnail:machine1,
          slideImages: [
         { img: yearImages.PW600_2000_1 },
@@ -785,6 +831,8 @@ const yearSlidedata = [
           cloneTitle: "Indigo orders the V2500",
           subtitle: "Changes the course of Indian aviation",
           image: yearImages.V2500_2005_1,
+            isExplore: true,
+                 redirectLinkData:productEngines[4]?.engines[1]?.details,
           // thumbnail:machine1,
          slideImages: [
         { img: yearImages.V2500_2005_1 },
@@ -808,6 +856,8 @@ const yearSlidedata = [
           cloneTitle: "F135 Powers F-35 Fighter Jet",
           subtitle: "Most advanced fighter engine ever built.",
           image: yearImages.F15_2008_1,
+            isExplore: true,
+            redirectLinkData:productEngines[1]?.engines[2]?.details,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.F15_2008_1 },
@@ -834,6 +884,8 @@ const yearSlidedata = [
           cloneTitle: "Revolutionary GTF’s First Flight",
           subtitle: "Quietest, Greenest & Cleanest",
           image: yearImages.GTF_2008_1,
+            isExplore: true,
+                redirectLinkData:productEngines[4]?.engines[0]?.details,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.GTF_2008_1 },
@@ -889,6 +941,7 @@ const yearSlidedata = [
           cloneTitle: "First C-17s arrive for the Indian Air Force",
           subtitle: "Backbone of IAF’s cargo missions",
           image: yearImages.C_2014_1,
+           isExplore: false,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.C_2014_1 },
@@ -912,6 +965,7 @@ const yearSlidedata = [
           cloneTitle: "India Customer Training Center is established",
           subtitle: "Global hub for critical entry-into-service trainings",
           image: yearImages.C_2015_1,
+           isExplore: false,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.C_2015_1 },
@@ -940,6 +994,8 @@ const yearSlidedata = [
           cloneTitle: "IndiGo A320neos Fly With GTF",
           subtitle: "1 billion liters of fuel saved  for Indian airlines ",
           image: yearImages.GTF_2016_1,
+            isExplore: true,
+              redirectLinkData:productEngines[4]?.engines[0]?.details,
           // thumbnail:machine1,
          slideImages: [
          { img: yearImages.GTF_2016_1 },
@@ -965,6 +1021,8 @@ const yearSlidedata = [
           cloneTitle: "PW800 Engine Enters Into Service",
           subtitle: "Global hub for critical entry-into-service trainings ",
           image: yearImages.PW_2018_1,
+            isExplore: true,
+             redirectLinkData:productEngines[5]?.engines[0]?.details,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.PW_2018_1 },
@@ -1009,6 +1067,7 @@ const yearSlidedata = [
           cloneTitle: "Hybrid-Electric Propulsion regional demonstrator",
           subtitle: "To power future regional and sustainable aircraft.",
           image: yearImages.H_2021_1,
+           isExplore: false,
           // thumbnail:machine1,
          slideImages: [
         { img: yearImages.H_2021_1 },
@@ -1027,6 +1086,7 @@ const yearSlidedata = [
           cloneTitle: "Pratt & Whitney invests in India Centers of Excellence",
           subtitle: "Supply chain, engineering and digital transformation",
           image: yearImages.PW_2022_1,
+           isExplore: false,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.PW_2022_1 },
@@ -1057,6 +1117,7 @@ const yearSlidedata = [
           cloneTitle: "India’s First C295 Arrives",
           subtitle: "Pratt & Whitney powers IAF’s transport modernisation",
           image: yearImages.C_2023_1,
+           isExplore: false,
           // thumbnail:machine1,
          slideImages: [
         { img: yearImages.C_2023_1 },
@@ -1077,6 +1138,8 @@ const yearSlidedata = [
           cloneTitle: "Hybrid-electric GTF™ engine demonstrator",
           subtitle: "Pratt & Whitney powers IAF’s transport modernisation",
           image: yearImages.S_2024_1,
+           isExplore: true,
+           redirectLinkData:productEngines[5]?.engines[0]?.details,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.S_2024_1 },

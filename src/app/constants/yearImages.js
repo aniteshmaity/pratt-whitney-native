@@ -243,6 +243,7 @@ import V_2006_2 from "../../assets/images/hundredYears/gallery/Pratt & Whitney F
 import V_2006_3 from "../../assets/images/hundredYears/gallery/The Future of the F-35 Chapter 1 Trust.mp4";
 import VPW100_1984_1 from "../../assets/images/hundredYears/gallery/3D wireframe Gif.mp4";
 import V_1972_1 from "../../assets/images/hundredYears/gallery/Celebrating the F100 Engine 50 Years Since First Flight.mp4";
+import VideoPlaceholder from "../../assets/video/video-placeholder.jpg";
 
 
 
@@ -434,5 +435,6 @@ V_2006_1,
 V_2006_2,
 V_2006_3,
 VPW100_1984_1,
-V_1972_1
+V_1972_1,
+VideoPlaceholder
 };

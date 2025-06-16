@@ -32,6 +32,7 @@ import MyTextBtn from "../../components/buttons/MyTextBtn";
 import PrevNextButton from "../../components/buttons/PrevNextButton";
 import CustomTextButton from "../../components/buttons/CustomTextButton";
 import homeImages from "../../constants/homeImages";
+import VideoComponent from "../../components/VideoComponent";
 const { width } = Dimensions.get('window');
 
 const HundredYears = () => {
@@ -377,6 +378,10 @@ growing economies and defending freedom.
         {/* Video and Content Sections */}
         <View className="relative flex-1 w-full  h-full ">
       <VideoView style={{ width: '100%', height: '100%' }}  player={player} nativeControls={false} contentFit="contain" />
+      {/* <VideoComponent
+                        videoUrl={homeImages.pw100HeroVideo}
+                        videoClass={{ width: '100%', height: '100%' }}
+                      /> */}
         </View>
       </View>
     </SafeAreaView>
