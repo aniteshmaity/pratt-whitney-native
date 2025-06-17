@@ -209,12 +209,12 @@ const { yearParam} = useLocalSearchParams();
   const airplaneRefs = useRef([]);
   const scrollX = useSharedValue(0.5); 
   const animatedX = useSharedValue(0);
-console.log("currentindex",currentIndex);
-console.log("imageposition",imagePosition);
-console.log("direction",direction);
-console.log("yearDetails----",yearDetails);
-console.log("yearParam----",yearParam);
-console.log("middleIndex",middleIndex);
+// console.log("currentindex",currentIndex);
+// console.log("imageposition",imagePosition);
+// console.log("direction",direction);
+// console.log("yearDetails----",yearDetails);
+// console.log("yearParam----",yearParam);
+// console.log("middleIndex",middleIndex);
 // At the top of your component
 const [savedPosition, setSavedPosition] = useState(null);
 const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -227,16 +227,16 @@ useEffect(()=> {if(yearParam){
 },[yearParam])
 
 const handleImageClick = useCallback((index,img) => {
-  console.log("images------",img);
+  // console.log("images------",img);
   setDialogImages(img);
   setStartIndex(index);
   setIsDialogOpen(true);
-  console.log("handleclick");
+  // console.log("handleclick");
 }, []);
 const isRestoringPosition = useRef(false); 
 // Before switching to YearTimelineCarousel
 const handleStateUp = () => {
-  console.log("clickeddhandle-----------");
+  
 
  
     setYearDetails("view");
@@ -251,7 +251,7 @@ const handleStateUp = () => {
 
 
    const handleChangeYearFlag = (curr) => {
-    console.log("curr---", curr);
+    // console.log("curr---", curr);
     if (curr === null) return;
     
     setYearDetails(""); // Reset to carousel view
@@ -346,18 +346,19 @@ const handleStateUp = () => {
   
   }
 
-console.log("year-lenght ",years.length);
+// console.log("year-lenght ",years.length);
   const airplaneImages = [
     yearImages.aero1,
     yearImages.aero2,
     yearImages.aero3,
     yearImages.aero4,
-    yearImages.aero1,
-    yearImages.aero2,
-    yearImages.aero3,
-    yearImages.aero1,
-    yearImages.aero2,
-    yearImages.aero2,
+    yearImages.aero5,
+    yearImages.aero6,
+    yearImages.aero7,
+    yearImages.aero8,
+    yearImages.aero9,
+    yearImages.aero10,
+    yearImages.aero11,
 
   ];
 
@@ -424,7 +425,7 @@ const moveImgAnimatedStyle = useAnimatedStyle(() => ({
 }));
 const scrollToIndex = (index) => {
   console.log("index--", index);
-  console.warn("flatListRef.current",flatListRef.current);
+  // console.warn("flatListRef.current",flatListRef.current);
   if (
     flatListRef.current &&
     index !== undefined &&

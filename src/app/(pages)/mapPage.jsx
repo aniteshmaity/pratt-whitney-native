@@ -15,6 +15,7 @@ import BlurSvg from '../components/BlurSvg';
 import homeImages from '../constants/homeImages';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
+import mapImages from '../constants/mapImages';
 
 const { height } = Dimensions.get("window");
 
@@ -46,10 +47,16 @@ export default function mapPage() {
   
       
     const handleClose = () => {
-       router.push("/home")
+ 
+       router.push({
+      pathname: "/home",
+      params: { 
+        targetIndex: 4,
+      }
+    });
       }
       const handleClick = (index) => {
-        selectedIndex.value = index; // 
+        selectedIndex.value = index; 
       };
 
     
@@ -88,7 +95,7 @@ export default function mapPage() {
          <View className="h-[80px] flex-row justify-between items-center w-[94%] m-auto  border-b border-black/5">
            <View className='flex flex-row justify-center items-center gap-8 relative z-[9999]'>
   
-          <CustomCloseButton onPress={handleClose} type={3}  />
+          {/* <CustomCloseButton onPress={handleClose} type={3}  /> */}
  
           <Text className='text-[1.6rem]  font-ObjektivMk1Bold  leading-[43px]'>Pratt & Whitney in India</Text>
          </View>
@@ -201,7 +208,7 @@ export default function mapPage() {
     <Image source={homeImages.frameMap} className="absolute top-0 left-0 w-full h-full" />
 <Animated.View ref={mapRef} className='relative w-[80%]  ml-auto z-30' style={[mapAnimatedStyle]}>
   {/* <MapSvg /> */}
-  <Image source={homeImages.map3d} className="w-full h-full" resizeMode='contain' />
+  <Image source={mapImages.mapIndia} className="w-full h-full" resizeMode='contain' />
 {/* <img src={indiaSvg} alt="" className='w-[100%] ' /> */}
 {/* <MapCard  cardclass="absolute top-[50%] left-[40%]" /> */}
 {cities?.map((city, index) => (
@@ -225,7 +232,7 @@ export default function mapPage() {
      </View>
 
 
-     <View className="flex flex-row absolute bottom-10 right-10 ">
+     {/* <View className="flex flex-row absolute bottom-10 right-10 ">
      <TouchableOpacity onPress={()=> router.push("/home")}>
      <Svg
     xmlns="http://www.w3.org/2000/svg"
@@ -260,7 +267,7 @@ export default function mapPage() {
       d="M13 28V17.5l7-5.288 7 5.288V28h-5.192v-6.384h-3.616V28zM45.586 16.328V27h-1.523v-4.898h-5.165V27h-1.523V16.328h1.523v4.477h5.164v-4.477zm10.023 6.781q0 1.188-.515 2.125a3.63 3.63 0 0 1-1.438 1.461q-.921.516-2.078.516-1.14 0-2.047-.523a3.77 3.77 0 0 1-1.422-1.477 4.34 4.34 0 0 1-.515-2.102q0-.906.289-1.656.296-.758.836-1.312A3.8 3.8 0 0 1 50 19.273a4.2 4.2 0 0 1 1.594-.304q.859 0 1.601.297t1.29.859.835 1.328.29 1.656m-1.539.032q0-.64-.187-1.211a2.8 2.8 0 0 0-.516-.97q-.328-.405-.781-.624a2.2 2.2 0 0 0-.977-.219q-1.07 0-1.78.844-.705.843-.704 2.133 0 .851.313 1.531.32.68.882 1.055.57.375 1.29.375.694 0 1.257-.367.563-.376.883-1.047.32-.672.32-1.5m4.61-3.961.086 1.258q.21-.43.57-.743.36-.312.836-.476a3.1 3.1 0 0 1 1.055-.172q.883 0 1.468.406.594.399.836 1.164.781-1.57 2.578-1.57.836 0 1.368.32.531.321.796.852.275.523.36 1.187.094.657.094 1.485V27h-1.454v-3.82q0-.758-.03-1.172a3 3 0 0 0-.095-.656q-.304-1.07-1.343-1.07a1.669 1.669 0 0 0-1.14.438 2.3 2.3 0 0 0-.423.514q-.18.297-.281.664a3 3 0 0 0-.117.649q-.024.375-.024 1.14V27h-1.46v-4.016q0-.812-.024-1.109a2.4 2.4 0 0 0-.086-.54q-.148-.498-.492-.773a1.2 1.2 0 0 0-.805-.28q-.586 0-1.062.35-.47.345-.735.962a3.5 3.5 0 0 0-.265 1.39V27h-1.453v-4.398q0-2.087-.102-3.422zm13.148 4.28q.156 1.166.852 1.845.702.672 1.757.672.625 0 1.22-.18.593-.18 1.226-.555v1.39a7.3 7.3 0 0 1-1.29.446 5.4 5.4 0 0 1-1.218.133 4.4 4.4 0 0 1-1.648-.297 3.5 3.5 0 0 1-1.266-.852 3.8 3.8 0 0 1-.805-1.335A5.1 5.1 0 0 1 70.375 23q0-1.195.453-2.11.453-.913 1.297-1.413.851-.508 1.93-.508 1.265 0 2.015.625.758.616 1.07 1.633.32 1.015.32 2.234zm.016-1.132h4.164a3.9 3.9 0 0 0-.297-1.125 1.85 1.85 0 0 0-.648-.789q-.43-.297-1.055-.297-.86 0-1.438.594-.57.586-.726 1.617"
     ></Path>
   </Svg></TouchableOpacity>
-     </View>
+     </View> */}
          </SafeAreaView>
   )
 }

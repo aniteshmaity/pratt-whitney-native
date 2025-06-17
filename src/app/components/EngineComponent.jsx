@@ -55,8 +55,10 @@ const [tabsSize, setTabsSize] = useState({ width: 0, height: 0 });
   const [scrollParentHeight1, setScrollParentHeight1] = useState(0);
   const [scrollParentHeight2, setScrollParentHeight2] = useState(0);
   const [contentHeight, setContentHeight] = useState(0);
+  const allEngineData = type === "product" ? engineData : yearEngineData
+  const [tabsData, setTabsData] = useState(allEngineData?.defaultTabsData ?? []);
 
-  const [tabsData, setTabsData] = useState(engineData?.defaultTabsData);
+  console.log("allEngineData---", allEngineData);
   const videoRef = useRef(null);
   const rotation = useSharedValue(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -335,7 +337,7 @@ const [tabsSize, setTabsSize] = useState({ width: 0, height: 0 });
 
           {/* <Video  source={{ uri: "http://commondatastorage.g  oogleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" }}  */}
          <View className=" h-full bg-slate-500 overflow-hidden" style={{width:"99.7%"}}>
-            <Image source={engineData?.logo || yearImages.machine1} className="w-full h-full" resizeMode="cover"/>
+            <Image source={allEngineData?.logo || yearImages.machine1} className="w-full h-full absolute top-0 left-0" resizeMode="cover"/>
             {/* <VideoView
               style={{
 
@@ -460,7 +462,7 @@ style={{ position: 'absolute', top: 20,right:-86 }}
                 const { width } = event.nativeEvent.layout;
                 setParentWidth(width);
               }}>
-                {parentWidth > 0 && <GalleryCarousel parentWidth={parentWidth} onImageClick={onImageClick} slideImages={engineData?.gallery || null} />}
+                {parentWidth > 0 && <GalleryCarousel parentWidth={parentWidth} onImageClick={onImageClick} slideImages={allEngineData?.gallery || null} />}
               </View>
             </View>
           </View>
@@ -494,9 +496,9 @@ preserveAspectRatio="none"
     ></Path>
   </Svg>
   <View className="absolute pl-[20px] top-1/2 -translate-y-1/2   ">
-        <Text className={`${type === "100year" ? "text-[20px]" : "text-[2.2rem]"}   leading-tight text-white font-ObjektivMk2Black`}> {type === "product" ? engineData?.title : yearEngineData?.title}</Text>
+        <Text className={`${type === "100year" ? "text-[20px]" : "text-[2.2rem]"}   leading-tight text-white font-ObjektivMk2Black`}> {allEngineData?.title}</Text>
         <Text className="text-[#CE2028] text-[0.8rem] font-ObjektivMk1Bold ">
-                {engineData?.subTitle || "A Legend Engine For a legedary Bombar"}
+                {allEngineData?.subTitle || "A Legend Engine For a legedary Bombar"}
               </Text>
       </View>
 </View>
@@ -511,7 +513,7 @@ preserveAspectRatio="none"
               <ClippedView width={400} height={87} backgroundColor="#393637" clipPathId="clip2" />
               <Text className="text-[2.2rem]  leading-tight text-white font-ObjektivMk2Black">
 
-                {type === "product" ? engineData?.title : yearEngineData?.title}
+                {type === "product" ? allEngineData?.title : yearEngineData?.title}
               </Text>
               <Text className="text-[#CE2028] text-[0.8rem] font-ObjektivMk1Bold pt-1">
                 {engineData?.subTitle || "A Legend Engine For a legedary Bombar"}
@@ -522,7 +524,7 @@ preserveAspectRatio="none"
             <View className=" rounded-full   w-[94px] h-[94px] p-2 bg-white" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
               <View className="overflow-hidden w-full h-full   rounded-full " style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 10, 5) }}>
                 <Image
-                  source={engineData.logo || yearImages.gtf}
+                  source={allEngineData?.logo || yearImages.gtf}
                   className="h-full w-full "
                   resizeMode="cover"
                 // style={{ width:80, height:80}}
@@ -535,7 +537,7 @@ preserveAspectRatio="none"
 
                 className="text-[#000000b3]  pr-[40px] text-[0.75rem] font-objektiv"
               >
-                {engineData?.description || "The Pratt & Whitney GTF™ engine is the only geared propulsion system delivering industry-leading fuel efficiency and sustainability benefits. Its geared fan has fundamentally changed how sustainable propulsion works, quickly becoming a foundation of our industry."}
+                {allEngineData?.description || "The Pratt & Whitney GTF™ engine is the only geared propulsion system delivering industry-leading fuel efficiency and sustainability benefits. Its geared fan has fundamentally changed how sustainable propulsion works, quickly becoming a foundation of our industry."}
 
               </Text>
             </Animated.ScrollView>
@@ -552,11 +554,11 @@ preserveAspectRatio="none"
               </View>
             )}
           </View>
-          {engineData?.variants && engineData?.variants.length > 0 ? (
+          {allEngineData?.variants && allEngineData?.variants.length > 0 && (
             <View className="flex gap-[40px] flex-row ml-5  items-center">
               <Text className="text-[#CE2028] text-[12px] font-ObjektivMk1Bold">Select Variant</Text>
 
-              {engineData?.variants.map((item, index) => {
+              {allEngineData?.variants.map((item, index) => {
                 return (
                   <View key={index}>
                     <View className=" rounded-full   w-[40px] h-[40px] p-1 bg-white" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
@@ -576,31 +578,8 @@ preserveAspectRatio="none"
                 );
               })}
             </View>
-          ) : (
-            <View className="flex gap-[40px] flex-row ml-5  items-center">
-              <Text className="text-[#CE2028] text-[12px] font-ObjektivMk1Bold">Select Variant</Text>
-
-              {Varients.map((item, index) => {
-                return (
-                  <View key={index}>
-                    <View className=" rounded-full   w-[40px] h-[40px] p-1 bg-white" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
-                      <View className="overflow-hidden w-full h-full   rounded-full" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 10, 5) }}>
-                        <Image
-                          source={item.img}
-                          className="h-full w-full"
-                          resizeMode="cover"
-                          style={{ width: '100%', height: '100%' }}
-                        />
-                      </View>
-                    </View>
-                    <Text className="text-[8px] text-center mt-2">
-                      {item.title}
-                    </Text>
-                  </View>
-                );
-              })}
-            </View>
-          )}
+          ) 
+          }
 
         </View>
 
@@ -709,7 +688,9 @@ preserveAspectRatio="none"
                       {tabsData[activeTab]?.title === "Platforms" || tabsData[activeTab]?.title === "Highlights"  ? (
                         <View className="flex-[3]">
                           <Animated.View className="" style={{ height: expandedIndex === idx ? animatedHeight : 40, overflow: 'hidden' }}>
-                            <Text className="text-[0.8rem] font-objektiv">
+                            {
+                              item.description && (
+                                 <Text className="text-[0.8rem] font-objektiv">
                               {expandedIndex === idx
                                 ? item.description
                                 : `${item.description.slice(0, 50)}...`}{" "}
@@ -722,6 +703,9 @@ preserveAspectRatio="none"
                                   : "Tap for more"}
                               </Text>
                             </Text>
+                              )
+                            }
+                           
                           </Animated.View>
                         </View>
                       ) : (
