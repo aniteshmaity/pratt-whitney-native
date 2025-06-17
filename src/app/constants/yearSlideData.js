@@ -1,6 +1,8 @@
 import yearImages from '../constants/yearImages';
 import { productEngines } from './productEngineData';
 
+const productEngine = productEngines.filter(item => item != null);
+
 const yearSlidedata = [
     {
       year: "1920",
@@ -132,7 +134,7 @@ const yearSlidedata = [
           image: yearImages.I_1927_1,
           thumbnail:yearImages.I_1925_2,
             isExplore: true,
-                 redirectLinkData:productEngines[7]?.engines[0]?.details,
+                 redirectLinkData:productEngine[7]?.engines[0]?.details,
           slideImages: [
             { img: yearImages.I_1927_1 },
             { img: yearImages.I_1927_2 },
@@ -218,7 +220,7 @@ const yearSlidedata = [
       subtitle: " Becomes the most-produced aircraft engine in history",
           image: yearImages.I_1930_1,
           isExplore: true,
-            redirectLinkData:productEngines[7]?.engines[4]?.details,
+            redirectLinkData:productEngine[7]?.engines[4]?.details,
           slideImages: [
             { img: yearImages.I_1930_1 },
             { img: yearImages.I_1930_2 },
@@ -253,7 +255,7 @@ const yearSlidedata = [
           subtitle: "Drives victory in the skies.",
           image: yearImages.I_1942_1,
             isExplore: true,
-                redirectLinkData:productEngines[7]?.engines[4]?.details,
+                redirectLinkData:productEngine[7]?.engines[4]?.details,
           slideImages: [
             { img: yearImages.I_1942_1 },
             { img: yearImages.I_1942_2 },
@@ -332,7 +334,7 @@ const yearSlidedata = [
           subtitle: "Enables the Jet Age.",
           image: yearImages.I_1958_1,
            isExplore: true,
-              redirectLinkData:productEngines[7]?.engines[1]?.details,
+              redirectLinkData:productEngine[7]?.engines[1]?.details,
           slideImages: [
             { img: yearImages.I_1958_1 },
             { img: yearImages.I_1958_2 },
@@ -374,7 +376,7 @@ const yearSlidedata = [
           subtitle: "Revolutionizes general aviation.",
           image: yearImages.machine1,
            isExplore: true,
-            redirectLinkData:productEngines[2]?.engines[3]?.details,
+            redirectLinkData:productEngine[2]?.engines[3]?.details,
            slideImages: [
         { img: yearImages.I_1963_1 },
         { img: yearImages.I_1963_2 },
@@ -419,7 +421,7 @@ const yearSlidedata = [
           subtitle: "Air India gets Boeing 707s with JT3D Engines",
           image: yearImages.I_1963_64_J1,
            isExplore: true,
-            redirectLinkData:productEngines[7]?.engines[1]?.details,
+            redirectLinkData:productEngine[7]?.engines[1]?.details,
            slideImages: [
         { img: yearImages.I_1963_64_J1 },
         { img: yearImages.I_1963_64_J2 },
@@ -442,7 +444,7 @@ const yearSlidedata = [
           subtitle: "Most widely used turbofan of its time.",
           image: yearImages.machine2,
            isExplore: true,
-              redirectLinkData:productEngines[7]?.engines[2]?.details,
+              redirectLinkData:productEngine[7]?.engines[2]?.details,
            slideImages: [
         { img: yearImages.I_1964_JT1 },
         { img: yearImages.I_1964_JT2 },
@@ -527,7 +529,7 @@ const yearSlidedata = [
           subtitle: "First high-bypass turbofan for widebody jets.",
           image: yearImages.JT_1970_1,
            isExplore: true,
-                 redirectLinkData:productEngines[7]?.engines[3]?.details,
+                 redirectLinkData:productEngine[7]?.engines[3]?.details,
           slideImages: [
         { img: yearImages.JT_1970_1 },
         { img: yearImages.JT_1970_2 },
@@ -566,7 +568,7 @@ const yearSlidedata = [
           subtitle: "First afterburning turbofan for fighters",
           image: yearImages.F_1972_1,
            isExplore: true,
-             redirectLinkData:productEngines[1]?.engines[5]?.details,
+             redirectLinkData:productEngine[1]?.engines[5]?.details,
           slideImages: [
         { img: yearImages.F_1972_1 },
         { img: yearImages.F_1972_2 },
@@ -613,7 +615,7 @@ const yearSlidedata = [
           subtitle: "Dominates regional turboprop segment.",
           image: yearImages.PW100_1984_1,
            isExplore: true,
-                          redirectLinkData:productEngines[0]?.engines[0]?.details,
+                          redirectLinkData:productEngine[0]?.engines[0]?.details,
           slideImages: [
         { img: yearImages.PW100_1984_1 },
         { img: yearImages.PW100_1984_2 },
@@ -636,7 +638,7 @@ const yearSlidedata = [
           subtitle: "Pratt & Whitney powers Air India’s ‘Queen of the Skies’ the Boeing 747 with JT9D",
           image: yearImages.V2500_1984_1,
            isExplore: true,
-                 redirectLinkData:productEngines[4]?.engines[1]?.details,
+                 redirectLinkData:productEngine[4]?.engines[1]?.details,
           slideImages: [
             { img: yearImages.V2500_1984_1 },
             { img: yearImages.V2500_1984_2 },
@@ -660,7 +662,7 @@ const yearSlidedata = [
           subtitle: "Digital control revolutionises commercial jet engines.",
           image: yearImages.PW2000_1984_1,
            isExplore: true,
-            redirectLinkData:productEngines[4]?.engines[3]?.details,
+            redirectLinkData:productEngine[4]?.engines[3]?.details,
           slideImages: [
             { img: yearImages.PW2000_1984_1 },
             { img: yearImages.PW2000_1984_2 },
@@ -680,7 +682,7 @@ const yearSlidedata = [
           subtitle: "Enhances mid-size business jets.",
           image: yearImages.PW300_1989_1,
            isExplore: true,
-            redirectLinkData:productEngines[4]?.engines[3]?.details,
+            redirectLinkData:productEngine[4]?.engines[3]?.details,
           slideImages: [
             { img: yearImages.PW300_1989_1 },
             { img: yearImages.PW300_1989_2 },
@@ -722,7 +724,7 @@ const yearSlidedata = [
           subtitle: "First fifth-generation fighter engine",
           image: yearImages.P400_1990_1,
            isExplore: true,
-             redirectLinkData:productEngines[4]?.engines[2]?.details,
+             redirectLinkData:productEngine[4]?.engines[2]?.details,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.P400_1990_1 },
@@ -748,7 +750,7 @@ const yearSlidedata = [
           subtitle: "First fifth-generation fighter engine",
           image: yearImages.F119_1990_1,
             isExplore: true,
-             redirectLinkData:productEngines[1]?.engines[3]?.details,
+             redirectLinkData:productEngine[1]?.engines[3]?.details,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.F119_1990_1 },
@@ -771,7 +773,7 @@ const yearSlidedata = [
           subtitle: "Becomes a leader in the business jet market",
           image: yearImages.PW500_1990_1,
             isExplore: true,
-                redirectLinkData:productEngines[5]?.engines[2]?.details,
+                redirectLinkData:productEngine[5]?.engines[2]?.details,
           // thumbnail:machine1,
          slideImages: [
         { img: yearImages.PW500_1990_1 },
@@ -813,7 +815,7 @@ const yearSlidedata = [
           subtitle: "Introduced for the very light & light jet market",
           image: yearImages.PW600_2000_1,
             isExplore: true,
-               redirectLinkData:productEngines[5]?.engines[1]?.details,
+               redirectLinkData:productEngine[5]?.engines[1]?.details,
           // thumbnail:machine1,
          slideImages: [
         { img: yearImages.PW600_2000_1 },
@@ -832,7 +834,7 @@ const yearSlidedata = [
           subtitle: "Changes the course of Indian aviation",
           image: yearImages.V2500_2005_1,
             isExplore: true,
-                 redirectLinkData:productEngines[4]?.engines[1]?.details,
+                 redirectLinkData:productEngine[4]?.engines[1]?.details,
           // thumbnail:machine1,
          slideImages: [
         { img: yearImages.V2500_2005_1 },
@@ -857,7 +859,7 @@ const yearSlidedata = [
           subtitle: "Most advanced fighter engine ever built.",
           image: yearImages.F15_2008_1,
             isExplore: true,
-            redirectLinkData:productEngines[1]?.engines[2]?.details,
+            redirectLinkData:productEngine[1]?.engines[2]?.details,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.F15_2008_1 },
@@ -885,7 +887,7 @@ const yearSlidedata = [
           subtitle: "Quietest, Greenest & Cleanest",
           image: yearImages.GTF_2008_1,
             isExplore: true,
-                redirectLinkData:productEngines[4]?.engines[0]?.details,
+                redirectLinkData:productEngine[4]?.engines[0]?.details,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.GTF_2008_1 },
@@ -995,7 +997,7 @@ const yearSlidedata = [
           subtitle: "1 billion liters of fuel saved  for Indian airlines ",
           image: yearImages.GTF_2016_1,
             isExplore: true,
-              redirectLinkData:productEngines[4]?.engines[0]?.details,
+              redirectLinkData:productEngine[4]?.engines[0]?.details,
           // thumbnail:machine1,
          slideImages: [
          { img: yearImages.GTF_2016_1 },
@@ -1022,7 +1024,7 @@ const yearSlidedata = [
           subtitle: "Global hub for critical entry-into-service trainings ",
           image: yearImages.PW_2018_1,
             isExplore: true,
-             redirectLinkData:productEngines[5]?.engines[0]?.details,
+             redirectLinkData:productEngine[5]?.engines[0]?.details,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.PW_2018_1 },
@@ -1139,7 +1141,7 @@ const yearSlidedata = [
           subtitle: "Pratt & Whitney powers IAF’s transport modernisation",
           image: yearImages.S_2024_1,
            isExplore: true,
-           redirectLinkData:productEngines[5]?.engines[0]?.details,
+           redirectLinkData:productEngine[5]?.engines[0]?.details,
           // thumbnail:machine1,
          slideImages: [
             { img: yearImages.S_2024_1 },

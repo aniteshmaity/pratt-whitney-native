@@ -118,14 +118,19 @@ const SlideItem = React.memo(({ slide, index, currentInnerSlide, innerSlideStatu
                   </Text>
                 </ScrollView>
                 <View className="flex flex-row z-50 mt-3">
-                  <CustomTextButton
+                  {
+                    slide?.innerSlidesData[currentInnerSlide]?.isExplore && (
+                      <CustomTextButton
                     className={"w-[98px] h-[26px] "}
-                    onPress={() => goToYearExplore(slide.year, slide?.innerSlidesData[currentInnerSlide].id)}
+                    onPress={() => goToYearExplore(slide.year, slide?.innerSlidesData[currentInnerSlide].id,slide?.innerSlidesData[currentInnerSlide].redirectLinkData)}
                     title={"Explore"}
                     textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "}
                     boxLeftClass={"w-[13px] h-[13px] -left-[6.5px]  -top-[6.5px] bg-white"}
                     boxRightClass={"w-[13px] h-[13px] -right-[6.5px] -bottom-[6.5px] bg-white"} 
                   />
+                    )
+                  }
+                  
                 </View>
               </View>
             </View>
@@ -215,13 +220,15 @@ const [navigationDirection,setNavigationDirection] = useState("next");
 
   const router = useRouter();
 
-  console.log("slideDataIndex",slideDataIndex);
-  const goToYearExplore = useCallback((year, id) => {
+  // console.log("slideDataIndex",slideDataIndex);
+  const goToYearExplore = useCallback((year, id, engineData) => {
+      // console.log("eengineData",engineData);
     router.push({
       pathname: '/hundred-years/yearEngineDetails',
       params: { 
         year: year, 
-        targetId: id
+        targetId: id,
+        engineData:JSON.stringify(engineData)
       }
     });
   }, [router]);
@@ -435,21 +442,23 @@ const [navigationDirection,setNavigationDirection] = useState("next");
 
   useEffect(() => {
     const yearIndex = yearSlideData.findIndex((e)=> e.year === Year)
-    setSlideDataIndex(yearIndex)
+    setSlideDataIndex(yearIndex);
     carouselRef.current?.scrollTo({ index: yearIndex, animated: true });
   }, [Year]);
 
   useEffect(()=> {
     if (yearParam) {
-      const yearIndex = yearSlideData.findIndex((e)=> e.year === yearParam)
+      const yearIndex = yearSlideData.findIndex((e)=> e.year === yearParam);
+ 
       if(carouselRef.current){
-        carouselRef.current.scrollTo(yearIndex,true);
+  
+      carouselRef.current?.scrollTo({ index: yearIndex, animated: true });
       }
     }
   },[yearParam]);
 
   const handleSlideChange = useCallback((index) => {
-    console.log("handelslide");
+    // console.log("handelslide");
     if(index > currentSlide ){
       setNavigationDirection("next");
       setDirection("next");

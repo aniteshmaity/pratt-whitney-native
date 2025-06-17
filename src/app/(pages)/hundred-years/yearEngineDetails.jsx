@@ -12,10 +12,12 @@ import yearSlidedata from "../../constants/yearSlideData";
 import CustomDialog from "../../components/CustomDialog";
 
 export default function yearEngineDetails() {
-  const { year, targetId } = useLocalSearchParams();
+  const { year, targetId,engineData } = useLocalSearchParams();
   const numericId = Number(targetId); 
   console.log("year",year);
   console.log("yearid",targetId);
+const parsedEngineData = engineData ? JSON.parse(engineData) : null;
+console.log("engineData", parsedEngineData);
   const matchedYearObject = yearSlidedata.find(e => e.year === year);
   // console.log("datamatched-",matchedYearObject);
   const data = matchedYearObject
@@ -109,8 +111,8 @@ export default function yearEngineDetails() {
 </TouchableOpacity>
                
               </View>
-{/* 
-              <EngineComponent type="100year" onImageClick={handleImageClick} yearEngineData={data} /> */}
+
+              <EngineComponent type="100year" onImageClick={handleImageClick} yearEngineData={parsedEngineData} />
             </View>
           </View>
         </ImageBackground>

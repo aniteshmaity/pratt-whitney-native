@@ -17,6 +17,7 @@ export default function HomeLayout() {
         <Stack.Screen name="products" options={{ headerShown: false }} />
         <Stack.Screen name="startScreen" options={{ headerShown: false }} />
         <Stack.Screen name="experience3d" options={{ headerShown: false }} />
+        <Stack.Screen name="conAerospace" options={{ headerShown: false }} />
       </Stack>
     </>
   );

@@ -51,7 +51,7 @@ const homeCardData = [
         "Experience in 3D how RTX is innovating the future of flight with Pratt & Whitney and Collins Aerospace.",
       videoUrl:
       homeImages.aerospaceVideo,
-      link: "/innovations",
+      link: "conAerospace",
     },
     // {
     //   title: {
