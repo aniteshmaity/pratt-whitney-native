@@ -8,17 +8,19 @@ const boxShadow = (
   radius = 4,
   elevation = 5
 ) => {
-  return Platform.select({
-    ios: {
-      shadowColor: color,
-      shadowOffset: { width: offsetX, height: offsetY },
-      shadowOpacity: opacity,
-      shadowRadius: radius,
-    },
-    android: {
-      elevation: elevation, // Android only supports elevation
-    },
-  });
+  return [
+    Platform.select({
+      ios: {
+        shadowColor: color,
+        shadowOffset: { width: offsetX, height: offsetY },
+        shadowOpacity: opacity,
+        shadowRadius: radius,
+      },
+      android: {
+        elevation: elevation,
+      },
+    }),
+  ];
 };
 
 export default boxShadow;
