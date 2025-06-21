@@ -6,6 +6,7 @@ import { Svg, Circle, Path } from 'react-native-svg';
 import { useRef } from 'react';
 import CustomTextButton from '../components/buttons/CustomTextButton';
 import MyTextBtn from '../components/buttons/MyTextBtn';
+import mapData from '../constants/mapData';
 
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, useDerivedValue } from "react-native-reanimated";
 import MapTextBtn from '../components/buttons/MapTextBtn';
@@ -15,7 +16,8 @@ import BlurSvg from '../components/BlurSvg';
 import homeImages from '../constants/homeImages';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import mapImages from '../constants/mapImages';
+import { mapaImages } from '../constants/mapImages';
+import SlidingCard from '../components/inIndia/SlidingCard';
 
 const { height } = Dimensions.get("window");
 
@@ -29,6 +31,7 @@ export default function mapPage() {
 
     const selectedIndex = useSharedValue(-1); 
     const [activeId, setActiveId] = useState(1);
+    const [showCards, setShowCards] = useState(false);
     const x = useSharedValue(cities[0].x);
     const y = useSharedValue(cities[0].y);
     const currentIndex = useSharedValue(0);
@@ -37,14 +40,17 @@ export default function mapPage() {
     const spansRef = useRef([]);
     const mapRef = useRef(null);
      const router = useRouter();
-    const buttonsData = [
-        { id: 1, name: "India Fleet" },
-        { id: 2, name: "Supply Chain" },
-        { id: 3, name: "Our Presence" },
-        { id: 4, name: "Our people" },
-        { id: 5, name: "Our Customers" },
-      ];
-  
+    // const buttonsData = [
+    //     { id: 1, name: "India Fleet" },
+    //     { id: 2, name: "Supply Chain" },
+    //     { id: 3, name: "Our Presence" },
+    //     { id: 4, name: "Our people" },
+    //     { id: 5, name: "Our Customers" },
+    //   ];
+    // const buttonsData = mapData.[activeId].
+  console.log("mapdata",mapData);
+  // console.log("mapdataimage",mapaImages);
+
       
     const handleClose = () => {
  
@@ -84,11 +90,29 @@ export default function mapPage() {
       const mapAnimatedStyle = useAnimatedStyle(() => ({
         transform: [{ translateX: x.value }, { translateY: y.value }],
       }));
-// console.log("currentindex",currentIndex);
-// const derivedIndex = useDerivedValue(() => {
-//     console.log("Updated currentIndex:", currentIndex.value);
-//     return currentIndex.value;
-//   });
+      
+const handleButtonPress = (button) => {
+    setActiveId(button.id);
+
+    if (button.id === 1) {
+    setShowCards(false); 
+    } else if (button.id === 2) {
+      const fletData = mapData[1]?.exploreData
+      // Navigate on second button click
+     router.push({
+      pathname: '/hundred-years/yearEngineDetails',
+      params: { 
+        // year: year, 
+        isFleetData:true,
+        mapData:JSON.stringify(fletData)
+      }
+      
+    });
+    } else if (button.id === 3 || button.id === 3) {
+        setShowCards(true);
+    }
+     
+  };
 
   return (
     <SafeAreaView className="w-screen h-screen bg-white">
@@ -146,7 +170,7 @@ export default function mapPage() {
         end={{ x: 1, y: 0 }}
        className="absolute top-0 left-0 w-[90%] h-[1px] z-30"
       />
-          {buttonsData.map((button, index) => { 
+          {mapData.map((button, index) => { 
 
             return  (
        
@@ -160,24 +184,12 @@ export default function mapPage() {
                             textClass={"text-[0.8rem] tracking-widest font-frutigerReg  "}
                             arrowClass="absolute left-0"
                             mapClass="w-max left-0"
-                            onPress={() => setActiveId(button.id)}
+                             onPress={() => handleButtonPress(button)}
+                            // onPress={() => setActiveId(button.id)}
                             isActive={activeId === button.id}
                           />
        
-            // <TouchableOpacity
-            //   key={button.id}
-            //   ref={(el) => (buttonsRef.current[index] = el)}
-            //   onPress={() => handleClick(index)}
-            //   className="w-[160px] relative h-[30px] p-1 text-[1rem]  bg-white"
-
-            // >
-            //   <Text
-            //     ref={(el) => (spansRef.current[index] = el)}
-            //     className="absolute top-1/2 -translate-y-1/2 left-[10px] w-max font-frutigerReg "
-            //   >
-            //     {button.name}
-            //   </Text>
-            // </TouchableOpacity>
+    
           ) })}
         </View>
       </View>
@@ -208,7 +220,7 @@ export default function mapPage() {
     <Image source={homeImages.frameMap} className="absolute top-0 left-0 w-full h-full" />
 <Animated.View ref={mapRef} className='relative w-[80%]  ml-auto z-30' style={[mapAnimatedStyle]}>
   {/* <MapSvg /> */}
-  <Image source={mapImages.mapIndia} className="w-full h-full" resizeMode='contain' />
+  <Image source={mapaImages.image.mapIndia} className="w-full h-full" resizeMode='contain' />
 {/* <img src={indiaSvg} alt="" className='w-[100%] ' /> */}
 {/* <MapCard  cardclass="absolute top-[50%] left-[40%]" /> */}
 {cities?.map((city, index) => (
@@ -227,7 +239,19 @@ export default function mapPage() {
    
         
       ))}
+
+  
+
 </Animated.View>
+
+{showCards && (
+    <>
+      <SlidingCard direction="left" show={showCards}   cardData={mapData[activeId - 1]?.leftCardData} activeId={activeId} />
+
+      <SlidingCard direction="right" show={showCards}   cardData={mapData[activeId - 1]?.rightCardData} activeId={activeId} />
+
+    </>
+  )}
     </View>
      </View>
 

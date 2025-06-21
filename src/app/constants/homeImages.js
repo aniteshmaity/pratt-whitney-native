@@ -10,7 +10,7 @@ import yearcard from "../../assets/images/home/100year-gif.gif";
 import productCard from "../../assets/images/home/product-gif.gif";
 import mapCard from "../../assets/images/home/In-India.png";
 import nameLogo from "../../assets/images/home/name logo.png";
-import circleLogo from "../../assets/images/home/circle logo.png";
+import circleLogo from "../../assets/images/home/circle-logo.png";
 import leftCroppedLogo from "../../assets/images/home/left-arrow-croped.png";
 import curveLogo from "../../assets/images/home/image-shadow-1.png";
 import notFound from "../../assets/images/home/man-with-404-error-logo_1150725-165.jpg";

@@ -12,18 +12,20 @@ import yearSlidedata from "../../constants/yearSlideData";
 import CustomDialog from "../../components/CustomDialog";
 
 export default function yearEngineDetails() {
-  const { year, targetId,engineData } = useLocalSearchParams();
+  const { year, targetId,engineData,mapData,isFleetData } = useLocalSearchParams();
   const numericId = Number(targetId); 
-  console.log("year",year);
-  console.log("yearid",targetId);
+  // console.log("year",year);
+  // console.log("yearid",targetId);
 const parsedEngineData = engineData ? JSON.parse(engineData) : null;
+const parsedMapData = mapData ? JSON.parse(mapData) : null;
 console.log("engineData", parsedEngineData);
+console.log("parsedMapData", parsedMapData);
   const matchedYearObject = yearSlidedata.find(e => e.year === year);
   // console.log("datamatched-",matchedYearObject);
   const data = matchedYearObject
     ? matchedYearObject.innerSlidesData.find(slide => slide.id === numericId)
     : null;
-  console.log("data-",data.slideImages);
+  // console.log("data-",data.slideImages);
   const router = useRouter();
     const [size, setSize] = useState({ width: 0, height: 0 });
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -31,7 +33,7 @@ console.log("engineData", parsedEngineData);
     const [startIndex, setStartIndex] = useState(0);
 
     const handleImageClick = (index,img) => {
-      console.log("images------",img);
+      // console.log("images------",img);
       setDialogImages(img);
       setStartIndex(index);
       setIsDialogOpen(true);
@@ -112,7 +114,7 @@ console.log("engineData", parsedEngineData);
                
               </View>
 
-              <EngineComponent type="100year" onImageClick={handleImageClick} yearEngineData={parsedEngineData} />
+              <EngineComponent type="100year" onImageClick={handleImageClick} yearEngineData={parsedEngineData} mapData ={parsedMapData} isFleetData={isFleetData} />
             </View>
           </View>
         </ImageBackground>

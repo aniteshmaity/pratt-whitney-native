@@ -4,7 +4,7 @@
     "slug": "pratt-whitney-app",
     "version": "1.0.0",
     "orientation": "landscape",
-    "icon": "./src/assets/images/home/circle logo.png",
+    "icon": "./src/assets/images/home/circle-logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -22,7 +22,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./src/assets/images/home/circle logo.png"
+      "favicon": "./src/assets/images/home/circle-logo.png"
     },
     "plugins": [
       "expo-router",
