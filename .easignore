@@ -1,0 +1,20 @@
+# Ignore unnecessary native folders
+android/
+ios/
+
+# Ignore build outputs
+build/
+dist/
+*.apk
+*.aab
+*.ipa
+
+# Ignore logs
+*.log
+
+# Ignore large assets not needed at build time
+assets/videos/
+assets/pdfs/
+*.mp4
+*.mov
+*.zip

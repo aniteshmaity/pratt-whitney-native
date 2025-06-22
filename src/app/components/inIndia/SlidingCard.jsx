@@ -6,6 +6,7 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
+import ClippedView from '../ClippedView';
 
 const SlidingCard = ({ direction = 'left', show, activeId, cardData }) => {
 
@@ -29,6 +30,7 @@ const SlidingCard = ({ direction = 'left', show, activeId, cardData }) => {
 
   return (
     <Animated.View style={[styles.card, direction === 'left' ? styles.leftCard : styles.rightCard, animatedStyle]}>
+        {/* <ClippedView width={360} height={140} backgroundColor="white" clipPathId="mapcard" slug="map1" /> */}
   
 <View className={`${direction === 'left' ? 'ml-[40%] px-5 pt-16 w-[150px]' : 'pt-16 pl-5 '}`}>
       {activeId === 3 && direction === 'right' && (<Text className="text-[#CE2028]  text-[1.4rem] font-ObjektivMk2Black mb-2">{cardData?.name}</Text>)}
@@ -58,8 +60,8 @@ const styles = StyleSheet.create({
     top: 100,
     zIndex: 999,
     padding: 10,
-    backgroundColor: '#e6e6e7a6',
-    borderRadius: 8,
+    backgroundColor: '#f1efefab',
+
 
     alignSelf: 'center',
     position: "absolute",

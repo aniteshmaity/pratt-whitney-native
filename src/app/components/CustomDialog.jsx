@@ -4,6 +4,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Carousel from 'react-native-reanimated-carousel';
 import Icon from 'react-native-vector-icons/Feather';
 import VideoComponent from './VideoComponent';
+import PdfViewer from './PDFViewer';
 
 const { width, height } = Dimensions.get('window');
 
@@ -78,25 +79,38 @@ const CustomDialog = ({ images, startIndex = 0, onClose }) => {
                       />
                     )}
                     {item.video && (
-                    <View
-  style={{
-    width: width * 0.6,
-    height: height * 0.6,
-    overflow: 'hidden',
-    borderRadius: 12,
-    backgroundColor: 'black', // helps contain it visually
-  }}
->
-  <VideoComponent
-    videoUrl={item.video}
-    isPlay={false}
-    videoClass={{
-      width: '100%',
-      height: '100%',
-    }}
-  />
-</View>
+                      <View
+                        style={{
+                          width: width * 0.6,
+                          height: height * 0.6,
+                          overflow: 'hidden',
+                          borderRadius: 12,
+                          backgroundColor: 'black', // helps contain it visually
+                        }}
+                      >
+                        <VideoComponent
+                          videoUrl={item.video}
+                          isPlay={false}
+                          videoClass={{
+                            width: '100%',
+                            height: '100%',
+                          }}
+                        />
+                      </View>
                     )}
+                     {item.pdf && (
+        <View
+          style={{
+            width: width * 0.6,
+            height: height * 0.6,
+            overflow: 'hidden',
+            borderRadius: 12,
+            backgroundColor: '#fff',
+          }}
+        >
+          <PdfViewer source={item.pdf} />
+        </View>
+      )}
                   </View>
                 )}
               />

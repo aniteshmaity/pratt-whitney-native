@@ -1158,10 +1158,10 @@ const mapData = [
         x: "0%",
         y: "0%",
         position: "top-[10%] left-[40%]",
-        cityPosition: "top-[27%] left-[27%]",
+        cityPosition: "top-[27%] left-[35%]",
 
         data: {
-          img: mapaImages.image.DeeptiSitting,
+          img: mapaImages.image.Delhi,
           items: [
             {
               title: "Pratt & Whitney",
@@ -1185,9 +1185,9 @@ const mapData = [
         x: "-10%",
         y: "-20%",
         position: "top-[45%] left-[42%]",
-        cityPosition: "top-[60%] left-[27%]",
+        cityPosition: "top-[60%] left-[36%]",
         data: {
-          img: mapaImages.image.DeeptiSitting,
+          img: mapaImages.image.hydrabad,
           items: [
             {
               id: 1,
@@ -1213,9 +1213,9 @@ const mapData = [
         x: "-20%",
         y: "-30%",
         position: "top-[65%] left-[50%]",
-        cityPosition: "top-[70%] left-[25%]",
+        cityPosition: "top-[73%] left-[34%]",
         data: {
-          img: mapaImages.image.DeeptiSitting,
+          img: mapaImages.image.Bangalore,
           items: [
             {
               id: 1,
@@ -1317,7 +1317,7 @@ const mapData = [
         x: "0%",
         y: "0%",
         position: "top-[10%] left-[40%]",
-        cityPosition: "top-[27%] left-[27%]",
+           cityPosition: "top-[27%] left-[35%]",
 
         data: {},
       },
@@ -1328,7 +1328,7 @@ const mapData = [
         x: "-10%",
         y: "-20%",
         position: "top-[45%] left-[42%]",
-        cityPosition: "top-[60%] left-[27%]",
+           cityPosition: "top-[60%] left-[36%]",
         data: {},
       },
       {
@@ -1337,7 +1337,7 @@ const mapData = [
         x: "-20%",
         y: "-30%",
         position: "top-[65%] left-[50%]",
-        cityPosition: "top-[70%] left-[25%]",
+   cityPosition: "top-[73%] left-[34%]",
         data: {},
       },
     ],

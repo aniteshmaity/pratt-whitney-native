@@ -157,6 +157,7 @@ import CH_47F from '../../assets/images/pwInIndia/additionalBackups/img/CH_47F.w
 import Bangalore from '../../assets/images/pwInIndia/additionalBackups/img/Bangalore.webp'
 import AgstaWestlandAw109 from '../../assets/images/pwInIndia/additionalBackups/img/AgstaWestlandAw109.webp'
 import mapIndia from "../../assets/images/map/India-new-2.webp"
+import hydrabad from "../../assets/images/pwInIndia/additionalBackups/img/Hyderabad.webp"
 
 export const mapaImages = {
     image: {
@@ -281,6 +282,7 @@ export const mapaImages = {
         DHCTwinOtter,
         C_130J,
         AH64Apache,
+        hydrabad
     },
     video: {
         PrattAndWhitneyICCSecondVideo,

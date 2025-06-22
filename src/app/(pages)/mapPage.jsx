@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, Image, TouchableOpacity, Dimensions } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import yearImages from '../constants/yearImages'
 import CustomCloseButton from '../components/buttons/CustomCloseButton'
 import { Svg, Circle, Path } from 'react-native-svg';
@@ -8,7 +8,7 @@ import CustomTextButton from '../components/buttons/CustomTextButton';
 import MyTextBtn from '../components/buttons/MyTextBtn';
 import mapData from '../constants/mapData';
 
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, useDerivedValue } from "react-native-reanimated";
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, useDerivedValue, withTiming, runOnJS } from "react-native-reanimated";
 import MapTextBtn from '../components/buttons/MapTextBtn';
 import MapSvg from '../components/MapSvg';
 import MapCard from '../components/MapCard';
@@ -18,6 +18,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { mapaImages } from '../constants/mapImages';
 import SlidingCard from '../components/inIndia/SlidingCard';
+import RedDotSvg from '../components/RedDotSvg';
+import ClippedView from '../components/ClippedView';
 
 const { height } = Dimensions.get("window");
 
@@ -32,8 +34,11 @@ export default function mapPage() {
     const selectedIndex = useSharedValue(-1); 
     const [activeId, setActiveId] = useState(1);
     const [showCards, setShowCards] = useState(false);
+      const [activeCity, setActiveCity] = useState(null);
     const x = useSharedValue(cities[0].x);
     const y = useSharedValue(cities[0].y);
+    const scale = useSharedValue(0);
+const opacity = useSharedValue(0);
     const currentIndex = useSharedValue(0);
     const buttonsRef = useRef([]);
     const cardRef = useRef([]);
@@ -48,9 +53,13 @@ export default function mapPage() {
     //     { id: 5, name: "Our Customers" },
     //   ];
     // const buttonsData = mapData.[activeId].
-  console.log("mapdata",mapData);
+  // console.log("mapdata",mapData);
   // console.log("mapdataimage",mapaImages);
 
+  const animatedCityStyle = useAnimatedStyle(() => ({
+  transform: [{ scale: scale.value }],
+  opacity: opacity.value,
+}));
       
     const handleClose = () => {
  
@@ -66,6 +75,31 @@ export default function mapPage() {
       };
 
     
+const handleCityClick = (city) => {
+  const isSameCity = activeCity?.id === city.id;
+
+  if (isSameCity) {
+    // Animate out before removing
+    scale.value = withTiming(0, { duration: 150 });   
+    opacity.value = withTiming(0, { duration: 150 }, () => {
+      runOnJS(setActiveCity)(null);
+    });
+  } else {
+    // Just replace city — animation handled in useEffect
+    setActiveCity(city);
+  }
+};
+ useEffect(() => {
+  if (activeCity) {
+    scale.value = 0;
+    opacity.value = 0;
+
+    // Animate in only when new city is mounted
+    scale.value = withSpring(1, { damping: 14, stiffness: 110 });
+    opacity.value = withTiming(1, { duration: 300 });
+  }
+}, [activeCity]);
+
 
       const handlePrevClick = () => {
         if(currentIndex.value === 0) return;
@@ -108,8 +142,11 @@ const handleButtonPress = (button) => {
       }
       
     });
-    } else if (button.id === 3 || button.id === 3) {
+    } else if (button.id === 3 || button.id === 4) {
+      setActiveCity(null);
         setShowCards(true);
+         x.value = withSpring("0%", { damping: 20, stiffness: 90 });
+    y.value = withSpring("0%", { damping: 20, stiffness: 90 });
     }
      
   };
@@ -145,19 +182,25 @@ const handleButtonPress = (button) => {
        className="absolute top-0 left-0 w-[50%] h-[1px] z-30"
       />
      <View className="w-[560px] absolute z-40 left-0 ">
+          <ClippedView width={400} height={550} backgroundColor="white" clipPathId="slidecardFirst1" slug="variant11" />
       {/* Blur Background */}
-      <View className="absolute -top-[26%] left-0 w-full ">
-        {/* <BlurSvg /> */}
+     
+      {/* <View className="absolute -top-[26%] left-0 w-full ">
+    
         <Image source={homeImages.curveLogo} className="w-full" resizeMode='contain'/>
-      </View>
+      </View> */}
 
       <View className="w-[70%] mx-auto mt-[60px] relative pl-[10px]">
         <View className="">
-          <Text className=" text-[2.2rem] font-ObjektivMk1Bold">70 years of Powering</Text>
+          <Text className=" text-[2.2rem] font-ObjektivMk1Bold">70 years </Text>
+        <Text className="text-[2.2rem] font-ObjektivMk1Bold">
+  of <Text className="text-[#D91027]">Powering</Text>
+</Text>
+          <Text className=" text-[2.2rem] font-ObjektivMk1Bold">Indian Aviation</Text>
 
-          <Text className="text-[#D91027] text-[2.8rem] leading-[72px]  font-ObjektivMk1Bold">
+          {/* <Text className="text-[#D91027] text-[2.8rem] leading-[72px]  font-ObjektivMk1Bold">
             Indian Aviation
-          </Text>
+          </Text> */}
         </View>
       
         {/* Buttons */}
@@ -218,12 +261,12 @@ const handleButtonPress = (button) => {
     <View className='overflow-hidden w-full  h-full bg-[#f5f5f5]'>
       <View className="absolute w-full h-full bg-[#c6bebe2c] z-10" />
     <Image source={homeImages.frameMap} className="absolute top-0 left-0 w-full h-full" />
-<Animated.View ref={mapRef} className='relative w-[80%]  ml-auto z-30' style={[mapAnimatedStyle]}>
+<Animated.View ref={mapRef} className='relative w-full max-w-[1000px] max-h-[90vh] aspect-[16/9] ml-auto overflow-hidden  z-30' style={[mapAnimatedStyle]}>
   {/* <MapSvg /> */}
   <Image source={mapaImages.image.mapIndia} className="w-full h-full" resizeMode='contain' />
 {/* <img src={indiaSvg} alt="" className='w-[100%] ' /> */}
 {/* <MapCard  cardclass="absolute top-[50%] left-[40%]" /> */}
-{cities?.map((city, index) => (
+{activeId === 1 && cities?.map((city, index) => (
         
       <MapCard
           key={city.name}
@@ -240,9 +283,59 @@ const handleButtonPress = (button) => {
         
       ))}
 
-  
+  {showCards && (
+  <>
+    {mapData[activeId - 1]?.cities?.map((city, index) => (
+      <TouchableOpacity key={city.id}  onPress={() => handleCityClick(city)} className={`flex  items-center justify-center absolute gap-2  ${city.cityPosition} cursor-pointer`}>
+        <RedDotSvg width={20} height={20} className=" " />
+        <Text className="text-[0.96rem] font-ObjektivMk1Bold ">
+          {city.name}
+        </Text>
+      </TouchableOpacity>
+    ))}
+  </>
+)}
+
+{
+  activeCity && (
+     <Animated.View className={`absolute p-4 flex-row gap-4 w-[380px] ${activeCity.position}`} style={animatedCityStyle}>
+      <Image
+        source={ activeCity.data.img }
+        alt={activeCity.title}
+        className="w-[80px] h-[80px] rounded-full"
+        resizeMode="cover"
+      />
+
+      <View>
+        {activeCity.data.items?.map((item,index) => (
+          <View key={index} className="mb-2">
+            <Text className="text-[0.7rem] text-[#D91027]   font-ObjektivMk2Black">{item.title}</Text>
+
+            {item.desc && (
+              <Text className="text-[0.6rem] pt-[1px] text-gray-700">{item.desc}</Text>
+            )}
+
+            {item.descList && (
+              <View className="pt-[1px] space-y-1">
+                {item.descList.map((point, idx) => (
+                  <Text key={idx} className="text-[0.6rem] text-gray-700 leading-[10px]">
+                    {point}
+                  </Text>
+                ))}
+              </View>
+            )}
+          </View>
+        ))}
+      </View>
+    </Animated.View>
+  )
+}
 
 </Animated.View>
+
+
+
+
 
 {showCards && (
     <>

@@ -4,6 +4,7 @@ import Animated, { useSharedValue, useAnimatedScrollHandler, useAnimatedStyle, i
 import yearImages from "../constants/yearImages";
 import PrevNextButton from "./buttons/PrevNextButton";
 import VideoComponent from "./VideoComponent";
+import PdfViewer from "./PDFViewer";
 
 // import Pdf from "react-native-pdf";
 
@@ -88,12 +89,12 @@ const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, galleryDa
             isPlay={false}
           />
         )}
-        {/* {item.pdf && (
-          <Pdf
-            source={{uri: item.pdf}}
-            style={{ width: '100%', height: 80 }}
-          />
-        )} */}
+        {item.pdf && (
+          <View className="h-[80px]">
+  <PdfViewer source={item.pdf} />
+       
+       </View>
+        )}
       </TouchableOpacity>
 
 
