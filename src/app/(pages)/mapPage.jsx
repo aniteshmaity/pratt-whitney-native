@@ -35,6 +35,7 @@ export default function mapPage() {
     const [activeId, setActiveId] = useState(1);
     const [showCards, setShowCards] = useState(false);
       const [activeCity, setActiveCity] = useState(null);
+      const [currentCityIndex, setCurrentCityIndex] = useState(0);
     const x = useSharedValue(cities[0].x);
     const y = useSharedValue(cities[0].y);
     const scale = useSharedValue(0);
@@ -55,7 +56,10 @@ const opacity = useSharedValue(0);
     // const buttonsData = mapData.[activeId].
   // console.log("mapdata",mapData);
   // console.log("mapdataimage",mapaImages);
-
+  console.log("currentCityIndex",currentCityIndex);
+useDerivedValue(() => {
+  runOnJS(setCurrentCityIndex)(currentIndex.value);
+}, [currentIndex]);
   const animatedCityStyle = useAnimatedStyle(() => ({
   transform: [{ scale: scale.value }],
   opacity: opacity.value,
@@ -266,22 +270,37 @@ const handleButtonPress = (button) => {
   <Image source={mapaImages.image.mapIndia} className="w-full h-full" resizeMode='contain' />
 {/* <img src={indiaSvg} alt="" className='w-[100%] ' /> */}
 {/* <MapCard  cardclass="absolute top-[50%] left-[40%]" /> */}
-{activeId === 1 && cities?.map((city, index) => (
+{/* {activeId === 1 && mapData?.[0]?.cities?.[currentCityIndex]?.data?.map((city, index) => (
         
       <MapCard
-          key={city.name}
-          city={city}
-          cardclass={`absolute ${city.position}`}
+          key={city.id}
+          cityData={city}
+          cardclass={`absolute ${mapData?.[0]?.cities?.[currentCityIndex].position}`}
           handlePrevClick={handlePrevClick}
           handleNextClick={handleNextClick}
           cardRef={(el) => (cardRef.current[index] = el)}
           index={index}
+            cityIndex={currentCityIndex} 
            currentIndex={currentIndex}
-           totalCities={cities.length}
+           totalCities={city.length}
         />
    
         
-      ))}
+      ))} */}
+
+      {activeId === 1 && mapData[0]?.cities?.[currentCityIndex] && (
+  <MapCard
+    key={mapData[0]?.cities[currentCityIndex].id}
+    cityData={mapData[0]?.cities[currentCityIndex]} // ✅ pass full city
+    cityIndex={currentCityIndex}
+    currentIndex={currentIndex}
+    handlePrevClick={handlePrevClick}
+    handleNextClick={handleNextClick}
+    cardRef={(el) => (cardRef.current[currentCityIndex] = el)}
+    totalCities={cities.length}
+    cardclass={`absolute ${mapData[0]?.cities[currentCityIndex].position}`}
+  />
+)}
 
   {showCards && (
   <>
