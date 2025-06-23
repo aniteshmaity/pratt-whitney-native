@@ -1,0 +1,67 @@
+{
+  "expo": {
+    "name": "pratt-whitney-app",
+    "slug": "pratt-whitney-app",
+    "version": "1.0.0",
+    "orientation": "landscape",
+    "icon": "./src/assets/images/home/circle-logo.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "requireFullScreen": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/images/home/app-logo_imresizer.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.aniruntime.prattwhitneyapp"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./src/assets/images/home/circle-logo.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./src/assets/images/home/PW Logo 1.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "LANDSCAPE"
+        }
+      ],
+      [
+        "expo-video",
+        {
+          "supportsBackgroundPlayback": true,
+          "supportsPictureInPicture": true
+        }
+      ],
+      "@config-plugins/react-native-blob-util",
+      "@config-plugins/react-native-pdf",
+      "expo-asset"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "e36d396e-a2c2-4e25-9253-4071e8ca797a"
+      }
+    }
+  }
+}
