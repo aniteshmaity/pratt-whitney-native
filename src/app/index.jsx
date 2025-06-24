@@ -3,8 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { Dimensions, Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-import yearImages from "./constants/yearImages";
+import { Image as ExpoImage } from 'expo-image';
 import homeImages from "./constants/homeImages";
 import CustomTextButton from "./components/buttons/CustomTextButton";
 import { useVideoPlayer, VideoView } from 'expo-video';
@@ -79,12 +78,57 @@ export default function App() {
 
           </View>
           <View className="absolute bottom-0">
-{/* <ExpoImage  source={require('../assets/images/home/plane-amiation-home.gif')} */}
-
             <Image
-              source={homeImages.homeMap}
-              resizeMode="contain"
-              className=""
+              source={homeImages.Map}
+              style={{ height: screenHeight * 0.35, width: screenWidth, resizeMode: 'stretch', bottom: 0 }}
+            />
+            <ExpoImage
+              source={require('../assets/images/home/plane-amiation-home.gif')}
+              style={{
+                width: screenWidth * 0.4,
+                height: screenHeight * 0.3,
+                position: "absolute",
+                right: screenWidth * 0.07,
+                bottom: screenHeight * 0.22
+              }}
+              autoplay={true}
+              loop={true}
+            />
+            <ExpoImage
+              source={require('../assets/images/home/plane-amiation-home.gif')}
+              style={{
+                width: screenWidth * 0.3,
+                height: screenHeight * 0.25,
+                position: "absolute",
+                left: screenWidth * 0.2,
+                bottom: screenHeight * 0.26
+              }}
+              autoplay={true}
+              loop={true}
+            />
+            <ExpoImage
+              source={require('../assets/images/home/plane-amiation-home.gif')}
+              style={{
+                width: screenWidth * 0.25,
+                height: screenHeight * 0.2,
+                position: "absolute",
+                right: screenWidth * 0.09,
+                bottom: screenHeight * 0.15
+              }}
+              autoplay={true}
+              loop={true}
+            />
+            <ExpoImage
+              source={require('../assets/images/home/plane-amiation-home.gif')}
+              style={{
+                width: screenWidth * 0.16,
+                height: screenHeight * 0.16,
+                position: "absolute",
+                right: screenWidth * 0.225,
+                bottom: screenHeight * 0.19
+              }}
+              autoplay={true}
+              loop={true}
             />
           </View>
         </View>

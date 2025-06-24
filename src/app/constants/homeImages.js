@@ -1,13 +1,13 @@
 import homeMap from "../../assets/images/home/pw-landing.png";
 import cardImg from "../../assets/images/home/Rectangle 12.png";
-import yearGif from "../../assets/images/home/product-gif.gif";
+// import yearGif from "../../assets/images/home/product-gif.gif";
 import Terrain from "../../assets/images/home/landscape.png";
 import groupAero from "../../assets/images/home/Group-aeroplanes.png";
 import building from "../../assets/images/home/building.png";
 import new1 from "../../assets/images/home/new-1.png";
 import aero3d from "../../assets/images/home/aerospace3d.png";
 import yearcard from "../../assets/images/home/100year-gif.gif";
-import productCard from "../../assets/images/home/product-gif.gif";
+// import productCard from "../../assets/images/home/product-gif.gif";
 import mapCard from "../../assets/images/home/In-India.png";
 import nameLogo from "../../assets/images/home/name logo.png";
 import circleLogo from "../../assets/images/home/circle-logo.png";
@@ -25,9 +25,11 @@ import year100Video from '../../assets/video/home/PW100 Years Interactive.mp4';
 import pw100Video from '../../assets/video/home/PW in India.mp4';
 import pw100HeroVideo from '../../assets/video/home/pw-100th-timeline-hero-video.mp4';
 import splashVideo from '../../assets/video/splash-video.mp4';
+import Map from '../../assets/images/home/Map.webp'
 
 
 
-export default { homeMap,cardImg,yearGif,Terrain,groupAero,building,new1,nameLogo,circleLogo,leftCroppedLogo,curveLogo,notFound,mapcontent1,map3d,frameMap,logo1,aero3d,yearcard,productCard,mapCard,
-aerospaceVideo,gtfVideo,productVideo,year100Video,pw100Video,pw100HeroVideo,splashVideo
+export default {
+    homeMap, cardImg, Terrain, groupAero, building, new1, nameLogo, circleLogo, leftCroppedLogo, curveLogo, notFound, mapcontent1, map3d, frameMap, logo1, aero3d, yearcard, mapCard,
+    aerospaceVideo, gtfVideo, productVideo, year100Video, pw100Video, pw100HeroVideo, splashVideo, Map
 };

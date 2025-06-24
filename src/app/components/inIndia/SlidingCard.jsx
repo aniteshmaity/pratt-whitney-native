@@ -9,7 +9,7 @@ import Animated, {
 import ClippedView from '../ClippedView';
 
 const SlidingCard = ({ direction = 'left', show, activeId, cardData }) => {
-        const [layout, setLayout] = useState({ width: 0, height: 0 });
+  const [layout, setLayout] = useState({ width: 0, height: 0 });
 
   console.log("cardData", cardData);
   console.log("activeId", activeId);
@@ -31,19 +31,19 @@ const SlidingCard = ({ direction = 'left', show, activeId, cardData }) => {
 
   return (
     <Animated.View style={[styles.card, direction === 'left' ? styles.leftCard : styles.rightCard, animatedStyle]} onLayout={(event) => {
-        const { width, height } = event.nativeEvent.layout;
-        setLayout({ width, height });
-        console.log("Width:", width, "Height:", height);
-      }}>
-        {
-          direction === 'left' ? ( <ClippedView width={layout.width} height={layout.height} backgroundColor="#f1efefab" clipPathId="mapcard" slug="right" />) : (
-             <ClippedView width={layout.width} height={layout.height} backgroundColor="#f1efefab" clipPathId="mapcard" slug="left" />
-          )
-        }
-       
-  
-<View className={`${direction === 'left' ? 'ml-[40%] px-5 pt-16 w-[150px]' : 'pt-16 pl-5 '}`}>
-      {activeId === 3 && direction === 'right' && (<Text className="text-[#CE2028]  text-[1.4rem] font-ObjektivMk2Black mb-2">{cardData?.name}</Text>)}
+      const { width, height } = event.nativeEvent.layout;
+      setLayout({ width, height });
+      console.log("Width:", width, "Height:", height);
+    }}>
+      {
+        direction === 'left' ? (<ClippedView width={layout.width} height={layout.height} backgroundColor="#f1efefab" clipPathId="mapcard" slug="right" />) : (
+          <ClippedView width={layout.width} height={layout.height} backgroundColor="#f1efefab" clipPathId="mapcard" slug="left" />
+        )
+      }
+
+
+      <View className={`${direction === 'left' ? 'ml-[40%] px-5 pt-16 w-[150px]' : 'pt-16 pl-5 '}`}>
+        {activeId === 3 && direction === 'right' && (<Text className="text-[#CE2028]  text-[1.4rem] font-ObjektivMk2Black mb-2">{cardData?.name}</Text>)}
         {cardData?.engineData?.map((item, index) => (
           <View key={index} className={`flex flex-row items-center gap-5 mb-5 `}>
             <Image source={item.logo} style={styles.logo} />
@@ -58,9 +58,9 @@ const SlidingCard = ({ direction = 'left', show, activeId, cardData }) => {
             </View>) : (<Text style={styles.desc}>{item.engine}</Text>)}
 
           </View>
-       
-      ))}
-       </View>
+
+        ))}
+      </View>
     </Animated.View>
   );
 };
@@ -78,12 +78,12 @@ const styles = StyleSheet.create({
 
   },
   leftCard: {
-    top:0,
+    top: 0,
     left: "20%", // anchor to left
     width: 340,
   },
   rightCard: {
-     top:0,
+    top: 0,
     right: 0, // anchor to right
     width: 240,
   },

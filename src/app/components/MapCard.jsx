@@ -9,29 +9,20 @@ import Svg, { Path } from 'react-native-svg'
 import RedDotSvg from './RedDotSvg'
 import homeImages from '../constants/homeImages'
 import { useRouter } from 'expo-router'
-export default function MapCard({cityData,cardRef,cardclass,handlePrevClick,handleNextClick,index,cityIndex,currentIndex,totalCities }) {
-  console.log("currentindex-index",currentIndex.value,index);
-console.log("city",cityData);
+export default function MapCard({ cityData, cardRef, cardclass, handlePrevClick, handleNextClick, index, cityIndex, currentIndex, totalCities }) {
   const cardOpacity = useSharedValue(0);
   const cardScale = useSharedValue(0.3);
   const translateY = useSharedValue(60);
   const router = useRouter();
-  
-const handlePress = (mapdata) => {
-  console.log("mapdata",mapdata);
-  router.push({
-    pathname: '/hundred-years/yearEngineDetails',
-    query: {
-      mapData: JSON.stringify(mapdata),
-    }
-  });
-};
 
+  const handlePress = (mapdata) => {
+    const query = `mapData=${encodeURIComponent(JSON.stringify(mapdata))}&mapPresence=true`;
+    router.push(`/hundred-years/yearEngineDetails?${query}`);
+  };
 
 
   const isActive = useDerivedValue(() => {
     const active = currentIndex.value === cityIndex;
-    // console.log(`Card ${index}: currentIndex = ${currentIndex.value}, isActive = ${active}`);
     return active;
   });
 
@@ -58,54 +49,54 @@ const handlePress = (mapdata) => {
     // Add more configurations as needed
   ];
   const { width, height, translateX } = svgConfigurations[index] || {
-  width: 120,
-  height: 140,
-  translateX: -100,
-};
+    width: 120,
+    height: 140,
+    translateX: -100,
+  };
   return (
-   <View ref={cardRef} className={`w-[400px] ${cardclass}`}>
-     <Animated.View className="relative flex gap-2"  style={[cardAnimatedStyle]}>
-      {cityData?.data.map((cityData, index) => (
-     <View  key={cityData.id}>
-        <ClippedView width={400} height={140} backgroundColor="white" clipPathId="mapcard" slug="map1" />
-    <View className='w-[16px] h-[80px] absolute bg-[#E11C37] top-0 -left-[16px] ' />
- 
-    <View
-className="h-[140px] p-5 "
+    <View ref={cardRef} className={`w-[400px] ${cardclass}`}>
+      <Animated.View className="relative flex gap-2" style={[cardAnimatedStyle]}>
+        {cityData?.data.map((cityData, index) => (
+          <View key={cityData.id}>
+            <ClippedView width={400} height={140} backgroundColor="white" clipPathId="mapcard" slug="map1" />
+            <View className='w-[16px] h-[80px] absolute bg-[#E11C37] top-0 -left-[16px] ' />
 
->
-        <View className='flex-1 flex-row gap-4 h-full '>
-        <View className='relative flex-1 '>
+            <View
+              className="h-[140px] p-5 "
 
-<Image className='w-full h-full '   source={homeImages.mapcontent1} resizeMode='cover' />
-</View>
-<View className='w-full flex-[2] justify-between '>
+            >
+              <View className='flex-1 flex-row gap-4 h-full '>
+                <View className='relative flex-1 '>
 
-<Text className='text-[1rem] text-[#D91027]   font-ObjektivMk2Black'>{cityData.header1}</Text>
-<Text className='text-[1rem] font-normal  font-ObjektivMk2Black'>{cityData.header2}</Text>
+                  <Image className='w-full h-full ' source={homeImages.mapcontent1} resizeMode='cover' />
+                </View>
+                <View className='w-full flex-[2] justify-between '>
+
+                  <Text className='text-[1rem] text-[#D91027]   font-ObjektivMk2Black'>{cityData.header1}</Text>
+                  <Text className='text-[1rem] font-normal  font-ObjektivMk2Black'>{cityData.header2}</Text>
 
 
-<Text className='text-[0.6rem] font-normal mt-2 font-objektiv'>{cityData.subHeader}</Text>
-<Text className='text-[0.4rem] font-normal mt-2 font-objektiv h-[30px] overflow-y-auto w-[80%]'>{cityData.desc}</Text>
-<MyTextBtn  
-                                        className={"w-[82px]   h-[24px]"}
-                                        onPress={() => {
-                                  handlePress(cityData.exploreData)
-                                        }}
-                                        title={"Explore"}
-                                        textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "}
-                                      />
-</View>
-        </View>
-        {/* <View className='m-auto mt-5 w-[120px]'>
+                  <Text className='text-[0.6rem] font-normal mt-2 font-objektiv'>{cityData.subHeader}</Text>
+                  <Text className='text-[0.4rem] font-normal mt-2 font-objektiv h-[30px] overflow-y-auto w-[80%]'>{cityData.desc}</Text>
+                  <MyTextBtn
+                    className={"w-[82px]   h-[24px]"}
+                    onPress={() => {
+                      handlePress(cityData.exploreData)
+                    }}
+                    title={"Explore"}
+                    textClass={" font-[700] text-[0.65rem] font-objektiv tracking-widest "}
+                  />
+                </View>
+              </View>
+              {/* <View className='m-auto mt-5 w-[120px]'>
        
         </View> */}
-      </View>
- 
+            </View>
 
-{/* <ReddropSvg /> */
-}
-{/* <View className="absolute top-2 left-0 -translate-x-[130px] z-40 -rotate-[0deg]" style={{ transform: [{ translateX: translateX }] }}>
+
+            {/* <ReddropSvg /> */
+            }
+            {/* <View className="absolute top-2 left-0 -translate-x-[130px] z-40 -rotate-[0deg]" style={{ transform: [{ translateX: translateX }] }}>
 <RedDotSvg width={30} height={30} className="absolute -bottom-[10px] left-[10px]" />
 <View className="">
 <Svg
@@ -124,23 +115,23 @@ className="h-[140px] p-5 "
   </Svg>
 </View>
 </View> */}
-     </View>
-       ))}
-  {/* Render the SVG and city data for non-active cards */}
-     <View className='absolute -right-[28%] top-0 flex flex-row gap-4'>
- <PrevNextButton
-        isColor={currentIndex.value === cityIndex ? "grey" : "red" } 
-        isIcon='prev'
-        isPolygon="first"
-                onPress={handlePrevClick}
-              />
-        <PrevNextButton
-                 isColor={ cityIndex === totalCities-1 ? "grey" : "red"}
-                 isIcon='next'
-                 onPress={handleNextClick}
-               />
-</View>
-{/* <View className={`absolute z-[400] flex flex-row items-center gap-5 ${cityData?.cityPosition}`} >
+          </View>
+        ))}
+        {/* Render the SVG and city data for non-active cards */}
+        <View className='absolute -right-[28%] top-0 flex flex-row gap-4'>
+          <PrevNextButton
+            isColor={currentIndex.value === cityIndex ? "grey" : "red"}
+            isIcon='prev'
+            isPolygon="first"
+            onPress={handlePrevClick}
+          />
+          <PrevNextButton
+            isColor={cityIndex === totalCities - 1 ? "grey" : "red"}
+            isIcon='next'
+            onPress={handleNextClick}
+          />
+        </View>
+        {/* <View className={`absolute z-[400] flex flex-row items-center gap-5 ${cityData?.cityPosition}`} >
         <RedDotSvg width={20} height={20} className=" top-[20%] left-[10px]" />
         <View>
           <Text className="text-[0.96rem] font-ObjektivMk1Bold ">{cityData.name}</Text>
@@ -148,7 +139,7 @@ className="h-[140px] p-5 "
         </View>
       </View> */}
 
-{/* <Animated.View className={`absolute z-[400] flex flex-row items-center gap-5 ${cityData?.cityPosition}`} style={[{ transform: [{ translateX: "-100%" }] }, nonActiveContentStyle]}>
+        {/* <Animated.View className={`absolute z-[400] flex flex-row items-center gap-5 ${cityData?.cityPosition}`} style={[{ transform: [{ translateX: "-100%" }] }, nonActiveContentStyle]}>
         <RedDotSvg width={20} height={20} className=" top-[20%] left-[10px]" />
         <View>
           <Text className="text-[0.96rem] font-ObjektivMk1Bold ">{cityData.name}</Text>
@@ -156,14 +147,14 @@ className="h-[140px] p-5 "
         </View>
       </Animated.View> */}
 
-  </Animated.View>
-  {/* <Animated.View className="absolute bottom-0 left-0 z-[400] flex flex-row items-center gap-5 " style={[{ transform: [{ translateX: "-100%" }] }, nonActiveContentStyle]}>
+      </Animated.View>
+      {/* <Animated.View className="absolute bottom-0 left-0 z-[400] flex flex-row items-center gap-5 " style={[{ transform: [{ translateX: "-100%" }] }, nonActiveContentStyle]}>
         <RedDotSvg width={20} height={20} className=" top-[20%] left-[10px]" />
         <View>
           <Text className="text-[0.96rem] font-ObjektivMk1Bold text-[#E11C37]">{city.name}</Text>
           <Text className="text-[0.76rem] font-frutigerBold">Training Centre</Text>
         </View>
       </Animated.View>  */}
-   </View>
+    </View>
   )
 }
