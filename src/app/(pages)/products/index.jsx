@@ -194,7 +194,7 @@ const Product = () => {
       setMiddleIndex(index);
       setSelectedItem(prev => (prev?.engine === nextItem.engine ? prev : nextItem));
     }
-  }, [scrollY.value]); 
+  }, [scrollY.value]);
 
   const handleClose = () => {
     router.back();
@@ -258,19 +258,8 @@ const Product = () => {
           />
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
             <View style={{ flexDirection: 'row' }}>
-              <Text
-                style={{
-                  color: '#dc2626',
-                  fontSize: 18,
-                  paddingRight: 8,
-                  fontFamily: 'objectiveBlk',
-                }}
-              >
-                INDIA
-              </Text>
-              <Text style={{ color: 'black', fontSize: 18, fontFamily: 'objectiveBlk' }}>
-                INTERACTIVE
-              </Text>
+              <Text className="text-[#E11C37] pr-2 font-objectiveBlk font-[900] text-[1.1rem]">INDIA</Text>
+              <Text className="text-black font-objectiveBlk font-[900]text-[1.1rem]">INTERACTIVE</Text>
             </View>
             <CustomCloseButton onPress={handleClose} />
           </View>
