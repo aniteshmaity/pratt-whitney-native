@@ -296,27 +296,3 @@ export default function Home() {
   );
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   flatListContent: {
-//     paddingHorizontal: (screenWidth - CARD_WIDTH) / 2, // Center the first card
-//   },
-//   card: {
-//     width: CARD_WIDTH,
-//     height: 400,
-//     // backgroundColor: '#6200ee',
-//     borderRadius: 10,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-
-//   },
-//   cardText: {
-//     color: 'white',
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//   },
-// });

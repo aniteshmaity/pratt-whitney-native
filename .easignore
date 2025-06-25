@@ -13,8 +13,5 @@ dist/
 *.log
 
 # Ignore large assets not needed at build time
-assets/videos/
-assets/pdfs/
-*.mp4
-*.mov
-*.zip
+
+

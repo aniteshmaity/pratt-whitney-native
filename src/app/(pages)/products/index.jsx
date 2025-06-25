@@ -274,6 +274,7 @@ export default function Products() {
     };
 });
 
+
 // const scrollHandler = useAnimatedScrollHandler((event) => {
 
 //   scrollY.value = event.contentOffset.y;
@@ -349,22 +350,7 @@ const animatedStyles = validEngines.map((_, idx) =>
       {/* Main Content */}
       <View className="flex flex-row  gap-5 px-12 bg-[#f5f5f5]" style={{height:ContainerHeight}}>
       <View className="absolute w-[40%] h-[1px] left-0 top-1/2 bg-[#00000014] " />
-      {/* <LinearGradient
-                  colors={["#00000014", "#E11C37"]} 
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 2, y: 0 }}
-                 className="absolute w-[50%] h-[1px] top-[50%] left-[0%] "
-                /> */}
-        {/* Sidebar Navigation */}
-        {/* <View className="w-[58px] justify-start items-center mt-4">
-        <ClippedView width={58} height={26} backgroundColor="#918F8F" clipPathId="backClip" slug="variant7" />
-          <TouchableOpacity onPress={handleClose} className=" px-3 py-2 flex flex-row justify-center items-center gap-2">
-            <Image source={yearImages.leftArrow} className="w-[7px] h-[7px]" resizeMode="contain" />
-            <Text className=" text-[10px] font-frutigerBlack text-white">
-              Back
-            </Text>
-          </TouchableOpacity>
-        </View> */}
+   
         <View className=" ">
           <Animated.View className="absolute w-[1px] h-[100%] left-[50%] bg-[#00000014] " style={[ lineAnimatedStyle]} />
            

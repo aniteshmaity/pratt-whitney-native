@@ -11,6 +11,7 @@ import managementTool from "../../assets/images/product/general/•_40_ reductio
 import flyingHours from "../../assets/images/product/general/100+ parameters monitored for optimum performance.webp"
 import headphone from "../../assets/images/product/commercial/Quiet.webp"
 import settingAero from "../../assets/images/product/millitary/World records (1).webp"
+import settingBig from "../../assets/images/pwInIndia/extra/rtx-icon_money-gear_rgb2.png"
 import capabilityMaintance from "../../assets/images/product/millitary/Performance and Capability (1).webp"
 import thrust from "../../assets/images/product/commercial/V2500 thrust.webp"
 import APS3200 from "../../assets/images/product/APU/APS3200 hero.webp"
@@ -99,7 +100,7 @@ const mapData = [
                         "Corporate headquarters houses majority of the commercial engines fleet service team – providing 24x7 support to key customers like IndiGo and Indian Air Force.",
                     },
                     {
-                      image: "", // Add image if available
+                      image: settingBig, // Add image if available
                       enginetext: "Finance, Taxation and Audit",
                       description:
                         "Accurate reporting, regulatory compliance, and strong internal controls, while enabling growth through financial planning, savings optimization, and strategic business partnering.",
@@ -164,11 +165,11 @@ const mapData = [
                   subtitle: "Student days ",
                 },
                 {
-                  title: "       500+ ",
+                  title: "60K  ",
                   subtitle: " Customers ",
                 },
                 {
-                  title: " 36M+",
+                  title: "    40+",
                   subtitle: " Nationalities",
                 },
                 {
@@ -182,7 +183,7 @@ const mapData = [
                   title: "Capabilities ",
                   content: [
                     {
-                      image: "", // Replace with appropriate image if needed
+                      image: settingBig, // Replace with appropriate image if needed
                       enginetext: "$1.03 M",
                       description: "Revenue",
                     },
@@ -283,18 +284,22 @@ const mapData = [
               bgVideo: mapaImages.video.ICCLoopICTCVideoloop_Thumbnail,
               description:
                 "400+ experts, transforming global supply chain, customer support and aftermarket Driving customer service and operations support for Pratt & Whitney Canada’s 68K engines - enhancing worldwide service transformation and operational excellence.",
-              variants: [
+            variants: [
                 {
                   title: "400+",
-                  subtitle: "5Employees 0k",
+                  subtitle: "Employees ",
                 },
                 {
                   title: "   500+ ",
-                  subtitle: " Projected employees'",
+                  subtitle: " Projected employees",
                 },
                 {
                   title: " 68K+",
-                  subtitle: "engines handled",
+                  subtitle: "Engines handled",
+                },
+                   {
+                  title: " 50+",
+                  subtitle: "Suppliers",
                 },
               ],
               logo: mapaImages.image.ICCConfRoom2,
@@ -303,7 +308,7 @@ const mapData = [
                   title: "Capabilities ",
                   content: [
                     {
-                      image: "",
+                      image: settingBig,
                       enginetext: "$6M",
                       description: "Annual Cost Savings",
                     },
@@ -408,10 +413,10 @@ const mapData = [
               subTitle: "",
               description:
                 "EC's mission is to establish a fully integrated team with US and Canada Engineering organizations for Commercial and Small Engine core engineering activities.End state is to fully integrate with global engineering, digital tools, systems & policies.",
-              variants: [
+             variants: [
                 {
                   title: "300+  ",
-                  subtitle: "5Employees 0k",
+                  subtitle: "Employees ",
                 },
                 {
                   title: "       500+ ",
@@ -419,7 +424,7 @@ const mapData = [
                 },
                 {
                   title: " 36M+",
-                  subtitle: "  investment",
+                  subtitle: "Investment",
                 },
               ],
               logo:mapaImages.image.PAND6670,
@@ -428,7 +433,7 @@ const mapData = [
                   title: "Capabilities ",
                   content: [
                     {
-                      image: "",
+                      image: settingBig,
                       enginetext: "$10M",
                       description: "Savings",
                     },
@@ -518,7 +523,7 @@ const mapData = [
               variants: [
                 {
                   title: "~100  ",
-                  subtitle: "employees ",
+                  subtitle: "Employees  ",
                 },
                 {
                   title: " 300+ ",
