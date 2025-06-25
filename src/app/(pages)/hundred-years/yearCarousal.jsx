@@ -155,17 +155,64 @@ const handleExplore = () => {
       style={[{ width: ITEM_WIDTH, height:ITEM_WIDTH }, animatedStyle]}
       className={`item-${index} ${ middleIndex === index ? 'active' : ''} ${middleIndex > index  ? 'left' : 'right'}`}
     >
-      <TouchableOpacity onPress={() => (index === middleIndex ? handleExplore() :  null)} style={{  ...boxShadow("#6b6464", 3, 7, 0.2, 10, 10), width: ITEM_WIDTH, height:ITEM_WIDTH }} className="rounded-full bg-white overflow-hidden   z-40 p-[15px] transition-transform duration-300 ease-in-out relative">
-      { middleIndex === index && (<Image source={yearImages.redStrap} className="absolute -left-[0px]  top-[10px] -z-10 w-[80px] h-[90px]"   />)}
-<View style={{ ...boxShadow("#b9b7b7", 1, 0, 0.3, 11, 8)}} className={`flex  justify-center items-center rounded-full w-full h-full  bg-white `}>
-                    <Text className="text-[2.6rem] text-[#D91027] font-objectiveBlk">
-                    {item.year}
-                  </Text>
-                  <Text className="text-[1.2rem] p-2  text-center font-ObjektivMk1Bold">
-                    {item.subTitle}
-                  </Text>
-                  </View>
-      </TouchableOpacity>
+        <TouchableOpacity 
+    onPress={() => (index === middleIndex ? handleExplore() : null)}
+    style={{
+      width: ITEM_WIDTH,
+      height: ITEM_WIDTH,
+      borderRadius: ITEM_WIDTH/2,
+      backgroundColor: 'white',
+      padding: 15,
+      // Shadow properties:
+      shadowColor: '#6b6464',
+      shadowOffset: {
+        width: 0,
+        height: 3,
+      },
+      shadowOpacity: 0.2,
+      shadowRadius: 7,
+      elevation: 10,
+      zIndex: 40,
+      overflow: 'hidden',
+    }}
+  >
+    {middleIndex === index && (
+      <Image 
+        source={yearImages.redStrap} 
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 10,
+          zIndex: -10,
+          width: 80,
+          height: 98,
+        }}
+      />
+    )}
+    <View style={{
+      shadowColor: '#b9b7b7',
+      shadowOffset: {
+        width: 1,
+        height: 0,
+      },
+      shadowOpacity: 0.3,
+      shadowRadius: 11,
+      elevation: 8,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: ITEM_WIDTH/2,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'white',
+    }}>
+      <Text className="text-[2.6rem] text-[#D91027] font-objectiveBlk">
+        {item.year}
+      </Text>
+      <Text className="text-[1.2rem] p-2  text-center font-ObjektivMk1Bold">
+        {item.subTitle}
+      </Text>
+    </View>
+  </TouchableOpacity>
       {middleIndex === index && (
          <Animated.View className="text-center mt-6" style={[textanimatedStyle]}>
          <Text className="text-[0.7rem] leading-tight font-[700] text-center font-frutigerBold">
