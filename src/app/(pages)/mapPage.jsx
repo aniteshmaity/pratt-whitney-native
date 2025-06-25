@@ -202,7 +202,7 @@ export default function mapPage() {
             <View className="">
               <Text className=" text-[2.2rem] font-ObjektivMk1Bold">70 years </Text>
               <Text className="text-[2.2rem] font-ObjektivMk1Bold">
-                of <Text className="text-[#D91027]">Powering</Text>
+                of <Text className="text-[#D91027]">powering</Text>
               </Text>
               <Text className=" text-[2.2rem] font-ObjektivMk1Bold">Indian Aviation</Text>
 

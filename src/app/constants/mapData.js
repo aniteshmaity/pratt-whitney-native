@@ -57,7 +57,7 @@ const mapData = [
         x: "0%",
         y: "0%",
         position: "top-[10%] left-[40%]",
-            cityPosition: "top-[27%] left-[35%]",
+        cityPosition: "top-[27%] left-[35%]",
 
         data: [
           {
@@ -66,7 +66,7 @@ const mapData = [
             header1: "Pratt & Whitney",
             header2: "Corporate Headquarters",
             subHeader: "At the heart of PW’s India presence",
-            desc: "our 70 yearlegacy in India begins with our corporate headquarters in Delhi - From fleet management and customer relations to finance, communications & more.",
+            desc: "our 70 year legacy in India begins with our corporate headquarters in Delhi - From fleet management and customer relations to finance, communications & more.",
             exploreData: {
               header1: "India",
               header2: "Corporate Headquarters",
@@ -94,19 +94,19 @@ const mapData = [
                   title: "Capabilities ",
                   content: [
                     {
-                      image: roter, // Add image if available
+                      image: roter, 
                       enginetext: "Aftermarket Support",
                       description:
                         "Corporate headquarters houses majority of the commercial engines fleet service team – providing 24x7 support to key customers like IndiGo and Indian Air Force.",
                     },
                     {
-                      image: settingBig, // Add image if available
+                      image: settingBig, 
                       enginetext: "Finance, Taxation and Audit",
                       description:
                         "Accurate reporting, regulatory compliance, and strong internal controls, while enabling growth through financial planning, savings optimization, and strategic business partnering.",
                     },
                     {
-                      image: Operators, // Add image if available
+                      image: Operators, 
                       enginetext:
                         "Communications, Customer Relations, Business Development, Government Relations",
                       description: "",
@@ -143,7 +143,7 @@ const mapData = [
         x: "-10%",
         y: "-20%",
         position: "top-[42%] left-[45%]",
-          cityPosition: "top-[60%] left-[36%]",
+        cityPosition: "top-[60%] left-[36%]",
         data: [
           {
             id: 1,
@@ -151,21 +151,21 @@ const mapData = [
             header1: "Pratt & Whitney India",
             header2: "Customer Training Center",
             subHeader: "State-of-the-art facility. First Investment.",
-            desc: "The customer Training Center in Hyderabad provides Specialised training to airline engineers & technicians on our most advanced engines",
+            desc: "The customer Training Center in Hyderabad provides Specialized training to airline engineers & technicians on our most advanced engines.",
             exploreData: {
               header1: "India",
               header2: "Customer Training Center",
               subTitle: "",
               bgvideo: mapaImages.video.ICTCVideoloop_Thumbnail,
               description:
-                "Pratt & Whitney's state-of-the-art Customer Training Center in Hyderabad provides specialized training to airline engineers & technicians on its most advanced engines.",
+                "Pratt & Whitney's state-of-the-art Customer Training Center in Hyderabad provides specialized training to airline engineers & technicians on its most advanced engines. Imparted training to more than 60 operators representing over 40 nationalities.",
               variants: [
                 {
                   title: "18K+ ",
                   subtitle: "Student days ",
                 },
                 {
-                  title: "60K  ",
+                  title: "   60+  ",
                   subtitle: " Customers ",
                 },
                 {
@@ -183,18 +183,18 @@ const mapData = [
                   title: "Capabilities ",
                   content: [
                     {
-                      image: settingBig, // Replace with appropriate image if needed
+                      image: settingBig,
                       enginetext: "$1.03 M",
                       description: "Revenue",
                     },
                     {
-                      image: certfic, // Replace or change image if needed
+                      image: certfic,
                       enginetext: "2 certifications",
                       description: "EASA and DGCA",
                     },
                     {
-                      image: roter, // Replace or change image if needed
-                      enginetext: "Innovation Collaborations",
+                      image: roter,
+                      enginetext: "Innovation Collaborations - Percept",
                       description: "Percept / AWIROS-Percept tool",
                     },
                   ],
@@ -204,40 +204,40 @@ const mapData = [
                   title: "Achievement",
                   content: [
                     {
-                      image: roter, // Add image if available
+                      image: roter,
                       enginetext: "Advanced Engine Programs",
                       description:
                         "Training programs on PW1100, PW1500, PW1900 and IAE V2500 engines.",
                     },
                     {
-                      image: settingAero, // Add image if available
+                      image: settingAero,
                       enginetext: "Engineering Trainings",
                       description:
-                        "Engine fleet management, engine design & repair, engine health monitoring, and engine failure analysis.",
+                        "Engine fleet management, Engine design & repair, Engine health monitoring, and Engine failure analysis.",
                     },
                     {
-                      image: Operators, // Add image if available
+                      image: Operators,
                       enginetext: "Technical and Engine Business Academy",
                       description:
-                        "Trainings include Gen Familiarization, LBM Borescope Troubleshooting, commercial engines business overview, and commercial aircraft performance & economics.",
+                        "Trainings include Gen Familiarization, LBM Borescope Troubleshooting, Commercial engines business overview, and commercial Aircraft Performance & economics.",
                     },
                     {
                       image: redCraft, // Add image path
                       enginetext: "Skill development",
                       description:
-                        "University programs and supplier development programs",
+                        "University programs and supplier development programs.",
                     },
                   ],
                 },
                 {
-                  title: "Future scope",
+                  title: "Future Scope",
                   content: [
                     { image: FADEC, enginetext: "IDCC collaboration " },
                     {
                       image: roter,
                       enginetext: "Capability enhancement- GP 7200",
                     },
-                    { image: Operators, enginetext: "Pilot training modules " },
+                    { image: Operators, enginetext: "Pilot Training modules" },
                   ],
                 },
               ],
@@ -268,7 +268,7 @@ const mapData = [
         x: "-20%",
         y: "-30%",
         position: "top-[35%] left-[49%]",
-           cityPosition: "top-[73%] left-[34%]",
+        cityPosition: "top-[73%] left-[34%]",
         data: [
           {
             id: 1,
@@ -284,7 +284,7 @@ const mapData = [
               bgVideo: mapaImages.video.ICCLoopICTCVideoloop_Thumbnail,
               description:
                 "400+ experts, transforming global supply chain, customer support and aftermarket Driving customer service and operations support for Pratt & Whitney Canada’s 68K engines - enhancing worldwide service transformation and operational excellence.",
-            variants: [
+              variants: [
                 {
                   title: "400+",
                   subtitle: "Employees ",
@@ -297,7 +297,7 @@ const mapData = [
                   title: " 68K+",
                   subtitle: "Engines handled",
                 },
-                   {
+                {
                   title: " 50+",
                   subtitle: "Suppliers",
                 },
@@ -349,13 +349,13 @@ const mapData = [
                       image: flyingHours,
                       enginetext: "Digital Engine Services",
                       description:
-                        "Working on ground-based software applications; engine dato analysis and visualization, support Oil-Al analysis",
+                        "Working on ground-based software applications; engine dato analysis and visualization, support Oil-Al analysis.",
                     },
                     {
                       image: settingAero,
                       enginetext: "Omnichannel & Business Support",
                       description:
-                        "Tech Publication purchase and quotes, portal registration and account management, non-technical RSVP, IT assistance, etc",
+                        "Tech Publication purchase and quotes, portal registration and account management, non-technical RSVP, IT assistance, etc.",
                     },
                   ],
                 },
@@ -412,22 +412,22 @@ const mapData = [
               header2: "Engineering Center",
               subTitle: "",
               description:
-                "EC's mission is to establish a fully integrated team with US and Canada Engineering organizations for Commercial and Small Engine core engineering activities.End state is to fully integrate with global engineering, digital tools, systems & policies.",
-             variants: [
+                "IEC's mission is to establish a fully integrated team with US and Canada Engineering organizations for Commercial and Small Engine core engineering activities.End state is to fully integrate with global engineering, digital tools, systems & policies.",
+              variants: [
                 {
                   title: "300+  ",
                   subtitle: "Employees ",
                 },
                 {
                   title: "       500+ ",
-                  subtitle: " Projected employees'",
+                  subtitle: " Projected employees",
                 },
                 {
                   title: " 36M+",
                   subtitle: "Investment",
                 },
               ],
-              logo:mapaImages.image.PAND6670,
+              logo: mapaImages.image.PAND6670,
               defaultTabsData: [
                 {
                   title: "Capabilities ",
@@ -454,28 +454,28 @@ const mapData = [
                   title: "Achievement",
                   content: [
                     {
-                      image: settingAero, // Add the path to the image if available
+                      image: settingAero,
                       enginetext: "Design Engineering",
                       description:
                         "Conceptualization and detailed design of engine components such as turbines, compressors, and combustors to meet thrust, efficiency, and reliability goals.",
                     },
                     {
-                      image: roter, // Add image path
+                      image: roter,
                       enginetext: "Structural Engineering",
                       description:
                         "Analyzing and ensuring the mechanical integrity of engine components under extreme temperatures, pressures, and dynamic loads throughout flight.",
                     },
                     {
-                      image: "", // Add image path
+                      image: "",
                       enginetext: "Project Engineering",
                       description:
                         "Technical execution of engine development programs by integrating inputs from design, manufacturing, and testing teams to deliver propulsion systems.",
                     },
                     {
-                      image: flyingHours, // Add image path
+                      image: flyingHours,
                       enginetext: "Software Engineering",
                       description:
-                        "Development of control algorithms, embedded systems, and diagnostic tools for engine monitoring, FADEC systems, and predictive maintenance.",
+                        "Development of control algorithms, embedded systems, and diagnostic tools for engine monitoring, FADEC and predictive maintenance.",
                     },
                   ],
                 },
@@ -536,18 +536,18 @@ const mapData = [
                   title: "Capabilities ",
                   content: [
                     {
-                      image: "", // Add appropriate image if available
+                      image: "", 
                       enginetext: "12",
                       description:
                         "Key Value projects ownership in Engineering, Factory Automation & Data Science and Analytics",
                     },
                     {
-                      image: redCraft, // Add appropriate image if available
+                      image: redCraft, 
                       enginetext: "81%+",
                       description: "Utilization",
                     },
                     {
-                      image: FADEC, // Add appropriate image if available
+                      image: FADEC, 
                       enginetext: "28",
                       description:
                         "Highest no of innovation projects in internal hackathon",
@@ -559,19 +559,19 @@ const mapData = [
                   title: "Achievement",
                   content: [
                     {
-                      image: settingAero, // Add image path if available
+                      image: settingAero,
                       enginetext: "Factory Automation & App Dev Services",
                       description:
                         "Deliver automation solutions and custom applications to streamline manufacturing, assembly, and customer service.",
                     },
                     {
-                      image: roter, // Add image path if available
+                      image: roter,
                       enginetext: "Data Science & Analytics",
                       description:
                         "Leverage engine test data, sensor feeds, and operational metrics to drive insights, optimize performance, and enable predictive maintenance.",
                     },
                     {
-                      image: No2, // Add image path if available
+                      image: No2,
                       enginetext: "Enterprise Architecture",
                       description:
                         "Define and govern the IT system blueprint to align digital tools, data flows, and business processes supporting engine design, production, and support.",
@@ -629,7 +629,7 @@ const mapData = [
       subTitle: "For PW India Experience Center",
       bgvideo: mapaImages.video.ICHQvideoLoop_Thumbnail,
       description:
-        "We have powered India's aviation growth for more than seven decades, starting in the 1960s with Air India's JT3D powered Boeing 707 fleet, to the Airbus A320neo family aircraft flying with GTFTM engines today.",
+        "We have powered India's aviation growth for more than seven decades, starting in the 1960s with Air India's JT3D powered Boeing 707 fleet, to the Airbus A320neo family aircraft flying with GTF™ engines today.",
       variants: [
         {
           title: "70+   ",
@@ -654,7 +654,7 @@ const mapData = [
           title: "All",
           content: [
             {
-              image: A3200neo, // Add image if available
+              image: A3200neo, 
               content1: {
                 enginetext: "Airbus A320neo   ",
                 engineNumber: "116",
@@ -670,7 +670,7 @@ const mapData = [
               },
             },
             {
-              image: A3200ceo, // Add image if available
+              image: A3200ceo, 
               content1: {
                 enginetext: "Airbus A320ceo  ",
                 engineNumber: "20",
@@ -686,7 +686,7 @@ const mapData = [
               },
             },
             {
-              image: atr42, // Add image if available
+              image: atr42, 
               content1: {
                 enginetext: "ATR 42/72 ",
                 engineNumber: "70",
@@ -698,7 +698,7 @@ const mapData = [
               },
             },
             {
-              image: dash8, // Add image if available
+              image: dash8, 
               content1: {
                 enginetext: "Dash-8/Q400",
                 engineNumber: "21",
@@ -710,7 +710,7 @@ const mapData = [
               },
             },
             {
-              image: boeing787, // Add image if available
+              image: boeing787, 
               content1: {
                 enginetext: "Boeing 787-8/9",
                 engineNumber: "34",
@@ -722,7 +722,7 @@ const mapData = [
               },
             },
             {
-              image: c17, // Add image if available
+              image: c17, 
 
               content1: {
                 enginetext: "C-17 Globemaster III",
@@ -735,7 +735,7 @@ const mapData = [
               },
             },
             {
-              image: pc2, // Add image if available
+              image: pc2, 
               content1: {
                 enginetext: "PC-7 Mk II",
                 engineNumber: "75",
@@ -747,7 +747,7 @@ const mapData = [
               },
             },
             {
-              image: c295, // Add image if available
+              image: c295,
               content1: {
                 enginetext: "C-295 ",
                 engineNumber: "56",
@@ -759,7 +759,7 @@ const mapData = [
               },
             },
             {
-              image: boeing737, // Add image if available
+              image: boeing737,
               content1: {
                 enginetext: "737-200 (adv)",
                 engineNumber: "2",
@@ -771,7 +771,7 @@ const mapData = [
               },
             },
             {
-              image: B707, // Add image if available
+              image: B707,
               content1: {
                 enginetext: "707-320C ",
                 engineNumber: "1",
@@ -783,7 +783,7 @@ const mapData = [
               },
             },
             {
-              image: kingfamily, // Add image if available
+              image: kingfamily,
               content1: {
                 enginetext: "King Air Family  ",
                 engineNumber: "61",
@@ -795,7 +795,7 @@ const mapData = [
               },
             },
             {
-              image: Bell412, // Add image if available
+              image: Bell412,
               content1: {
                 enginetext: "Bell 412 ",
                 engineNumber: "28",
@@ -807,7 +807,7 @@ const mapData = [
               },
             },
             {
-              image: aw139, // Add image if available
+              image: aw139,
               content1: {
                 enginetext: "AW139  ",
                 engineNumber: "12",
@@ -819,7 +819,7 @@ const mapData = [
               },
             },
             {
-              image: aw109, // Add image if available
+              image: aw109,
               content1: {
                 enginetext: "AW109  ",
                 engineNumber: "23",
@@ -831,7 +831,7 @@ const mapData = [
               },
             },
             {
-              image: twinotter, // Add image if available
+              image: twinotter,
               content1: {
                 enginetext: "Twin Otter   ",
                 engineNumber: "3",
@@ -843,7 +843,7 @@ const mapData = [
               },
             },
             {
-              image: carvanfamily, // Add image if available
+              image: carvanfamily,
               content1: {
                 enginetext: "Caravan Family       ",
                 engineNumber: "10",
@@ -855,7 +855,7 @@ const mapData = [
               },
             },
             {
-              image: pc12, // Add image if available
+              image: pc12,
               content1: {
                 enginetext: "PC-12  ",
                 engineNumber: "7",
@@ -872,7 +872,7 @@ const mapData = [
           title: "Commercial & Regional",
           content: [
             {
-              image: A3200neo, // Add image if available
+              image: A3200neo,
               content1: {
                 enginetext: "Airbus A320neo   ",
                 engineNumber: "116",
@@ -888,7 +888,7 @@ const mapData = [
               },
             },
             {
-              image: A3200ceo, // Add image if available
+              image: A3200ceo,
               content1: {
                 enginetext: "Airbus A320ceo  ",
                 engineNumber: "20",
@@ -904,7 +904,7 @@ const mapData = [
               },
             },
             {
-              image: gtf, // Add image if available
+              image: gtf, 
               content1: {
                 enginetext: "ATR 42/72 ",
                 engineNumber: "70",
@@ -916,7 +916,7 @@ const mapData = [
               },
             },
             {
-              image: gtf, // Add image if available
+              image: gtf, 
               content1: {
                 enginetext: "Dash-8/Q400",
                 engineNumber: "21",
@@ -928,7 +928,7 @@ const mapData = [
               },
             },
             {
-              image: boeing787, // Add image if available
+              image: boeing787, 
               content1: {
                 enginetext: "Boeing 787-8/9",
                 engineNumber: "34",
@@ -945,7 +945,7 @@ const mapData = [
           title: "Defense",
           content: [
             {
-              image: c17, // Add image if available
+              image: c17, 
 
               content1: {
                 enginetext: "C-17 Globemaster III",
@@ -958,7 +958,7 @@ const mapData = [
               },
             },
             {
-              image: pc2, // Add image if available
+              image: pc2, 
               content1: {
                 enginetext: "PC-7 Mk II",
                 engineNumber: "75",
@@ -970,7 +970,7 @@ const mapData = [
               },
             },
             {
-              image: gtf, // Add image if available
+              image: gtf, 
               content1: {
                 enginetext: "C-295 ",
                 engineNumber: "56",
@@ -982,7 +982,7 @@ const mapData = [
               },
             },
             {
-              image: boeing737, // Add image if available
+              image: boeing737, 
               content1: {
                 enginetext: "737-200 (adv)",
                 engineNumber: "2",
@@ -994,7 +994,7 @@ const mapData = [
               },
             },
             {
-              image: B707, // Add image if available
+              image: B707, 
               content1: {
                 enginetext: "707-320C ",
                 engineNumber: "1",
@@ -1011,7 +1011,7 @@ const mapData = [
           title: "Heli., Biz. & General",
           content: [
             {
-              image: kingfamily, // Add image if available
+              image: kingfamily, 
               content1: {
                 enginetext: "King Air Family  ",
                 engineNumber: "61",
@@ -1023,7 +1023,7 @@ const mapData = [
               },
             },
             {
-              image: Bell412, // Add image if available
+              image: Bell412, 
               content1: {
                 enginetext: "Bell 412 ",
                 engineNumber: "28",
@@ -1035,7 +1035,7 @@ const mapData = [
               },
             },
             {
-              image: aw139, // Add image if available
+              image: aw139, 
               content1: {
                 enginetext: "AW139  ",
                 engineNumber: "12",
@@ -1047,7 +1047,7 @@ const mapData = [
               },
             },
             {
-              image: aw109, // Add image if available
+              image: aw109, 
               content1: {
                 enginetext: "AW109  ",
                 engineNumber: "23",
@@ -1059,7 +1059,7 @@ const mapData = [
               },
             },
             {
-              image: twinotter, // Add image if available
+              image: twinotter, 
               content1: {
                 enginetext: "Twin Otter   ",
                 engineNumber: "3",
@@ -1071,7 +1071,7 @@ const mapData = [
               },
             },
             {
-              image: carvanfamily, // Add image if available
+              image: carvanfamily, 
               content1: {
                 enginetext: "Caravan Family       ",
                 engineNumber: "10",
@@ -1083,7 +1083,7 @@ const mapData = [
               },
             },
             {
-              image: pc12, // Add image if available
+              image: pc12, 
               content1: {
                 enginetext: "PC-12  ",
                 engineNumber: "7",
@@ -1253,7 +1253,7 @@ const mapData = [
   },
   {
     id: 4,
-    name: "About RTX",
+    name: "RTX in India",
     type: "custom",
     leftCardData: {
       name: "",
@@ -1322,7 +1322,7 @@ const mapData = [
         x: "0%",
         y: "0%",
         position: "top-[10%] left-[40%]",
-           cityPosition: "top-[27%] left-[35%]",
+        cityPosition: "top-[27%] left-[35%]",
 
         data: {},
       },
@@ -1333,7 +1333,7 @@ const mapData = [
         x: "-10%",
         y: "-20%",
         position: "top-[45%] left-[42%]",
-           cityPosition: "top-[60%] left-[36%]",
+        cityPosition: "top-[60%] left-[36%]",
         data: {},
       },
       {
@@ -1342,7 +1342,7 @@ const mapData = [
         x: "-20%",
         y: "-30%",
         position: "top-[65%] left-[50%]",
-   cityPosition: "top-[73%] left-[34%]",
+        cityPosition: "top-[73%] left-[34%]",
         data: {},
       },
     ],

@@ -29,7 +29,7 @@ export const productEngines = [
     video:productImages.MilitaryVideo,
     engines: [
       { id: 'TF33', img: productImages.machine1, title: 'TF33', description: "A legendary engine for a legendary bomber", details: engineDetails.military.TF33 },
-      { id: 'PW4062', img: productImages.F139_2, title: 'PW4062/F139', description: "Time-tested reliability for the KC-46 Pegasus", details: engineDetails.military["PW4062/F139"] },
+      { id: 'PW4062', img: productImages.F139_2, title: 'F139', description: "Time-tested reliability for the KC-46 Pegasus", details: engineDetails.military["PW4062/F139"] },
       { id: 'F135', img: productImages.F135_0, title: 'F135', description: "The world’s most powerful fighter jet engine", details: engineDetails.military.F135 },
       { id: 'F119', img: productImages.F119_1, title: 'F119', description: "The first operational 5th Gen fighter engine on F-22", details: engineDetails.military.F119 },
        { id: 'F117_1', img: productImages.F117_1, title: 'F117', description: "Exclusive power forthe C-17 Globemaster III", details: engineDetails.military.F117 },

@@ -19,6 +19,7 @@ import MyTextBtn from "../../components/buttons/MyTextBtn";
 import CustomTextButton from "../../components/buttons/CustomTextButton";
 import CustomDialog from "../../components/CustomDialog";
 import TimelineSkeleton from "../../components/TimelineSkeleton";
+
 const { width,height } = Dimensions.get('window');
 const ITEM_WIDTH = width / 5; // Calculate width for 5 visible cards
 const adjustedHeight = height - 80;
@@ -48,7 +49,7 @@ const years = [
       year: "1950s",
       name: "1950",
       subTitle: "Ushering in the Jet Age",
-      description: "From fuel cells for Apollo 11, and most popular general aviation engine – to the world’s fastest military aircraft 1960s were a defining decade",
+      description: "With the war over, aviation leaped into the jet age – spearheaded by Pratt & Whitney ",
     },
     {
       year: "1960s",
@@ -65,7 +66,7 @@ const years = [
     {
       year: "1980s",
       name: "1980",
-      subTitle: "FADEC, V2500 nand PW100",
+      subTitle: "FADEC, V2500 and PW100",
       description: "During the 1980s, Pratt & Whitney further expanded its military and commercial offerings – and reinvented the regional aviation segment",
     },
     {
@@ -84,7 +85,7 @@ const years = [
       year: "2010s",
       name: "2010",
       subTitle: "Decade of expansion",
-      description: "Pratt & Whitney Aircraft Company is founded by Frederick B. Rentschler, pioneer of the air-cooled radial engine design",
+      description: "From the GTF’s entry-into-service, to the introduction of the PW800, the 2010s focused on expansion",
     },
     {
       year: "2020s",

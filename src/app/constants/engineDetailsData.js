@@ -193,7 +193,7 @@ const engineDetails = {
                   description: 'The E-3 AWACS (Airborne Warning and Control System) is a military aircraft developed by Boeing for the United States Air Force. Equipped with a distinctive rotating radar dome, it provides comprehensive surveillance, command, and control capabilities, enabling it to detect and track airborne threats over vast distances.'
                  },
                  ] },
-              { title: "Specifications", content: [{image:productImages.flyingHours, description:"72M+ flight hours on B-52 bombers." },
+              { title: "Specifications", content: [{image:productImages.Thrust, description:"72M+ flight hours on B-52 bombers." },
                   {image:productImages.TF33_S_1, description:"1,000 engines still in service with USAF. " },
 
               ] },
@@ -204,7 +204,7 @@ const engineDetails = {
               ] },
               { title: "Customers",   content: [
   { name: "United States Air Force", image:productImages.USAairforce},
-  { name: "Royal Australian Air Force", image: productImages.RoyalAustralia},
+  { name: "Royal Australian Air Force", image: productImages.royalAusAir},
                  
                 ]  },
                 // {
@@ -286,6 +286,7 @@ const engineDetails = {
             {img:productImages.F139_6},
             {img:productImages.F139_7},
             {pdf:productImages.Mil_pdf_1},
+            {video:productImages.F139_V1}
           ]
       },
       F135:{
@@ -368,6 +369,8 @@ const engineDetails = {
           {img:productImages.F135_7},
           {img:productImages.F135_8},
           {img:productImages.F135_9},
+          {video:productImages.F135_V_1},
+          {video:productImages.F135_V_2},
         ]
     },
     F119:{

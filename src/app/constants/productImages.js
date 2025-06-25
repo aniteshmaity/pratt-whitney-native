@@ -183,6 +183,7 @@ import PT6C_H_2 from "../../assets/images/product/helicopter/Advanced Technology
 import PT6C_H_3 from "../../assets/images/product/helicopter/Engine Control 2.webp"
 
 import RoyalAustralia from "../../assets/images/product/helicopter/Royal Australian Navy.webp"
+import royalAusAir from "../../assets/images/product/millitary/Royal Australian Air Force copy.webp";
 import NATO from "../../assets/images/product/helicopter/NATO.webp"
 
 //genral avation
@@ -618,7 +619,9 @@ import LegacyVideo from "../../assets/video/product/Legacy Engines.mp4"
 import MilitaryVideo from "../../assets/video/product/Military Engines.mp4"
 import RegionalVideo from "../../assets/video/product/Regional Engines.mp4"
 import Jt8d_V from "../../assets/images/product/legacy/jt8d/The Dependability of The Pratt & Whitney JT8D Engine Saves the Day.mp4";
-
+import F139_V1 from "../../assets/images/product/millitary/Pratt & Whitney Powers the USAF Next Generation Tanker.mp4";
+import F135_V_1 from "../../assets/images/product/millitary/Pratt & Whitney Powers Evolution of Engine Technology.mp4";
+import F135_V_2 from "../../assets/images/product/millitary/The Future of the F-35   Chapter 1   Trust.mp4";
 
 export default {
   PW100150,
@@ -649,6 +652,8 @@ PW100_150_6,
 PW100_150_7,
 PW100_150_P_1,
 PW100_150_P_2,
+F135_V_1,
+F135_V_2,
 PW100_150_P_3,
 PW100_150_H_1,
 PW100_150_H_2,
@@ -830,6 +835,7 @@ PT6A_P_5,
 PT6A_P_6,
 PT6A_P_7,
 PT6A_S_1,
+royalAusAir,
 PW4_1,
 PW4_2,
 PW4_3,
@@ -1004,7 +1010,7 @@ wasp_H_2,
 wasp_H_3,
 wasp_P_1,
 wasp_P_2,
-
+F139_V1,
 jt3d,
 Jt8d,
 Jt9d,

@@ -340,11 +340,9 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
             <Image source={allEngineData?.logo || yearImages.machine1} className="w-full h-full absolute top-0 left-0" resizeMode="cover" />
             {/* <VideoView
               style={{
-
-                flex: 1, // Fill the parent container
+                flex: 1, 
                 width: '100%',
                 height: '100%',
-                aspectRatio: 16 / 9,
               }}
               player={nonProductPlayer}
               allowsFullscreen
@@ -803,7 +801,7 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
                       )} */}
                           {tabsData[activeTab].title == "Platforms" || tabsData[activeTab].title == "Highlights" ? (
                             <View className="bg-white flex-1">
-                              <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-ObjektivMk1Bold">
+                              <Text className="text-[#CE2028] text-[0.7rem] font-ObjektivMk1Bold">
                                 {item.enginetext}
                               </Text>
                             </View>
@@ -830,7 +828,7 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
                           ) : (
                             null
                           )}
-                          {tabsData[activeTab]?.title === "Platforms" || tabsData[activeTab]?.title === "Highlights" ? (
+                          {tabsData[activeTab]?.title === "Platforms" || tabsData[activeTab]?.title === "Highlights" ? (   // des should be scrollable
                             <View className="flex-[3]">
                               <Animated.View className="" style={{ height: expandedIndex === idx ? animatedHeight : 40, overflow: 'hidden' }}>
                                 {
