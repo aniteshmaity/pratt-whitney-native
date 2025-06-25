@@ -7,25 +7,26 @@ import { useRouter } from 'expo-router'
 
 export default function conAerospace() {
 
-      const router = useRouter();
+  const router = useRouter();
 
-    const handleClose = () => {
- 
-       router.push({
-      pathname: "/home",
-      params: { 
-        targetIndex: 3,
-      }
-    });
-      }
-    
+  const handleClose = () => {
+
+    router.back();
+    // router.push({
+    //   pathname: "/home",
+    //   params: {
+    //     targetIndex: 3,
+    //   }
+    // });
+  }
+
   return (
     <View className='relative'>
-        <View className="flex-row  gap-4 absolute top-5 right-2 z-40">
-             <CustomCloseButton onPress={handleClose} />
-        </View>
-        
-    <VideoComponent videoUrl={homeImages.aerospaceVideo} isPlay={false} videoClass={{ width: '100%', height: "100%" }} />
+      <View className="flex-row  gap-4 absolute top-5 right-2 z-40">
+        <CustomCloseButton onPress={handleClose} />
+      </View>
+
+      <VideoComponent videoUrl={homeImages.aerospaceVideo} isPlay={false} videoClass={{ width: '100%', height: "100%" }} />
     </View>
   )
 }

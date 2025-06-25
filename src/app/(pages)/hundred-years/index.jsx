@@ -45,16 +45,13 @@ const HundredYears = () => {
   const router = useRouter();
 
 
-const videoSource =
-homeImages.pw100HeroVideo
+  const videoSource = homeImages.pw100HeroVideo
 
   const player = useVideoPlayer(videoSource, player => {
-      player.loop = true;
-      player.muted = true;
-      player.play();
-  
-  
-    });
+    player.loop = true;
+    player.muted = true;
+    player.play();
+  });
 
 
 
@@ -173,7 +170,8 @@ homeImages.pw100HeroVideo
     setActiveIndex(null);
   };
   const handleClose = () => {
-    router.push("home")
+    router.back();
+    // router.push("home")
   }
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
@@ -317,10 +315,10 @@ homeImages.pw100HeroVideo
             <View className="p-4 pt-10 text-black/80 font-normal w-[90%]">
               <Text className="leading-tight text-[1.1rem] font-frutigerReg">
                 For 100 years, the people of Pratt & Whitney have pushed the boundaries of aviation to shape human
-flight. Pratt & Whitney’s history is a story of relentless grit and unwavering dedication, from developing
-era-defining engines in the early 20th century to unleashing new technologies that power the skies today.
-With more than 90,000 engines in service around the globe, we remain committed to connecting people,
-growing economies and defending freedom. 
+                flight. Pratt & Whitney’s history is a story of relentless grit and unwavering dedication, from developing
+                era-defining engines in the early 20th century to unleashing new technologies that power the skies today.
+                With more than 90,000 engines in service around the globe, we remain committed to connecting people,
+                growing economies and defending freedom.
                 {/* {!isExpanded && "..."}
 
                 <Text onPress={toggleReadMore} className="text-[#D91027] font-[900] text-[1.1rem] leading-tight">
@@ -364,7 +362,6 @@ growing economies and defending freedom.
             <CustomTextButton
               className={"w-[186px] h-[36px] mt-8 ml-4"}
               onPress={goToYearCourasal}
-
               title={"Begin Interactive"}
               textClass={" font-[700] text-[0.75rem] font-objektiv tracking-widest "}
               boxLeftClass={"w-[15px] h-[15px] -left-[7.5px]  -top-[7.5px] bg-white"}
@@ -377,8 +374,8 @@ growing economies and defending freedom.
 
         {/* Video and Content Sections */}
         <View className="relative flex-1 w-full  h-full ">
-      <VideoView style={{ width: '100%', height: '100%' }}  player={player} nativeControls={false} contentFit="contain" />
-      {/* <VideoComponent
+          <VideoView style={{ width: '100%', height: '100%' }} player={player} nativeControls={false} contentFit="contain" />
+          {/* <VideoComponent
                         videoUrl={homeImages.pw100HeroVideo}
                         videoClass={{ width: '100%', height: '100%' }}
                       /> */}

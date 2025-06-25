@@ -19,13 +19,9 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const CARD_WIDTH = screenWidth / 3; // Width of each card
 const customheight = (screenHeight / 2 - 175) - 80
 const VISIBLE_CARDS = 5; // Number of visible cards
-const LOOP_DATA = homeCardData;
-const loopData = LOOP_DATA;
-const blurhash =
-  '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
+const loopData = homeCardData;
 
 const Card = ({ item, index, scrollX, centeredIndex }) => {
-  const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
   if (item === null) {
@@ -44,7 +40,7 @@ const Card = ({ item, index, scrollX, centeredIndex }) => {
     const scale = interpolate(
       scrollX.value,
       inputRange,
-      [0.4, 1, 0.4], // Scale middle card to 1, others to 0.2
+      [0.4, 1, 0.4],
       'clamp'
     );
     const translateY = interpolate(
@@ -74,10 +70,6 @@ const Card = ({ item, index, scrollX, centeredIndex }) => {
 
 
   });
-
-
-
-
 
   return (
     <Animated.View
@@ -147,7 +139,7 @@ const Card = ({ item, index, scrollX, centeredIndex }) => {
 };
 
 
-export default function Home() {
+function Home() {
   const translateX = useSharedValue(screenWidth / 2); // Start from the center of the screen (X-axis)
   const translateY = useSharedValue(screenHeight / 3); // Start from the center of the screen (Y-axis)
   const scrollX = useSharedValue(0); // Track scroll position
@@ -160,7 +152,8 @@ export default function Home() {
   const rawIndex = Number(targetIndex);
   const handleClose = () => {
 
-    router.push("/startScreen");
+    // router.push("/startScreen");
+    router.back()
   }
 
   useEffect(() => {
@@ -295,6 +288,8 @@ export default function Home() {
     </SafeAreaView>
   );
 }
+
+export default React.memo(Home)
 
 // const styles = StyleSheet.create({
 //   container: {

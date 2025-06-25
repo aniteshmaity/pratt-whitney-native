@@ -336,7 +336,8 @@ const handleStateUp = () => {
 
   const handleClose = () => {
     // Navigate to another screen or action
-    router.push("/hundred-years");
+    router.back();
+    // router.push("/hundred-years");
   };
   const handleTimeClose = () => {
     handleChangeYearFlag();

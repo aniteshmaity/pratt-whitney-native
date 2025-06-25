@@ -4,7 +4,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Carousel from 'react-native-reanimated-carousel';
 import Icon from 'react-native-vector-icons/Feather';
 import VideoComponent from './VideoComponent';
-import PdfViewer from './PDFViewer';
+import PDFViewer from './PDFViewer';
 
 const { width, height } = Dimensions.get('window');
 
@@ -62,6 +62,7 @@ const CustomDialog = ({ images, startIndex = 0, onClose }) => {
                 scrollAnimationDuration={300}
                 onSnapToItem={(index) => setCurrentIndex(index)}
                 loop={false}
+                windowSize={3} 
                 renderItem={({ item }) => (
                   <View
                     className="flex-1 items-center justify-center"
@@ -69,6 +70,7 @@ const CustomDialog = ({ images, startIndex = 0, onClose }) => {
                       width: '100%',
                       height: '100%',
                       overflow: 'hidden',
+                      backgroundColor: 'rgba(0,0,0,0.6)'
                     }}
                   >
                     {item.img && (
@@ -85,12 +87,13 @@ const CustomDialog = ({ images, startIndex = 0, onClose }) => {
                           height: height * 0.6,
                           overflow: 'hidden',
                           borderRadius: 12,
-                          backgroundColor: 'black', // helps contain it visually
+                          backgroundColor: 'black',
                         }}
                       >
                         <VideoComponent
                           videoUrl={item.video}
-                          isPlay={false}
+                          isPlay={true}
+                          isControl={true}
                           videoClass={{
                             width: '100%',
                             height: '100%',
@@ -98,19 +101,23 @@ const CustomDialog = ({ images, startIndex = 0, onClose }) => {
                         />
                       </View>
                     )}
-                     {item.pdf && (
-        <View
-          style={{
-            width: width * 0.6,
-            height: height * 0.6,
-            overflow: 'hidden',
-            borderRadius: 12,
-            backgroundColor: '#fff',
-          }}
-        >
-          <PdfViewer source={item.pdf} />
-        </View>
-      )}
+                    {item.pdf && (
+                      <View style={{
+                        width: width * 0.53,
+                        height: height * 0.53,
+                        backgroundColor: '#fff',
+                      }}>
+                        <PDFViewer
+                          pdfFile={item.pdf}
+                          visible={true}
+                          style={{
+                            flex: 1,
+                            width: '100%',
+                            height: '100%',
+                          }}
+                        />
+                      </View>
+                    )}
                   </View>
                 )}
               />

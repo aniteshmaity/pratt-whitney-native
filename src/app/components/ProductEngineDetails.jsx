@@ -2,47 +2,37 @@ import { View, Text, Image, ImageBackground, LogBox } from "react-native";
 import React, { Suspense, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import yearImages from "../constants/yearImages";
-import CloseButton from "./CloseButton ";
 import EngineComponent from "./EngineComponent";
-import ClippedView from "./ClippedView";
 import CustomCloseButton from "./buttons/CustomCloseButton";
 import Loader from "./3dModels/Loader";
-import { Test3d } from "./3dModels/Test3d";
-// import useControls from "r3f-native-orbitcontrols";
-// import { Canvas } from "@react-three/fiber";
-import Trigger from "./3dModels/Trigger";
 import CustomDialog from "./CustomDialog";
 LogBox.ignoreLogs(["Cannot read property 'trim' of undefined"]);
-export default function ProductEngineDetails({handleEngineClose,engineData}) {
-    const [size, setSize] = useState({ width: 0, height: 0 });
-    const [show3DModel, setShow3DModel] = useState(false);
-    // const [OrbitControls, events] = useControls();
+
+function ProductEngineDetails({ handleEngineClose, engineData }) {
+  const [show3DModel, setShow3DModel] = useState(false);
   const [loading, setLoading] = useState(false);
-  const handleClose = () => {
-    console.log("ok");
-  };
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [dialogImages, setDialogImages] = useState([]);
-    // console.log("dialogimages",dialogImages);
-    const [startIndex, setStartIndex] = useState(0);
-  const handleImageClick = (index,img) => {
-    console.log("images------",img);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [dialogImages, setDialogImages] = useState([]);
+
+  const [startIndex, setStartIndex] = useState(0);
+  const handleImageClick = (index, img) => {
     setDialogImages(img);
     setStartIndex(index);
     setIsDialogOpen(true);
     console.log("handleclick");
   };
+
   return (
     <SafeAreaView className="bg-white">
       {show3DModel ? (<View className="bg-black flex-1 w-full h-screen absolute z-[50]">
-              <View className="absolute top-3 right-3 z-50">
-              {/* <CustomCloseButton onPress={handleEngineClose}   /> */}
-              </View>
-              {loading && (    
+        <View className="absolute top-3 right-3 z-50">
+          {/* <CustomCloseButton onPress={handleEngineClose}   /> */}
+        </View>
+        {loading && (
           <Loader />
-      )}
-            
-            </View>) : ( <View className=" w-full h-screen overflow-hidden relative">
+        )}
+
+      </View>) : (<View className=" w-full h-screen overflow-hidden relative">
         <ImageBackground
           source={yearImages.exploreBgImage}
           style={{ flex: 1, width: "100%", height: "100%" }}
@@ -66,21 +56,23 @@ export default function ProductEngineDetails({handleEngineClose,engineData}) {
               </View>
             </View>
             <View className="relative ">
-       
+
 
               <EngineComponent type="product" engineData={engineData} onEngineClose={handleEngineClose} onImageClick={handleImageClick} setShow3DModel={setShow3DModel} setLoading={setLoading} />
             </View>
           </View>
         </ImageBackground>
 
-         {isDialogOpen && (
-                <CustomDialog
-                images={dialogImages}
-                startIndex={startIndex}
-                  onClose={() => setIsDialogOpen(false)}
-                />
-              )}
+        {isDialogOpen && (
+          <CustomDialog
+            images={dialogImages}
+            startIndex={startIndex}
+            onClose={() => setIsDialogOpen(false)}
+          />
+        )}
       </View>)}
     </SafeAreaView>
   );
 }
+
+export default React.memo(ProductEngineDetails)
