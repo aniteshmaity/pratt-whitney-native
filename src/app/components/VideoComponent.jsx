@@ -3,7 +3,7 @@ import { useVideoPlayer, VideoView } from 'expo-video';
 import React from 'react'
 import { TouchableOpacity } from 'react-native';
 
-export default function VideoComponent({videoUrl,videoClass,togglePlayback,isPlay=true,isControl=true}) {
+export default function VideoComponent({videoUrl,videoClass,togglePlayback,isPlay=false,isControl=true}) {
     // console.log("videourl",videoUrl);
       const videoSource = videoUrl
     

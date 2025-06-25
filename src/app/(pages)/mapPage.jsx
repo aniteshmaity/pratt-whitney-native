@@ -72,12 +72,13 @@ export default function mapPage() {
 
   const handleClose = () => {
 
-    router.push({
-      pathname: "/home",
-      params: {
-        targetIndex: 4,
-      }
-    });
+    router.back();
+    // router.push({
+    //   pathname: "/home",
+    //   params: {
+    //     targetIndex: 4,
+    //   }
+    // });
   }
   const handleClick = (index) => {
     selectedIndex.value = index;

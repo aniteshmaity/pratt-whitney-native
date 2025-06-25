@@ -4,7 +4,8 @@ import Animated, { useSharedValue, useAnimatedScrollHandler, useAnimatedStyle, i
 import yearImages from "../constants/yearImages";
 import PrevNextButton from "./buttons/PrevNextButton";
 import VideoComponent from "./VideoComponent";
-// import PdfViewer from "./PDFViewer";
+import homeImages from "../constants/homeImages";
+import DynamicPDFViewer from "./PDFViewer";
 
 // import Pdf from "react-native-pdf";
 
@@ -32,13 +33,13 @@ const data = [
 // Duplicate the data to create a looping effect
 
 
-const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, galleryData, onImageClick, loopingData }) => {
+const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, galleryData, onImageClick, loopingData, onPdfClick }) => {
   // console.log("galleryData",galleryData);
   if (!item) {
     return <View style={{ width: itemWidth }} />; // Empty space
   }
   const filteredData = galleryData.filter(item => item !== null);
-  console.log("filteredData",filteredData);
+  console.log("filteredData", filteredData);
   const realIndex = galleryData.filter((e) => e !== null).indexOf(item);
   const animatedStyle = useAnimatedStyle(() => {
     const scale = interpolate(
@@ -72,8 +73,7 @@ const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, galleryDa
         {
           item.img && (
             <Image
-
-              source={ item.img}
+              source={item.img}
               alt={`Card ${item.index}`}
               className=" w-full"
               resizeMode="cover"
@@ -89,12 +89,17 @@ const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, galleryDa
             isPlay={false}
           />
         )}
-        {/* {item.pdf && (
-          <View className="h-[80px]">
-  <PdfViewer source={item.pdf} />
-       
-       </View>
-        )} */}
+
+        {item.pdf && (
+          <TouchableOpacity onPress={() => onPdfClick(item.pdf)} style={{ height: 80 }}>
+            <Image
+              source={homeImages.logo1}
+              resizeMode="cover"
+              style={{ width: '100%', height: 80 }}
+            />
+          </TouchableOpacity>
+        )}
+
       </TouchableOpacity>
 
 
@@ -128,7 +133,7 @@ const GalleryCarousel = ({ parentWidth, slideImages, onImageClick }) => {
     null,
     ...slideImages,
     null,
-  
+
   ];
   // const handlePrev = () => {
   //   if (currentIndex <= 0) return; // Prevent negative index
@@ -149,34 +154,45 @@ const GalleryCarousel = ({ parentWidth, slideImages, onImageClick }) => {
   //   flatListRef.current?.scrollToIndex({ index: newIndex - 1, animated: true });
   // };
 
+  const [selectedPdf, setSelectedPdf] = useState('');
+  const [showPDF, setShowPDF] = useState(false)
+
+  const handlePdfOpen = (pdfFile) => {
+    if (!pdfFile) return;
+    setSelectedPdf(pdfFile);
+    setShowPDF(true);
+  };
+
   return (
-    <View
-      className=" relative"
-    >
 
-      <Animated.FlatList
-        ref={flatListRef}
-        data={loopingData}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <CarouselItem item={item} index={index} itemWidth={itemWidth} currentIndex={currentIndex} scrollX={scrollX} galleryData={galleryData} onImageClick={onImageClick} loopingData={loopingData} />
-        )}
-        onScroll={scrollHandler}
-        snapToInterval={itemWidth}
-        decelerationRate="fast"
-        // contentContainerStyle={{ paddingHorizontal: (parentWidth - itemWidth) / 4 }}
-        initialScrollIndex={1} // Start on first real item
-        getItemLayout={(data, index) => ({
-          length: itemWidth,
-          offset: itemWidth * index,
-          index,
-        })}
-      />
+    <>
+      <View
+        className=" relative"
+      >
 
-      {/* Navigation Buttons */}
-      {/* <View className="absolute top-1/2 -translate-y-1/2 left-3">
+        <Animated.FlatList
+          ref={flatListRef}
+          data={loopingData}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => (
+            <CarouselItem item={item} index={index} itemWidth={itemWidth} currentIndex={currentIndex} scrollX={scrollX} galleryData={galleryData} onImageClick={onImageClick} loopingData={loopingData} onPdfClick={handlePdfOpen} />
+          )}
+          onScroll={scrollHandler}
+          snapToInterval={itemWidth}
+          decelerationRate="fast"
+          // contentContainerStyle={{ paddingHorizontal: (parentWidth - itemWidth) / 4 }}
+          initialScrollIndex={1} // Start on first real item
+          getItemLayout={(data, index) => ({
+            length: itemWidth,
+            offset: itemWidth * index,
+            index,
+          })}
+        />
+
+        {/* Navigation Buttons */}
+        {/* <View className="absolute top-1/2 -translate-y-1/2 left-3">
     
                <PrevNextButton
                     isColor={currentIndex === 0 ? "grey" : "red"} 
@@ -199,7 +215,19 @@ const GalleryCarousel = ({ parentWidth, slideImages, onImageClick }) => {
             
           </View> */}
 
-    </View>
+      </View>
+      {/* {selectedPdf && showPDF ? (
+        <DynamicPDFViewer
+          visible={true}
+          pdfFile={selectedPdf}
+          onClose={() => {
+            console.log("PDF modal closed");
+            setShowPDF(false);
+            setSelectedPdf(null);
+          }}
+        />
+      ) : null} */}
+    </>
   );
 };
 

@@ -14,7 +14,7 @@ const homeCardData = [
        "Browse through Pratt & Whitney’s 100-year history of pushing the boundaries of aviation to shape the future of flight.",
       videoUrl:
       homeImages.year100Video,
-      link: "/test",
+      link: "/hundred-years",
       triggerCloseAnimation: true,
     },
     {
