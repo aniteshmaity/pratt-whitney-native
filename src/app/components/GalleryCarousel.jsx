@@ -6,6 +6,7 @@ import PrevNextButton from "./buttons/PrevNextButton";
 import VideoComponent from "./VideoComponent";
 import homeImages from "../constants/homeImages";
 import DynamicPDFViewer from "./PDFViewer";
+import PDFThumbnail from "./PDFThumnail";
 
 // import Pdf from "react-native-pdf";
 
@@ -87,17 +88,16 @@ const CarouselItem = ({ item, index, currentIndex, itemWidth, scrollX, galleryDa
             videoUrl={item.video}
             videoClass={{ width: '100%', height: 80 }}
             isPlay={false}
+            isControl={false}
           />
         )}
 
         {item.pdf && (
-          <TouchableOpacity onPress={() => onPdfClick(item.pdf)} style={{ height: 80 }}>
-            <Image
-              source={homeImages.logo1}
-              resizeMode="cover"
-              style={{ width: '100%', height: 80 }}
-            />
-          </TouchableOpacity>
+          <PDFThumbnail
+            pdfFile={item.pdf}
+            visible={true}
+            style={{ width: '100%', height: 80 }}
+          />
         )}
 
       </TouchableOpacity>

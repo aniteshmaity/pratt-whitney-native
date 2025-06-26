@@ -26,7 +26,7 @@ export default function conAerospace() {
         <CustomCloseButton onPress={handleClose} />
       </View>
 
-      <VideoComponent videoUrl={homeImages.aerospaceVideo} isPlay={false} videoClass={{ width: '100%', height: "100%" }} />
+      <VideoComponent videoUrl={homeImages.aerospaceVideo} isPlay={false} contentFit="contain" videoClass={{ width: '100%', height: "100%" }} />
     </View>
   )
 }

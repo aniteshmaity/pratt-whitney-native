@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Modal, View, Image, TouchableOpacity, Text, Dimensions } from 'react-native';
+import { Modal, View, Image, TouchableOpacity, Text, Dimensions, Pressable } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Carousel from 'react-native-reanimated-carousel';
 import Icon from 'react-native-vector-icons/Feather';
@@ -25,6 +25,9 @@ const CustomDialog = ({ images, startIndex = 0, onClose }) => {
       setCurrentIndex(prev => prev + 1);
     }
   };
+
+  const [playing, setIsPlaying] = useState(false)
+  console.log("PLAYING STATE CHANGED TO:", playing);
 
   return (
     <SafeAreaProvider>
@@ -60,9 +63,11 @@ const CustomDialog = ({ images, startIndex = 0, onClose }) => {
                 data={images}
                 defaultIndex={startIndex}
                 scrollAnimationDuration={300}
-                onSnapToItem={(index) => setCurrentIndex(index)}
+                onSnapToItem={(index) => {
+                  setCurrentIndex(index)
+                }}
                 loop={false}
-                windowSize={3} 
+                windowSize={3}
                 renderItem={({ item }) => (
                   <View
                     className="flex-1 items-center justify-center"

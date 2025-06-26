@@ -58,6 +58,7 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
   const allEngineData = type === "product" ? engineData : mapData ? mapData : yearEngineData
   const [tabsData, setTabsData] = useState(allEngineData?.defaultTabsData ?? []);
 
+
   console.log("allEngineData---", allEngineData);
   const videoRef = useRef(null);
   const rotation = useSharedValue(0);
@@ -336,8 +337,8 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
           /> */}
 
           {/* <Video  source={{ uri: "http://commondatastorage.g  oogleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" }}  */}
-          <View className=" h-full bg-slate-500 overflow-hidden" style={{ width: "99.7%" }}>
-            <Image source={allEngineData?.logo || yearImages.machine1} className="w-full h-full absolute top-0 left-0" resizeMode="cover" />
+          <View className=" h-full bg-white overflow-hidden" style={{ width: "99.7%" }}>
+            <Image source={allEngineData?.logo || yearImages.machine1} className="w-full h-full absolute top-0 left-0" resizeMode="center" />
             {/* <VideoView
               style={{
                 flex: 1, 
@@ -504,7 +505,7 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
                 </Svg>
                 <View className="absolute pl-[20px] top-1/2 -translate-y-1/2   ">
                   <Text className={`${type === "100year" ? "text-[20px]" : "text-[2.2rem]"}   leading-tight text-white font-ObjektivMk2Black`}> {allEngineData?.title}</Text>
-                  <Text className="text-[#CE2028] text-[0.8rem] font-ObjektivMk1Bold ">
+                  <Text className="text-[#CE2028] text-[0.8rem] font-ObjektivMk1Bold pl-[10px]">
                     {allEngineData?.subTitle || "A Legend Engine For a legedary Bombar"}
                   </Text>
                 </View>
@@ -572,7 +573,7 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
                           <Text className="text-[#E11C37] text-[1.6rem] font-ObjektivMk2Black">
                             {item.title}
                           </Text>
-                          <Text className="text-[8px] text-center ">
+                          <Text className="text-[0.8rem] ">
                             {item.subtitle}
                           </Text>
                         </View>
@@ -590,7 +591,7 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
 
                     {allEngineData?.variants.map((item, index) => {
                       return (
-                        <View key={index}>
+                        <TouchableOpacity key={index} onPress={() => setTabsData(allEngineData?.variants[index]?.tabsData)}>
                           <View className=" rounded-full   w-[40px] h-[40px] p-1 bg-white" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
                             <View className="overflow-hidden w-full h-full   rounded-full" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 10, 5) }}>
                               <Image
@@ -604,7 +605,7 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
                           <Text className="text-[8px] text-center mt-2">
                             {item.title}
                           </Text>
-                        </View>
+                        </TouchableOpacity>
                       );
                     })}
                   </View>
@@ -632,7 +633,7 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
                   className={`flex-1  py-[6px] text-[0.5rem] `}
                 >
                   <ClippedView width={tabsSize.width / tabsData.length} height={tabsSize.height} backgroundColor={activeTab === index ? "#D91027" : "#918F8F"} clipPathId="EnginePclip1" slug={"variant8"} />
-                  <Text className="text-[0.5rem] font-semibold  text-white  text-center">{tab.title}</Text>
+                  <Text className="text-[0.7rem] font-semibold  text-white  text-center">{tab.title}</Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -662,30 +663,32 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
 
                           {isFleetData ? (
                             <>
-                              <View className="bg-white  rounded-full  overflow-hidden w-[60px] h-[60px]" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
 
-                                <Image
-                                  source={item.image}
-                                  className="w-full h-full"
+                              <View className="bg-white  rounded-full overflow-hidden  w-[60px] h-[60px] p-1" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
+                                <View className="w-full h-full overflow-hidden  rounded-full " style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
+                                  <Image
+                                    source={item.image || yearImages.gtfImg}
+                                    className="w-full h-full"
 
-                                  resizeMode="cover"
-                                />
+                                    resizeMode="cover"
+                                  />
+                                </View>
                               </View>
 
-                              <View className="flex gap-1">
+                              <View className="flex-[2] gap-1">
                                 <Text className="text-[#363535] text-[0.7rem] font-ObjektivMk1Bold">{item.content1.enginetext}</Text>
                                 <Text className="text-[#CE2028] text-[0.9rem] font-ObjektivMk2Black">{item.content1.engineNumber}</Text>
                                 <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-objektiv">{item.content1.engineCraft}</Text>
                               </View>
 
-                              <View>
+                              <View className="flex-1">
 
                                 <View className="bg-white  rounded-full overflow-hidden  w-[60px] h-[60px] p-1" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
 
                                   <View className="w-full h-full overflow-hidden  rounded-full " style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
 
                                     <Image
-                                      source={item.content2.image}
+                                      source={item.content2.image || yearImages.gtfImg}
                                       className="w-full h-full"
 
                                       resizeMode="cover"
@@ -699,13 +702,13 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
                               </View>
 
                               {item.content3 && (
-                                <View >
+                                <View className="flex-[2]">
 
                                   <View className="bg-white  rounded-full overflow-hidden  w-[60px] h-[60px] p-1" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
                                     <View className="w-full h-full overflow-hidden  rounded-full " style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
 
                                       <Image
-                                        source={item.content3.image}
+                                        source={item.content3.image || yearImages.gtfImg}
                                         className="w-full h-full"
 
                                         resizeMode="cover"
@@ -718,14 +721,27 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
                                   </Text>
                                 </View>
                               )}
+
                             </>
                           ) : (
                             <>
 
 
-                              <View>
-                                <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-ObjektivMk1Bold">{item.enginetext}</Text>
-                                <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-objektiv">{item.description}</Text>
+                              <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', gap: 10 }}>
+                                <View className="bg-white  rounded-full overflow-hidden  w-[60px] h-[60px] p-1" style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
+                                  <View className="w-full h-full overflow-hidden  rounded-full " style={{ ...boxShadow("#6b646426", 3, 7, 0.2, 20, 10) }}>
+                                    <Image
+                                      source={item.image}
+                                      className="w-full h-full"
+
+                                      resizeMode="cover"
+                                    />
+                                  </View>
+                                </View>
+                                <View>
+                                  <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-ObjektivMk1Bold">{item.enginetext}</Text>
+                                  <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-objektiv">{item.description}</Text>
+                                </View>
                               </View>
                             </>
                           )}
@@ -812,7 +828,7 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
 
                           {tabsData[activeTab].title == "Specifications" ? (
                             <View className="bg-white flex-1">
-                              <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-objektiv">
+                              <Text className="text-[rgba(0, 0, 0, 0.7)] text-[0.7rem] font-ObjektivMk1Bold">
                                 {item.description}
                               </Text>
                             </View>
@@ -830,7 +846,7 @@ export default function EngineComponent({ type, onEngineClose, engineData, setSh
                           )}
                           {tabsData[activeTab]?.title === "Platforms" || tabsData[activeTab]?.title === "Highlights" ? (   // des should be scrollable
                             <View className="flex-[3]">
-                              <Animated.View className="" style={{ height: expandedIndex === idx ? animatedHeight : 40, overflow: 'hidden' }}>
+                              <Animated.View className="" style={{ overflow: 'hidden' }}>  //height: expandedIndex === idx ? animatedHeight : 40,
                                 {
                                   item.description && (
                                     <Text className="text-[0.8rem] font-objektiv">

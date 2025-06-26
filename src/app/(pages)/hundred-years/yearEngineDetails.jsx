@@ -12,7 +12,7 @@ import yearSlidedata from "../../constants/yearSlideData";
 import CustomDialog from "../../components/CustomDialog";
 
 export default function yearEngineDetails() {
-  const { year, targetId, engineData, mapData, mapPresence, isFleetData } = useLocalSearchParams();
+  const { year, targetId, engineData, mapData, isFleetData } = useLocalSearchParams();
   const numericId = Number(targetId);
   const parsedEngineData = engineData ? JSON.parse(engineData) : null;
   const parsedMapData = mapData ? JSON.parse(mapData) : null;
@@ -33,14 +33,7 @@ export default function yearEngineDetails() {
   };
 
   const handleClose = () => {
-    if (mapPresence === 'true') {
-      router.replace('/mapPage');
-      return;
-    }
-    router.push({
-      pathname: '/hundred-years/yearCarousal',
-      params: { yearParam: year }
-    });
+    router.back()
   };
 
   const onPressHome = () => {

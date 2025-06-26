@@ -55,7 +55,7 @@ export const productEngines = [
     description: "Proven, prolific, PT6",
     video:productImages.GeneralVideo,
     engines: [
-      { id: 'PT6 ', img: productImages.PT6E_66XP, title: 'PT6 E-Series', description: "First engine family with a dual channel integrated electronic propeller", details: engineDetails.general["PT6 E-Series"] },
+      { id: 'PT6 ', img: productImages.PT6E_66XP, title: 'PT6E', description: "First engine family with a dual channel integrated electronic propeller", details: engineDetails.general["PT6 E-Series"] },
       { id: 'PT6A', img: productImages.PT6A_2, title: 'PT6A', description: "PT6A engine family is the world's most popular engine in its class", details: engineDetails.general.PT6A },
 
     ],
@@ -65,7 +65,7 @@ export const productEngines = [
     description: "Dependable, efficient power",
     video:productImages.CommercialVideo,
     engines: [
-      { id: 'gtf', img: productImages.gtf, title: 'GTF  Family', description: "The most fuel-efficient engine for single-aisle aircraft", details: engineDetails.commercial.GTF_Family },
+      { id: 'gtf', img: productImages.gtf, title: 'GTF', description: "The most fuel-efficient engine for single-aisle aircraft", details: engineDetails.commercial.GTF_Family },
       { id: 'v2500_1', img: productImages.V25_1, title: 'v2500', description: "Versatile engine that supports ever-evolving needs", details: engineDetails.commercial.v2500 },
       { id: 'v2500_2', img: productImages.PW4_1, title: 'PW4000 ', description: "Extended-range Twin-engine Operations leader for the 777", details: engineDetails.commercial.PW4000 },
       { id: 'v2500_3', img: productImages.PW2_1, title: 'PW2000', description: "Covers mid-thrust range from 37K to 43K pounds", details: engineDetails.commercial.PW2000 },
@@ -88,7 +88,7 @@ export const productEngines = [
      
   },
   {
-    engine: "APUs",
+    engine: "Auxiliary Power Units",
     description: "Industry leading APUs",
     video:productImages.APUVideo,
     engines: [

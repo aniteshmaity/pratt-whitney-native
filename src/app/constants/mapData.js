@@ -56,7 +56,7 @@ const mapData = [
         name: "New Delhi",
         x: "0%",
         y: "0%",
-        position: "top-[10%] left-[40%]",
+        position: "top-[10%] left-[50%]",
         cityPosition: "top-[27%] left-[35%]",
 
         data: [
@@ -141,8 +141,8 @@ const mapData = [
 
         name: "Hyderabad",
         x: "-10%",
-        y: "-20%",
-        position: "top-[42%] left-[45%]",
+        y: "-15%",
+        position: "top-[42%] left-[55%]",
         cityPosition: "top-[60%] left-[36%]",
         data: [
           {
@@ -265,9 +265,9 @@ const mapData = [
       {
         id: 3,
         name: "Bangalore",
-        x: "-20%",
-        y: "-30%",
-        position: "top-[35%] left-[49%]",
+        x: "-10%",
+        y: "-20%",
+        position: "top-[35%] left-[54%]",
         cityPosition: "top-[73%] left-[34%]",
         data: [
           {
@@ -1113,7 +1113,7 @@ const mapData = [
   },
   {
     id: 3,
-    name: "About India",
+    name: "RTX in India",
     type: "custom",
     leftCardData: {
       name: gtf,
@@ -1253,7 +1253,7 @@ const mapData = [
   },
   {
     id: 4,
-    name: "RTX in India",
+    name: "About India",
     type: "custom",
     leftCardData: {
       name: "",

@@ -53,6 +53,7 @@ export default function MapCard({ cityData, cardRef, cardclass, handlePrevClick,
     height: 140,
     translateX: -100,
   };
+
   return (
     <View ref={cardRef} className={`w-[400px] ${cardclass}`}>
       <Animated.View className="relative flex gap-2" style={[cardAnimatedStyle]}>
@@ -67,7 +68,6 @@ export default function MapCard({ cityData, cardRef, cardclass, handlePrevClick,
             >
               <View className='flex-1 flex-row gap-4 h-full '>
                 <View className='relative flex-1 '>
-
                   <Image className='w-full h-full ' source={homeImages.mapcontent1} resizeMode='cover' />
                 </View>
                 <View className='w-full flex-[2] justify-between '>
@@ -88,9 +88,6 @@ export default function MapCard({ cityData, cardRef, cardclass, handlePrevClick,
                   />
                 </View>
               </View>
-              {/* <View className='m-auto mt-5 w-[120px]'>
-       
-        </View> */}
             </View>
 
 
@@ -118,7 +115,7 @@ export default function MapCard({ cityData, cardRef, cardclass, handlePrevClick,
           </View>
         ))}
         {/* Render the SVG and city data for non-active cards */}
-        <View className='absolute -right-[28%] top-0 flex flex-row gap-4'>
+        {/* <View className='absolute -right-[28%] top-0 flex flex-row gap-4'>
           <PrevNextButton
             isColor={currentIndex.value === cityIndex ? "grey" : "red"}
             isIcon='prev'
@@ -130,7 +127,7 @@ export default function MapCard({ cityData, cardRef, cardclass, handlePrevClick,
             isIcon='next'
             onPress={handleNextClick}
           />
-        </View>
+        </View> */}
         {/* <View className={`absolute z-[400] flex flex-row items-center gap-5 ${cityData?.cityPosition}`} >
         <RedDotSvg width={20} height={20} className=" top-[20%] left-[10px]" />
         <View>

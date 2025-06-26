@@ -70,7 +70,7 @@ const SlideInCard = ({ selectedItem, scrollDirection, middleIndex, handleExplore
       ]}
     >
       <ClippedView width={SCREEN_WIDTH * 0.6} height={SCREEN_HEIGHT * 0.65} backgroundColor="white" clipPathId="Cardclip" slug="variant9" />
-      <VideoComponent videoUrl={selectedItem.video} isPlay={false} videoClass={{ width: '100%', height: 240 }} />
+      <VideoComponent videoUrl={selectedItem.video} isPlay={true} videoClass={{ width: '100%', height: 240 }} />
       <View className="w-full py-5 px-6">
         <Text className="text-[2.2rem]   pb-2 font-ObjektivMk1Bold">
           {selectedItem?.engine}

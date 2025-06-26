@@ -46,7 +46,7 @@ export default function mapPage() {
   const y = useSharedValue(cities[0].y);
   const scale = useSharedValue(0);
   const opacity = useSharedValue(0);
-  const currentIndex = useSharedValue(0);
+  const currentIndex = useSharedValue(-1);
   const buttonsRef = useRef([]);
   const cardRef = useRef([]);
   const spansRef = useRef([]);
@@ -99,6 +99,15 @@ export default function mapPage() {
       setActiveCity(city);
     }
   };
+
+  const handlePresenceClick = (city, index) => {
+    currentIndex.value = index; // set current index
+    console.log('currentIndex.value', currentIndex.value)
+    x.value = withSpring(city.x, { damping: 20, stiffness: 90 });
+    y.value = withSpring(city.y, { damping: 20, stiffness: 90 });
+  }
+
+
   useEffect(() => {
     if (activeCity) {
       scale.value = 0;
@@ -137,8 +146,11 @@ export default function mapPage() {
     setActiveId(button.id);
 
     if (button.id === 1) {
+      setActiveCity(null)
+      currentIndex.value === -1;
       setShowCards(false);
     } else if (button.id === 2) {
+      currentIndex.value = -1;
       const fletData = mapData[1]?.exploreData
       // Navigate on second button click
       router.push({
@@ -151,6 +163,7 @@ export default function mapPage() {
 
       });
     } else if (button.id === 3 || button.id === 4) {
+      currentIndex.value = -1;
       setActiveCity(null);
       setShowCards(true);
       x.value = withSpring("0%", { damping: 20, stiffness: 90 });
@@ -323,7 +336,7 @@ export default function mapPage() {
               activeId === 1 && (
                 <>
                   {mapData[activeId - 1]?.cities?.map((city, index) => (
-                    <TouchableOpacity key={city.id} className={`flex  items-center justify-center absolute gap-2  ${city.cityPosition} cursor-pointer`}>
+                    <TouchableOpacity onPress={() => handlePresenceClick(city, index)} key={city.id} className={`flex  items-center justify-center absolute gap-2  ${city.cityPosition} cursor-pointer`}>
                       <RedDotSvg width={20} height={20} className=" " />
                       <Text className="text-[0.96rem] font-ObjektivMk1Bold ">
                         {city.name}
